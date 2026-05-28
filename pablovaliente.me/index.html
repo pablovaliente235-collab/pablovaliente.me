@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pablo Valiente — Video Editor &amp; Colorist | Berlin</title>
+<meta name="description" content="Pablo Valiente — DaVinci Resolve-certified Video Editor and Colorist based in Berlin. Specialising in short films, branded content, and high-end post-production."/>
+<meta property="og:title" content="Pablo Valiente — Video Editor &amp; Colorist | Berlin"/>
+<meta property="og:description" content="DaVinci Resolve-certified Video Editor and Colorist based in Berlin. Specialising in short films, branded content, and high-end post-production."/>
+<meta property="og:image" content="https://pablovaliente.me/assets/projects/project-1/Frames/frame-03.webp"/>
+<meta property="og:url" content="https://pablovaliente.me/"/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Pablo Valiente — Video Editor &amp; Colorist | Berlin"/>
+<meta name="twitter:description" content="DaVinci Resolve-certified Video Editor and Colorist based in Berlin."/>
+<meta name="twitter:image" content="https://pablovaliente.me/assets/projects/project-1/Frames/frame-03.webp"/>
+<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+<link rel="manifest-icon" type="image/png" sizes="192x192" href="/favicon-192.png"/>
+<link rel="stylesheet" href="https://use.typekit.net/vab7sfw.css"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Pablo Valiente",
+  "url": "https://pablovaliente.me",
+  "jobTitle": "Video Editor & Colorist",
+  "description": "DaVinci Resolve-certified Video Editor and Colorist based in Berlin, specialising in short films, branded content, and high-end post-production.",
+  "email": "contact@pablovaliente.me",
+  "address": { "@type": "PostalAddress", "addressLocality": "Berlin", "addressCountry": "DE" }
+}
+</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  font-family: "neue-haas-grotesk-display", sans-serif;
+  background: #0a0a0a;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Backgrounds ── */
+.bg-stack {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+.bg-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  will-change: opacity;
+}
+.bg-layer.is-active {
+  opacity: 1;
+}
+.bg-layer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+#bg-default .bg-overlay {
+  background: rgba(0, 0, 0, 0.65);
+}
+.bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+/* ── Header ── */
+#site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 24px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+}
+.header-logo {
+  font-family: "neue-haas-grotesk-display", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+  color: inherit;
+}
+.header-nav {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+.header-nav a {
+  font-family: "neue-haas-grotesk-display", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.header-nav a:hover { opacity: 1; }
+.header-nav a .dim { opacity: 0.4; }
+.burger-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  padding: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Mobile menu overlay ── */
+#mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: #0a0a0a;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+#mobile-overlay.open {
+  display: flex;
+}
+#mobile-overlay::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background-image: var(--overlay-img, none);
+  background-size: cover;
+  background-position: center;
+  filter: blur(24px);
+  z-index: 0;
+}
+#mobile-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  z-index: 1;
+}
+#mobile-overlay .mobile-nav-links { position: relative; z-index: 2; }
+.mobile-close-btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 2;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  padding: 4px;
+}
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+.mobile-nav-links a {
+  font-family: "neue-haas-grotesk-display", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+  color: rgba(255,255,255,0.5);
+  transition: color 0.2s;
+}
+.mobile-nav-links a:hover { color: #ffffff; }
+
+/* ── Main / project list ── */
+#main-content {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  padding: 70px 40px 60px;
+  pointer-events: none;
+  overflow: hidden;
+}
+.project-list {
+  list-style: none;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: 80px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.project-list::-webkit-scrollbar { display: none; }
+.project-list.is-dragging { cursor: grabbing; }
+.project-list li {
+  flex: none;
+}
+.project-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px 0 28px;
+  text-decoration: none;
+  color: rgba(242,240,239,0.9);
+  transition: opacity 0.25s ease;
+  cursor: pointer;
+}
+.project-text {
+  display: flex;
+  flex-direction: column;
+}
+.project-item:hover {
+  opacity: 0.6;
+}
+.project-title {
+  font-family: "neue-haas-grotesk-display", sans-serif;
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  display: block;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+.project-category {
+  margin-bottom: 2px;
+  font-family: "neue-haas-grotesk-display", sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  display: block;
+  margin-top: 8px;
+  white-space: nowrap;
+}
+
+/* ── Footer ── */
+#site-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(255,255,255,0.4);
+  pointer-events: none;
+}
+#site-footer a {
+  pointer-events: auto;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+#site-footer a:hover { opacity: 0.8; }
+.footer-col {
+  font-family: "neue-haas-grotesk-display", sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
+.footer-col:nth-child(2) { font-size: 15px; }
+.mail-short { display: none; }
+
+/* ── Tablet ── */
+@media (max-width: 1024px) {
+  .project-title {
+    font-size: 30px;
+  }
+  #main-content {
+    padding: 70px 24px 56px;
+  }
+  .project-item {
+    padding: 16px 0;
+  }
+}
+
+/* ── Mobile ── */
+@media (max-width: 767px) {
+  #site-header {
+    padding: 20px 24px;
+  }
+  .header-nav {
+    display: none;
+  }
+  .burger-btn {
+    display: flex;
+  }
+  #main-content {
+    padding: 72px 0 96px;
+    align-items: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    pointer-events: auto;
+  }
+  .project-list {
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    cursor: default;
+    gap: 0;
+    pointer-events: auto;
+    width: 100%;
+  }
+  .project-list li {
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .project-item {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    cursor: pointer;
+  }
+  .project-title {
+    font-size: 30px;
+    white-space: normal;
+  }
+  .project-category {
+    margin-top: 0;
+    font-size: 8px;
+    white-space: normal;
+  }
+  #site-footer { flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 28px; padding: 14px 20px; }
+  .footer-col { text-align: center; }
+  .footer-col:first-child { order: 2; width: 100%; }
+  .footer-col:not(:first-child) { display: flex; order: 1; font-size: 11px; }
+  .footer-col:nth-child(2) { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; }
+  footer a[href^="mailto:"] { text-transform: uppercase; letter-spacing: 0.07em; font-size: 11px; }
+  .mail-full { display: none; }
+  .mail-short { display: inline; }
+}
+
+/* ── Mobile TikTok Slider ── */
+#mobile-tiktok { display: none; }
+@media (max-width: 767px) {
+  #main-content, #site-footer { display: none !important; }
+  #mobile-tiktok {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 28px 60px;
+  }
+  .mtk-row { display: flex; align-items: center; gap: 24px; }
+  .mtk-info { flex: 1; min-width: 0; height: 130px; overflow: hidden; transition: opacity 0.2s; }
+  .mtk-info.is-fading { opacity: 0; }
+  .mtk-category {
+    display: block;
+    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-size: 9px; font-weight: 400; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 12px;
+  }
+  .mtk-title {
+    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-size: clamp(32px, 10vw, 56px); font-weight: 500;
+    letter-spacing: -0.025em; line-height: 1.0; color: #fff; margin: 0;
+  }
+  .mtk-hint {
+    display: flex; align-items: center; gap: 8px; margin-top: 18px;
+    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.28); transition: opacity 0.5s;
+  }
+  .mtk-indicator {
+    flex-shrink: 0; height: 130px;
+    display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+    cursor: pointer;
+  }
+  .mtk-ind-num {
+    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-size: 9px; letter-spacing: 0.1em; line-height: 1;
+    color: rgba(255,255,255,0.4);
+  }
+  .mtk-ind-track {
+    position: relative; width: 1px; height: 50px;
+    background: rgba(255,255,255,0.18);
+  }
+  .mtk-ind-fill {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: #fff;
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+@media (max-width: 767px) {
+  #bg-3 img { object-position: calc(50% + 150px) center; }
+  #bg-4 img { object-position: calc(50% - 270px) center; }
+}
+</style>
+</head>
+<body>
+<script>
+(function(){
+  var f=sessionStorage.getItem('slideFrom')||'below';
+  sessionStorage.removeItem('slideFrom');
+  document.body.style.opacity='0';
+  if(window.innerWidth<=767) document.body.style.transform='translateY('+(f==='below'?'60px':'-60px')+')';
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    document.body.style.transition='transform 0.45s cubic-bezier(0.4,0,0.2,1),opacity 0.45s ease';
+    document.body.style.transform='translateY(0)';
+    document.body.style.opacity='1';
+  });});
+})();
+</script>
+
+<!-- Background image stack -->
+<div class="bg-stack" id="bgStack" aria-hidden="true">
+  <div class="bg-layer is-active" id="bg-default">
+    <img src="assets/projects/project-1/Frames/frame-01.webp" alt="" fetchpriority="high" loading="eager"/>
+    <div class="bg-overlay"></div>
+  </div>
+  <div class="bg-layer" id="bg-0">
+    <img src="assets/projects/project-1/Frames/frame-01.webp" alt="" loading="lazy"/>
+    <div class="bg-overlay"></div>
+  </div>
+  <div class="bg-layer" id="bg-1">
+    <img src="assets/projects/project-2/Frames/frame-01.webp" alt="" loading="lazy"/>
+    <div class="bg-overlay"></div>
+  </div>
+  <div class="bg-layer" id="bg-2">
+    <img src="assets/projects/project-3/Frames/frame-01.webp" alt="" loading="lazy"/>
+    <div class="bg-overlay"></div>
+  </div>
+  <div class="bg-layer" id="bg-3">
+    <img src="assets/projects/project-4/Frames/frame-01.webp" alt="" loading="lazy"/>
+    <div class="bg-overlay"></div>
+  </div>
+  <div class="bg-layer" id="bg-4">
+    <img src="assets/projects/project-5/Frames/frame-01.webp" alt="" loading="lazy"/>
+    <div class="bg-overlay"></div>
+  </div>
+  <div class="bg-layer" id="bg-5">
+    <img src="assets/projects/project-6/Frames/frame-01.webp" alt="" loading="lazy"/>
+    <div class="bg-overlay"></div>
+  </div>
+  <div class="bg-layer" id="bg-6">
+    <img src="assets/projects/project-7/Frames/frame-01.webp" alt="" loading="lazy"/>
+    <div class="bg-overlay"></div>
+  </div>
+  <div class="bg-layer" id="bg-7">
+    <img src="assets/projects/project-1/Frames/frame-06.webp" alt="" loading="lazy"/>
+    <div class="bg-overlay"></div>
+  </div>
+  <div class="bg-layer" id="bg-8">
+    <img src="assets/projects/project-2/Frames/frame-06.webp" alt="" loading="lazy"/>
+    <div class="bg-overlay"></div>
+  </div>
+</div>
+
+<!-- Header -->
+<header id="site-header">
+  <a href="index.html" class="header-logo">Pablo Valiente</a>
+  <nav class="header-nav" aria-label="Main navigation">
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <button class="burger-btn" id="burgerBtn" aria-label="Open menu" aria-expanded="false">
+    <svg width="22" height="14" viewBox="0 0 22 14" fill="none" aria-hidden="true">
+      <rect width="22" height="1.5" fill="currentColor"/>
+      <rect y="6.25" width="22" height="1.5" fill="currentColor"/>
+      <rect y="12.5" width="22" height="1.5" fill="currentColor"/>
+    </svg>
+  </button>
+</header>
+
+<!-- Mobile overlay -->
+<div id="mobile-overlay" role="dialog" aria-modal="true" aria-label="Navigation">
+  <button class="mobile-close-btn" id="closeBtn" aria-label="Close menu">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <path d="M1 1l16 16M17 1L1 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <nav class="mobile-nav-links" aria-label="Mobile navigation">
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</div>
+
+<!-- Main: project list -->
+<main id="main-content">
+  <ul class="project-list" role="list" id="projectList">
+    <li>
+      <a class="project-item" href="bellamar.html" data-bg="bg-0">
+        <div class="project-text">
+        <span class="project-title">Bellamar Hotel Beach &amp; Spa</span>
+        <span class="project-category">Hospitality Brand Production</span>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a class="project-item" href="marvell.html" data-bg="bg-1">
+        <div class="project-text">
+        <span class="project-title">Marvell Club</span>
+        <span class="project-category">Hospitality Brand Production</span>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a class="project-item" href="ordinary.html" data-bg="bg-2">
+        <div class="project-text">
+        <span class="project-title">The Ordinary</span>
+        <span class="project-category">Editing &amp; Color Grading</span>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a class="project-item" href="zufaellige-begegnung.html" data-bg="bg-3">
+        <div class="project-text">
+        <span class="project-title">Zufällige Begegnung</span>
+        <span class="project-category">Short Film Production</span>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a class="project-item" href="perdido-en-una-perdiz.html" data-bg="bg-4">
+        <div class="project-text">
+        <span class="project-title">Perdido en una perdiz</span>
+        <span class="project-category">Editing &amp; Color Grading</span>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a class="project-item" href="urbanliving.html" data-bg="bg-5">
+        <div class="project-text">
+        <span class="project-title">Urban Living</span>
+        <span class="project-category">Interior Media Production</span>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a class="project-item" href="esparadis.html" data-bg="bg-6">
+        <div class="project-text">
+        <span class="project-title">Es Paradis</span>
+        <span class="project-category">Social Media Content</span>
+        </div>
+      </a>
+    </li>
+  </ul>
+</main>
+
+<!-- Footer -->
+<footer id="site-footer" aria-label="Site footer">
+  <span class="footer-col">&copy; <span class="footer-year"></span> Pablo Valiente. All rights reserved.</span>
+  <span class="footer-col"><a href="mailto:contact@pablovaliente.me"><span class="mail-full">contact@pablovaliente.me</span><span class="mail-short">Mail</span></a></span>
+  <span class="footer-col"><a href="impressum.html">Impressum</a></span>
+  <span class="footer-col"><a href="https://instagram.com/pvaliente_" target="_blank" rel="noopener noreferrer">Instagram</a></span>
+</footer>
+
+<script>
+'use strict';
+
+// ── Drag-to-scroll on project list ──
+var projectList = document.getElementById('projectList');
+var dragStartX = 0, dragScrollLeft = 0, isDragging = false, didDrag = false;
+
+projectList.addEventListener('mousedown', function(e) {
+  isDragging = true;
+  didDrag = false;
+  dragStartX = e.pageX - projectList.getBoundingClientRect().left;
+  dragScrollLeft = projectList.scrollLeft;
+  projectList.classList.add('is-dragging');
+});
+
+window.addEventListener('mouseup', function() {
+  isDragging = false;
+  projectList.classList.remove('is-dragging');
+});
+
+window.addEventListener('mousemove', function(e) {
+  if (!isDragging) return;
+  var x = e.pageX - projectList.getBoundingClientRect().left;
+  var walk = (x - dragStartX) * 1.2;
+  if (Math.abs(walk) > 4) didDrag = true;
+  projectList.scrollLeft = dragScrollLeft - walk;
+});
+
+document.querySelectorAll('.project-item').forEach(function(item) {
+  item.addEventListener('click', function(e) {
+    if (didDrag) e.preventDefault();
+  });
+});
+
+// ── Background hover logic ──
+const defaultBg = document.getElementById('bg-default');
+const allBgLayers = document.querySelectorAll('.bg-layer');
+const items = document.querySelectorAll('.project-item');
+
+function showBg(id) {
+  allBgLayers.forEach(function(layer) {
+    layer.classList.remove('is-active');
+  });
+  if (id) {
+    var target = document.getElementById(id);
+    if (target) target.classList.add('is-active');
+  } else {
+    defaultBg.classList.add('is-active');
+  }
+}
+
+items.forEach(function(item) {
+  var bgId = item.getAttribute('data-bg');
+
+  item.addEventListener('mouseenter', function() {
+    showBg(bgId);
+  });
+
+  item.addEventListener('mouseleave', function() {
+    showBg(null);
+  });
+
+  item.addEventListener('focus', function() {
+    showBg(bgId);
+  });
+
+  item.addEventListener('blur', function() {
+    showBg(null);
+  });
+});
+
+// ── Mobile menu ──
+var burgerBtn = document.getElementById('burgerBtn');
+var closeBtn = document.getElementById('closeBtn');
+var mobileOverlay = document.getElementById('mobile-overlay');
+
+function openMenu() {
+  var activeBg = document.querySelector('.bg-layer.is-active img');
+  if (activeBg) mobileOverlay.style.setProperty('--overlay-img', "url('" + activeBg.src + "')");
+  mobileOverlay.classList.add('open');
+  burgerBtn.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMenu() {
+  mobileOverlay.classList.remove('open');
+  burgerBtn.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+
+burgerBtn.addEventListener('click', openMenu);
+closeBtn.addEventListener('click', closeMenu);
+
+mobileOverlay.querySelectorAll('a').forEach(function(a) {
+  a.addEventListener('click', closeMenu);
+});
+
+// Close on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && mobileOverlay.classList.contains('open')) {
+    closeMenu();
+  }
+});
+
+// ── Update footer year ──
+document.querySelectorAll('.footer-year').forEach(function(el) {
+  el.textContent = new Date().getFullYear();
+});
+// ── Mobile TikTok Slider ──
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.innerWidth > 767) return;
+
+  var projects = [
+    { href: 'bellamar.html',              title: 'Bellamar Hotel<br>Beach &amp; Spa',          category: 'Hospitality Brand Production', bg: 'bg-0' },
+    { href: 'marvell.html',               title: 'Marvell Club Hotel<br>&amp; Apartments',     category: 'Hospitality Brand Production', bg: 'bg-1' },
+    { href: 'ordinary.html',              title: 'The Ordinary',                               category: 'Editing & Color Grading',      bg: 'bg-2' },
+    { href: 'zufaellige-begegnung.html',  title: 'Zufällige<br>Begegnung',                     category: 'Short Film Production',        bg: 'bg-3' },
+    { href: 'perdido-en-una-perdiz.html', title: 'Perdido en<br>una perdiz',                   category: 'Editing & Color Grading',      bg: 'bg-4' },
+    { href: 'urbanliving.html',           title: 'Urban Living',                               category: 'Interior Media Production',    bg: 'bg-5' },
+    { href: 'esparadis.html',             title: 'Es Paradis',                                 category: 'Social Media Content',         bg: 'bg-6' },
+  ];
+
+  var idx     = 0;
+  var wrap    = document.getElementById('mobile-tiktok');
+  var infoEl  = document.getElementById('mtkInfo');
+  var titleEl = document.getElementById('mtkTitle');
+  var catEl   = document.getElementById('mtkCategory');
+  var hintEl   = document.getElementById('mtkHint');
+  var indEl   = document.getElementById('mtkIndicator');
+  var fillEl  = document.getElementById('mtkIndFill');
+  var trackEl = document.getElementById('mtkIndTrack');
+  var curEl   = document.getElementById('mtkIndCur');
+
+  function updateIndicator() {
+    var progress = projects.length > 1 ? idx / (projects.length - 1) : 0;
+    fillEl.style.height = ((1 - progress) * 100) + '%';
+    curEl.textContent   = idx + 1;
+  }
+
+  trackEl.addEventListener('click', function(e) {
+    var rect = trackEl.getBoundingClientRect();
+    var rel  = (e.clientY - rect.top) / rect.height;
+    goTo(Math.round(rel * (projects.length - 1)));
+  });
+
+  function goTo(n) {
+    n = ((n % projects.length) + projects.length) % projects.length;
+    if (n === idx) return;
+    idx = n;
+    infoEl.classList.add('is-fading');
+    setTimeout(function() {
+      titleEl.innerHTML = projects[idx].title;
+      catEl.textContent   = projects[idx].category;
+      infoEl.classList.remove('is-fading');
+    }, 150);
+    showBg(projects[idx].bg);
+    updateIndicator();
+  }
+
+  function navigateTo(url, forward) {
+    sessionStorage.setItem('slideFrom', forward !== false ? 'below' : 'above');
+    document.body.style.transition = 'transform 0.45s cubic-bezier(0.4,0,0.2,1),opacity 0.45s ease';
+    document.body.style.transform = 'translateY(' + (forward !== false ? '-60px' : '60px') + ')';
+    document.body.style.opacity = '0';
+    setTimeout(function() { window.location.href = url; }, 450);
+  }
+  function openProject() { navigateTo(projects[idx].href); }
+
+  titleEl.innerHTML = projects[0].title;
+  catEl.textContent   = projects[0].category;
+  showBg(projects[0].bg);
+  updateIndicator();
+
+  var startX, startY, hasMoved;
+  var SWIPE = 45, TAP = 12;
+
+  wrap.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    hasMoved = false;
+  }, { passive: true });
+
+  wrap.addEventListener('touchmove', function(e) {
+    if (Math.abs(e.touches[0].clientX - startX) > TAP ||
+        Math.abs(e.touches[0].clientY - startY) > TAP) hasMoved = true;
+  }, { passive: true });
+
+  wrap.addEventListener('touchend', function(e) {
+    var dx  = e.changedTouches[0].clientX - startX;
+    var dy  = e.changedTouches[0].clientY - startY;
+    var adx = Math.abs(dx), ady = Math.abs(dy);
+
+    if (!hasMoved) { openProject(); return; }
+
+    if (adx > SWIPE && adx > ady && dx < 0) {
+      sessionStorage.setItem('slideFrom', 'right');
+      document.body.style.transition = 'transform 0.45s cubic-bezier(0.4,0,0.2,1),opacity 0.45s ease';
+      document.body.style.transform = 'translateX(-60px)';
+      document.body.style.opacity = '0';
+      setTimeout(function() { window.location.href = projects[idx].href; }, 450);
+      if (hintEl) hintEl.style.opacity = '0';
+      return;
+    }
+
+    if (ady > SWIPE && ady > adx) {
+      if (dy < 0 && idx === projects.length - 1) {
+        navigateTo('about.html');
+      } else {
+        goTo(dy < 0 ? idx + 1 : idx - 1);
+      }
+      if (hintEl) hintEl.style.opacity = '0';
+    }
+  }, { passive: true });
+});
+
+</script>
+
+<!-- Mobile TikTok slider (hidden on desktop) -->
+<div id="mobile-tiktok" aria-label="Browse projects">
+  <div class="mtk-row">
+    <div class="mtk-info" id="mtkInfo">
+      <span class="mtk-category" id="mtkCategory"></span>
+      <h2 class="mtk-title" id="mtkTitle"></h2>
+      <div class="mtk-hint" id="mtkHint">
+        <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M10 1l5 4-5 4M1 5h14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Open project
+      </div>
+    </div>
+    <div class="mtk-indicator" id="mtkIndicator">
+      <span class="mtk-ind-num" id="mtkIndCur">1</span>
+      <div class="mtk-ind-track" id="mtkIndTrack">
+        <div class="mtk-ind-fill" id="mtkIndFill"></div>
+      </div>
+      <span class="mtk-ind-num">7</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

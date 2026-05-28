@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — Pablo Valiente | Video Editor &amp; Colorist, Berlin</title>
+  <meta name="description" content="Contact Pablo Valiente — Video Editor &amp; Colorist based in Berlin. Available for remote post-production, editing, and color grading worldwide."/>
+  <meta property="og:title" content="Contact — Pablo Valiente | Video Editor &amp; Colorist, Berlin"/>
+  <meta property="og:url" content="https://pablovaliente.me/contact"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://pablovaliente.me/assets/projects/project-1/Frames/frame-03.webp"/>
+  <link rel="canonical" href="https://pablovaliente.me/contact"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+  <link rel="manifest-icon" type="image/png" sizes="192x192" href="/favicon-192.png"/>
+  <link rel="stylesheet" href="https://use.typekit.net/vab7sfw.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      background: #F2F0EF;
+      color: #282828;
+      font-family: "neue-haas-grotesk-display", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    /* HEADER */
+    #site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 24px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: #F2F0EF;
+    }
+    .header-logo {
+      font-size: 18px; font-weight: 500; letter-spacing: 0;
+      text-decoration: none; color: #282828;
+    }
+    .header-nav { display: flex; gap: 40px; align-items: center; }
+    .header-nav a {
+      font-size: 18px; font-weight: 500; letter-spacing: 0;
+      text-decoration: none; color: #282828;
+      opacity: 0.45; transition: opacity 0.2s;
+    }
+    .header-nav a:hover, .header-nav a.is-active { opacity: 1; }
+    #burger-btn { display: none; background: none; border: none; cursor: pointer; padding: 4px; color: #282828; }
+
+    /* MOBILE OVERLAY */
+    #mobile-overlay { display: none; position: fixed; inset: 0; background: #0a0a0a; z-index: 200; flex-direction: column; justify-content: center; align-items: center; gap: 40px; overflow: hidden; }
+    #mobile-overlay.open { display: flex; }
+    #mobile-overlay::before { content: ''; position: absolute; inset: -20px; background-image: var(--overlay-img, none); background-size: cover; background-position: center; filter: blur(24px); z-index: 0; }
+    #mobile-overlay::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.72); z-index: 1; }
+    #mobile-overlay > * { position: relative; z-index: 2; }
+    #mobile-overlay a { font-size: 18px; font-weight: 500; text-decoration: none; color: rgba(255,255,255,0.55); transition: color 0.2s; }
+    #mobile-overlay a:hover { color: #fff; }
+    #burger-close { position: absolute; top: 24px; right: 24px; background: none; border: none; cursor: pointer; padding: 4px; color: rgba(255,255,255,0.7); }
+
+    /* MAIN */
+    main {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      padding: 72px 40px 60px;
+    }
+
+    /* CONTACT LAYOUT */
+    .contact-wrap {
+      width: 100%;
+      max-width: 1040px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 80px;
+      align-items: start;
+    }
+
+    /* LEFT: HEADING */
+    .contact-label {
+      font-size: 9px; font-weight: 400; letter-spacing: 0.12em;
+      text-transform: uppercase; opacity: 0.35;
+      margin-bottom: 20px; display: block;
+    }
+    .contact-title {
+      font-size: clamp(32px, 4vw, 54px);
+      font-weight: 500; letter-spacing: -0.03em;
+      line-height: 0.96; white-space: nowrap;
+    }
+
+    /* RIGHT: DETAILS */
+    .contact-body {
+      margin-bottom: 32px;
+    }
+    .contact-body p {
+      font-size: 13px; font-weight: 300; line-height: 1.8; opacity: 0.72;
+    }
+    .contact-body p + p { margin-top: 12px; }
+    .contact-divider {
+      border: none; border-top: 1px solid rgba(40,40,40,0.12);
+      margin-bottom: 28px;
+    }
+    .email-label {
+      font-size: 8px; font-weight: 400; letter-spacing: 0.12em;
+      text-transform: uppercase; opacity: 0.35; margin-bottom: 10px; display: block;
+    }
+    .email-link {
+      display: block;
+      font-size: 13px; font-weight: 300;
+      color: #282828; text-decoration: none;
+      transition: opacity 0.2s;
+      line-height: 1.8; opacity: 0.72;
+    }
+    .email-link:hover { opacity: 0.35; }
+
+    /* FOOTER */
+    #site-footer {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+      background: #F2F0EF;
+      padding: 20px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-col { font-size: 11px; font-weight: 400; opacity: 0.35; text-transform: uppercase; letter-spacing: 0.07em; }
+    .footer-col a { color: inherit; text-decoration: none; transition: opacity 0.2s; }
+    .footer-col a:hover { opacity: 1; }
+    footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
+    .footer-col:nth-child(2) { font-size: 15px; }
+    .mail-short { display: none; }
+
+    @media (max-width: 768px) {
+      body { overflow: auto; }
+      #site-header { padding: 20px 24px; }
+      .header-nav { display: none; }
+      #burger-btn { display: block; }
+      main { position: static; display: block; padding: 100px 24px 120px; }
+      .contact-wrap { grid-template-columns: 1fr; gap: 0; }
+      .contact-wrap > div:first-child { display: none; }
+      .contact-title { white-space: normal; }
+      #site-footer { flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 28px; padding: 16px 24px; }
+      .footer-col { text-align: center; }
+      .footer-col:first-child { order: 2; width: 100%; }
+      .footer-col:not(:first-child) { display: block; order: 1; font-size: 11px; letter-spacing: 0.07em; }
+      .footer-col:nth-child(2) { text-transform: uppercase; }
+      footer a[href^="mailto:"] { text-transform: uppercase; letter-spacing: 0.07em; font-size: 11px; }
+      .mail-full { display: none; }
+      .mail-short { display: inline; }
+    }
+  </style>
+</head>
+<body>
+<script>
+(function(){
+  var f=sessionStorage.getItem('slideFrom')||'below';
+  sessionStorage.removeItem('slideFrom');
+  document.body.style.opacity='0';
+  if(window.innerWidth<=767) document.body.style.transform='translateY('+(f==='below'?'60px':'-60px')+')';
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    document.body.style.transition='transform 0.45s cubic-bezier(0.4,0,0.2,1),opacity 0.45s ease';
+    document.body.style.transform='translateY(0)';
+    document.body.style.opacity='1';
+  });});
+})();
+</script>
+
+  <div id="mobile-overlay" role="dialog" aria-modal="true" aria-label="Navigation">
+    <button id="burger-close" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 1l16 16M17 1L1 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <a href="about.html">About</a>
+    <a href="contact.html" class="is-active">Contact</a>
+  </div>
+
+  <header id="site-header">
+    <a href="index.html" class="header-logo">Pablo Valiente</a>
+    <nav class="header-nav">
+      <a href="about.html">About</a>
+      <a href="contact.html" class="is-active">Contact</a>
+    </nav>
+    <button id="burger-btn" aria-label="Open menu" aria-expanded="false">
+      <svg width="20" height="14" viewBox="0 0 20 14" fill="none">
+        <rect width="20" height="1.5" fill="currentColor"/>
+        <rect y="6.25" width="20" height="1.5" fill="currentColor"/>
+        <rect y="12.5" width="20" height="1.5" fill="currentColor"/>
+      </svg>
+    </button>
+  </header>
+
+  <main>
+    <div class="contact-wrap">
+
+      <div></div>
+
+      <div class="contact-right">
+        <span class="contact-label">Contact</span>
+        <h1 class="contact-title" style="margin-bottom:32px">Let's work together.</h1>
+        <div class="contact-body">
+          <p>Based in Berlin. Available for remote post-production, editing, and color grading worldwide.</p>
+          <p>Let's discuss how we can bring a high-end cinematic standard to your upcoming project, campaign, or digital content.</p>
+        </div>
+        <hr class="contact-divider"/>
+        <span class="email-label">Email</span>
+        <a href="mailto:contact@pablovaliente.me" class="email-link">contact@pablovaliente.me</a>
+        <hr class="contact-divider" style="margin-top:28px"/>
+        <span class="email-label">WhatsApp Business</span>
+        <a href="https://wa.me/491633461889" class="email-link" target="_blank" rel="noopener noreferrer">+49 163 3461889</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer id="site-footer" aria-label="Site footer">
+    <span class="footer-col">&copy; <span class="footer-year"></span> Pablo Valiente. All rights reserved.</span>
+    <span class="footer-col"><a href="mailto:contact@pablovaliente.me"><span class="mail-full">contact@pablovaliente.me</span><span class="mail-short">Mail</span></a></span>
+    <span class="footer-col"><a href="impressum.html">Impressum</a></span>
+    <span class="footer-col"><a href="https://instagram.com/pvaliente_" target="_blank" rel="noopener noreferrer">Instagram</a></span>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.footer-year').forEach(el => el.textContent = new Date().getFullYear());
+    const overlay = document.getElementById('mobile-overlay');
+    const burgerBtn = document.getElementById('burger-btn');
+    const burgerClose = document.getElementById('burger-close');
+    function openMenu() { overlay.classList.add('open'); burgerBtn.setAttribute('aria-expanded','true'); document.body.style.overflow = 'hidden'; }
+    function closeMenu() { overlay.classList.remove('open'); burgerBtn.setAttribute('aria-expanded','false'); document.body.style.overflow = ''; }
+    burgerBtn.addEventListener('click', openMenu);
+    burgerClose.addEventListener('click', closeMenu);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+  </script>
+  <script>
+  (function() {
+    if (window.innerWidth > 767) return;
+    function navigateTo(url, forward) {
+      sessionStorage.setItem('slideFrom', forward ? 'below' : 'above');
+      document.body.style.transition = 'transform 0.45s cubic-bezier(0.4,0,0.2,1),opacity 0.45s ease';
+      document.body.style.transform = 'translateY(' + (forward ? '-60px' : '60px') + ')';
+      document.body.style.opacity = '0';
+      setTimeout(function() { window.location.href = url; }, 450);
+    }
+    var startX, startY;
+    var SWIPE = 45;
+    document.addEventListener('touchstart', function(e) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    }, { passive: true });
+    document.addEventListener('touchend', function(e) {
+      var dx = e.changedTouches[0].clientX - startX;
+      var dy = e.changedTouches[0].clientY - startY;
+      if (Math.abs(dy) > SWIPE && Math.abs(dy) > Math.abs(dx) && dy > 0) {
+        navigateTo('about.html', false);
+      }
+    }, { passive: true });
+  })();
+  </script>
+</body>
+</html>

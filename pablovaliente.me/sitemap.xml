@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://pablovaliente.me/</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/bellamar</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://pablovaliente.me/assets/projects/project-1/Frames/frame-01.webp</image:loc>
+      <image:title>Bellamar Hotel Beach &amp; Spa — Hospitality Brand Production</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/marvell</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://pablovaliente.me/assets/projects/project-2/Frames/frame-01.webp</image:loc>
+      <image:title>Marvell Club Hotel &amp; Apartments — Hospitality Brand Production</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/ordinary</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://pablovaliente.me/assets/projects/project-3/Frames/frame-01.webp</image:loc>
+      <image:title>The Ordinary — Editing &amp; Color Grading</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/zufaellige-begegnung</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://pablovaliente.me/assets/projects/project-4/Frames/frame-01.webp</image:loc>
+      <image:title>Zufällige Begegnung — Short Film Production</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/perdido-en-una-perdiz</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://pablovaliente.me/assets/projects/project-5/Frames/frame-01.webp</image:loc>
+      <image:title>Perdido en una Perdiz — Editing &amp; Color Grading</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/urbanliving</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://pablovaliente.me/assets/projects/project-6/Frames/frame-01.webp</image:loc>
+      <image:title>Urban Living — Interior Media Production</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/esparadis</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://pablovaliente.me/assets/projects/project-7/Frames/frame-01.webp</image:loc>
+      <image:title>Es Paradis — Social Media Content</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/about</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/contact</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/impressum</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>

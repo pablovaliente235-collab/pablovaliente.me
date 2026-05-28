@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Impressum — Pablo Valiente | Video Editor &amp; Colorist, Berlin</title>
+  <meta name="description" content="Legal notice and impressum for pablovaliente.me — Pablo Valiente, Video Editor &amp; Colorist, Berlin."/>
+  <meta name="robots" content="noindex"/>
+  <link rel="canonical" href="https://pablovaliente.me/impressum"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+  <link rel="manifest-icon" type="image/png" sizes="192x192" href="/favicon-192.png"/>
+  <link rel="stylesheet" href="https://use.typekit.net/vab7sfw.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      background: #F2F0EF;
+      color: #282828;
+      font-family: "neue-haas-grotesk-display", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    /* HEADER */
+    #site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 24px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: #F2F0EF;
+    }
+    .header-logo {
+      font-size: 18px; font-weight: 500; letter-spacing: 0;
+      text-decoration: none; color: #282828;
+    }
+    .header-nav { display: flex; gap: 40px; align-items: center; }
+    .header-nav a {
+      font-size: 18px; font-weight: 500; letter-spacing: 0;
+      text-decoration: none; color: #282828;
+      opacity: 0.45; transition: opacity 0.2s;
+    }
+    .header-nav a:hover { opacity: 1; }
+    #burger-btn { display: none; background: none; border: none; cursor: pointer; padding: 4px; color: #282828; }
+
+    /* MOBILE OVERLAY */
+    #mobile-overlay { display: none; position: fixed; inset: 0; background: #0a0a0a; z-index: 200; flex-direction: column; justify-content: center; align-items: center; gap: 40px; overflow: hidden; }
+    #mobile-overlay.open { display: flex; }
+    #mobile-overlay::before { content: ''; position: absolute; inset: -20px; background-image: var(--overlay-img, none); background-size: cover; background-position: center; filter: blur(24px); z-index: 0; }
+    #mobile-overlay::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.72); z-index: 1; }
+    #mobile-overlay > * { position: relative; z-index: 2; }
+    #mobile-overlay a { font-size: 18px; font-weight: 500; text-decoration: none; color: rgba(255,255,255,0.55); transition: color 0.2s; }
+    #mobile-overlay a:hover { color: #fff; }
+    #burger-close { position: absolute; top: 24px; right: 24px; background: none; border: none; cursor: pointer; padding: 4px; color: rgba(255,255,255,0.7); }
+
+    /* MAIN — fixed viewport */
+    main {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      padding: 72px 40px 60px;
+      overflow-y: auto;
+    }
+
+    /* LAYOUT */
+    .impr-grid {
+      width: 100%;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .impr-header {
+      margin-bottom: 24px;
+    }
+    .impr-label {
+      font-size: 9px; font-weight: 400; letter-spacing: 0.12em;
+      text-transform: uppercase; opacity: 0.35;
+      margin-bottom: 16px; display: block;
+    }
+    .impr-title {
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 500; letter-spacing: -0.03em;
+      line-height: 1.0;
+    }
+
+    /* TWO-COLUMN SECTIONS */
+    .impr-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 80px;
+      border-top: 1px solid rgba(40,40,40,0.1);
+      padding-top: 20px;
+    }
+
+    .impr-section {
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(40,40,40,0.08);
+    }
+    .impr-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .impr-section-label {
+      font-size: 8px; font-weight: 400; letter-spacing: 0.14em;
+      text-transform: uppercase; opacity: 0.35;
+      margin-bottom: 7px; display: block;
+    }
+    .impr-section p {
+      font-size: 12px; font-weight: 300; line-height: 1.7; opacity: 0.6;
+    }
+    .impr-section a {
+      color: #282828; text-decoration: none;
+      border-bottom: 1px solid rgba(40,40,40,0.2);
+      transition: opacity 0.2s;
+    }
+    .impr-section a:hover { opacity: 0.5; }
+
+    /* FOOTER */
+    #site-footer {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+      background: #F2F0EF;
+      padding: 20px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-col { font-size: 11px; font-weight: 400; opacity: 0.35; text-transform: uppercase; letter-spacing: 0.07em; }
+    .footer-col a { color: inherit; text-decoration: none; transition: opacity 0.2s; }
+    .footer-col a:hover { opacity: 1; }
+    footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
+    .footer-col:nth-child(2) { font-size: 15px; }
+    .mail-short { display: none; }
+
+    @media (max-width: 768px) {
+      body { overflow: auto; }
+      #site-header { padding: 20px 24px; }
+      .header-nav { display: none; }
+      #burger-btn { display: block; }
+      main { position: static; display: block; padding: 100px 24px 120px; overflow-y: visible; }
+      .impr-cols { grid-template-columns: 1fr; }
+      #site-footer { position: static; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 28px; padding: 16px 24px; }
+      .footer-col { text-align: center; }
+      .footer-col:first-child { order: 2; width: 100%; }
+      .footer-col:not(:first-child) { display: block; order: 1; font-size: 11px; letter-spacing: 0.07em; }
+      .footer-col:nth-child(2) { text-transform: uppercase; }
+      footer a[href^="mailto:"] { text-transform: uppercase; letter-spacing: 0.07em; font-size: 11px; }
+      .mail-full { display: none; }
+      .mail-short { display: inline; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="mobile-overlay" role="dialog" aria-modal="true" aria-label="Navigation">
+    <button id="burger-close" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 1l16 16M17 1L1 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <header id="site-header">
+    <a href="index.html" class="header-logo">Pablo Valiente</a>
+    <nav class="header-nav">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button id="burger-btn" aria-label="Open menu" aria-expanded="false">
+      <svg width="20" height="14" viewBox="0 0 20 14" fill="none">
+        <rect width="20" height="1.5" fill="currentColor"/>
+        <rect y="6.25" width="20" height="1.5" fill="currentColor"/>
+        <rect y="12.5" width="20" height="1.5" fill="currentColor"/>
+      </svg>
+    </button>
+  </header>
+
+  <main>
+    <div class="impr-grid">
+
+      <div class="impr-header">
+        <span class="impr-label">Legal</span>
+        <h1 class="impr-title">Impressum / Legal Notice</h1>
+      </div>
+
+      <div class="impr-cols">
+
+        <div class="impr-col-left">
+          <div class="impr-section">
+            <span class="impr-section-label">Information according to § 5 TMG</span>
+            <p>Pablo Valiente González<br>Grazer Platz 18<br>12157 Berlin, Germany</p>
+          </div>
+          <div class="impr-section">
+            <span class="impr-section-label">Contact</span>
+            <p><a href="mailto:contact@pablovaliente.me">contact@pablovaliente.me</a></p>
+          </div>
+          <div class="impr-section">
+            <span class="impr-section-label">Responsible for content</span>
+            <p>Pablo Valiente González<br>Grazer Platz 18<br>12157 Berlin, Germany</p>
+          </div>
+        </div>
+
+        <div class="impr-col-right">
+          <div class="impr-section">
+            <span class="impr-section-label">Disclaimer</span>
+            <p>The contents of this website have been created with the utmost care. However, I cannot guarantee the accuracy, completeness, or timeliness of the content. All content is subject to German copyright law. Duplication or commercialisation beyond the scope of copyright law requires written consent.</p>
+          </div>
+          <div class="impr-section">
+            <span class="impr-section-label">Privacy Policy</span>
+            <p>This website does not collect personal data. No cookies are set. No analytics tools are used. Vimeo embeds are loaded with DNT enabled. Server logs are managed by Cloudflare Pages per their privacy policies.</p>
+          </div>
+          <div class="impr-section">
+            <span class="impr-section-label">External Links</span>
+            <p>This website contains links to external websites over which I have no control. The respective provider or operator of those pages is always responsible for their content.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer" aria-label="Site footer">
+    <span class="footer-col">&copy; <span class="footer-year"></span> Pablo Valiente. All rights reserved.</span>
+    <span class="footer-col"><a href="mailto:contact@pablovaliente.me"><span class="mail-full">contact@pablovaliente.me</span><span class="mail-short">Mail</span></a></span>
+    <span class="footer-col"><a href="impressum.html">Impressum</a></span>
+    <span class="footer-col"><a href="https://instagram.com/pvaliente_" target="_blank" rel="noopener noreferrer">Instagram</a></span>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.footer-year').forEach(el => el.textContent = new Date().getFullYear());
+    const overlay = document.getElementById('mobile-overlay');
+    const burgerBtn = document.getElementById('burger-btn');
+    const burgerClose = document.getElementById('burger-close');
+    function openMenu() { overlay.classList.add('open'); burgerBtn.setAttribute('aria-expanded','true'); document.body.style.overflow = 'hidden'; }
+    function closeMenu() { overlay.classList.remove('open'); burgerBtn.setAttribute('aria-expanded','false'); document.body.style.overflow = ''; }
+    burgerBtn.addEventListener('click', openMenu);
+    burgerClose.addEventListener('click', closeMenu);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+  </script>
+</body>
+</html>
