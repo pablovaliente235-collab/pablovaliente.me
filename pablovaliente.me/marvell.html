@@ -235,7 +235,8 @@
 <body>
 <script>
 (function(){
-  var f=sessionStorage.getItem('slideFrom')||'right';
+  var f=sessionStorage.getItem('slideFrom');
+  if(!f) return;
   sessionStorage.removeItem('slideFrom');
   if(window.innerWidth<=767){
     document.body.style.opacity='0';

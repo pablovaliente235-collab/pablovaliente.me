@@ -150,7 +150,8 @@
 <body>
 <script>
 (function(){
-  var f=sessionStorage.getItem('slideFrom')||'below';
+  var f=sessionStorage.getItem('slideFrom');
+  if(!f) return;
   sessionStorage.removeItem('slideFrom');
   document.body.style.opacity='0';
   if(window.innerWidth<=767) document.body.style.transform='translateY('+(f==='below'?'60px':'-60px')+')';
