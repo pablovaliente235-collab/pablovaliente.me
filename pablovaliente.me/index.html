@@ -234,7 +234,8 @@ body {
   display: flex;
   flex-direction: column;
 }
-.project-item:hover {
+.project-item:hover,
+.project-item.is-kb-active {
   opacity: 0.6;
 }
 .project-title {
@@ -676,10 +677,39 @@ mobileOverlay.querySelectorAll('a').forEach(function(a) {
   a.addEventListener('click', closeMenu);
 });
 
-// Close on Escape key
+// ── Keyboard navigation ──
+var kbIdx = -1;
+var itemsArr = Array.from(items);
+
+function kbGoTo(n) {
+  n = ((n % itemsArr.length) + itemsArr.length) % itemsArr.length;
+  kbIdx = n;
+  itemsArr.forEach(function(it, i) { it.classList.toggle('is-kb-active', i === n); });
+  showBg(itemsArr[n].getAttribute('data-bg'));
+}
+
+function kbClear() {
+  kbIdx = -1;
+  itemsArr.forEach(function(it) { it.classList.remove('is-kb-active'); });
+  showBg(null);
+}
+
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape' && mobileOverlay.classList.contains('open')) {
-    closeMenu();
+  if (e.key === 'Escape') {
+    if (mobileOverlay.classList.contains('open')) closeMenu();
+    else kbClear();
+    return;
+  }
+  if (window.innerWidth <= 767) return;
+  if (e.key === 'ArrowRight') {
+    e.preventDefault();
+    kbGoTo(kbIdx < 0 ? 0 : kbIdx + 1);
+  } else if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    kbGoTo(kbIdx < 0 ? itemsArr.length - 1 : kbIdx - 1);
+  } else if ((e.key === 'Enter' || e.key === 'ArrowDown') && kbIdx >= 0) {
+    e.preventDefault();
+    window.location.href = itemsArr[kbIdx].href;
   }
 });
 
