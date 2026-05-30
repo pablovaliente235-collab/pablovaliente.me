@@ -229,6 +229,20 @@
     .last-section .footer-copy   { color: rgba(255,255,255,0.4) !important; opacity: 1 !important; }
     .last-section .footer-link   { color: rgba(255,255,255,0.4) !important; opacity: 1 !important; }
     .last-section .footer-link:hover { opacity: 0.9 !important; }
+
+    /* Custom Vimeo player controls */
+    .vp-controls { position:absolute; bottom:0; left:0; right:0; display:flex; align-items:center; gap:10px; padding:8px 14px 10px; background:linear-gradient(transparent,rgba(0,0,0,0.52)); z-index:10; }
+    .vp-btn { flex-shrink:0; width:26px; height:26px; background:none; border:none; cursor:pointer; color:#fff; padding:0; display:flex; align-items:center; justify-content:center; opacity:0.8; transition:opacity 0.15s; }
+    .vp-btn:hover { opacity:1; }
+    .vp-prog { flex:1; height:16px; background:transparent; border-radius:0; cursor:pointer; position:relative; }
+    .vp-prog::before { content:''; position:absolute; top:50%; left:0; right:0; height:2px; background:rgba(255,255,255,0.22); border-radius:2px; transform:translateY(-50%); transition:height 0.15s; }
+    .vp-prog:hover::before { height:4px; }
+    .vp-prog-fill { position:absolute; top:50%; left:0; height:2px; background:#fff; border-radius:2px; width:0%; pointer-events:none; transform:translateY(-50%); transition:height 0.15s; }
+    .vp-prog:hover .vp-prog-fill { height:4px; }
+    .vp-time { flex-shrink:0; font-size:10px; color:rgba(255,255,255,0.6); white-space:nowrap; letter-spacing:0.05em; font-variant-numeric:tabular-nums; }
+    .vp-click-overlay { position:absolute; inset:0; z-index:5; cursor:pointer; }
+    .vp-pause-indicator { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.85); width:60px; height:60px; border-radius:50%; background:rgba(0,0,0,0.35); border:1.5px solid rgba(255,255,255,0.55); display:flex; align-items:center; justify-content:center; color:#fff; opacity:0; pointer-events:none; z-index:6; transition:opacity 0.2s,transform 0.2s; backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); }
+    .vp-pause-indicator.is-paused { opacity:1; transform:translate(-50%,-50%) scale(1); }
   </style>
 </head>
 <body>
@@ -320,7 +334,7 @@
 
         <div class="grade-slide">
           <div class="grade-video-wrap">
-            <iframe src="https://player.vimeo.com/video/1169571849?title=0&amp;byline=0&amp;portrait=0&amp;dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Es Paradis"></iframe>
+            <iframe src="https://player.vimeo.com/video/1169571849?title=0&amp;byline=0&amp;portrait=0&amp;share=0&amp;watchlater=0&amp;like=0&amp;controls=0&amp;dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Es Paradis"></iframe>
           </div>
           <span class="grade-slide-label">Color Graded</span>
         </div>
@@ -461,7 +475,39 @@
   </section><!-- /last-section -->
   </div><!-- /page-wrap -->
 
+  <script src="https://player.vimeo.com/api/player.js"></script>
   <script>
+    function initVimeoControls(iframe, wrap) {
+      var player = new Vimeo.Player(iframe), dur = 0, playing = true;
+      var bar = document.createElement('div');
+      bar.className = 'vp-controls';
+      bar.innerHTML =
+        '<button class="vp-btn" aria-label="Play/Pause">' +
+          '<svg class="vp-icon-pause" width="11" height="14" viewBox="0 0 11 14" fill="none"><rect x="0" y="0" width="4" height="14" rx="1" fill="currentColor"/><rect x="7" y="0" width="4" height="14" rx="1" fill="currentColor"/></svg>' +
+          '<svg class="vp-icon-play" width="11" height="14" viewBox="0 0 11 14" fill="none" style="display:none"><path d="M0 0L11 7L0 14Z" fill="currentColor"/></svg>' +
+        '</button>' +
+        '<div class="vp-prog"><div class="vp-prog-fill"></div></div>' +
+        '<span class="vp-time">0:00 / 0:00</span>';
+      wrap.appendChild(bar);
+      var btn=bar.querySelector('.vp-btn'), prog=bar.querySelector('.vp-prog'),
+          fill=bar.querySelector('.vp-prog-fill'), timeEl=bar.querySelector('.vp-time'),
+          ip=bar.querySelector('.vp-icon-pause'), ipl=bar.querySelector('.vp-icon-play');
+      function fmt(s){var m=Math.floor(s/60);return m+':'+(s%60<10?'0':'')+Math.floor(s%60);}
+      player.getDuration().then(function(d){dur=d;timeEl.textContent='0:00 / '+fmt(d);});
+      player.on('timeupdate',function(d){if(!dur)return;fill.style.width=(d.seconds/dur*100)+'%';timeEl.textContent=fmt(d.seconds)+' / '+fmt(dur);});
+      var ind=document.createElement('div'); ind.className='vp-pause-indicator';
+      ind.innerHTML='<svg width="18" height="20" viewBox="0 0 18 20" fill="none"><path d="M2 2L16 10L2 18V2Z" fill="currentColor"/></svg>';
+      wrap.appendChild(ind);
+      function toggle(){player.getPaused().then(function(paused){if(paused)player.play().catch(function(){});else player.pause();});}
+      player.on('play',function(){playing=true;ip.style.display='';ipl.style.display='none';ind.classList.remove('is-paused');});
+      player.on('pause',function(){playing=false;ip.style.display='none';ipl.style.display='';ind.classList.add('is-paused');});
+      btn.addEventListener('click',function(e){e.stopPropagation();toggle();});
+      prog.addEventListener('click',function(e){e.stopPropagation();var r=prog.getBoundingClientRect(),frac=(e.clientX-r.left)/r.width;if(dur){player.setCurrentTime(frac*dur);}else{player.getDuration().then(function(d){dur=d;player.setCurrentTime(frac*d);});}});
+      var ov=document.createElement('div'); ov.className='vp-click-overlay'; wrap.appendChild(ov);
+      ov.addEventListener('click',function(e){e.stopPropagation();toggle();});
+      return player;
+    }
+
     const VIMEO_ID = '1169571849';
 
     // Header scroll — watch page-wrap
@@ -480,13 +526,27 @@
     const modalIframe = document.getElementById('modal-iframe');
     const modalClose = document.getElementById('modal-close');
     document.getElementById('play-btn').addEventListener('click', () => {
-      modalIframe.src = `https://player.vimeo.com/video/${VIMEO_ID}?autoplay=1&title=0&byline=0&portrait=0&dnt=1`;
+      modalIframe.src = `https://player.vimeo.com/video/${VIMEO_ID}?autoplay=1&title=0&byline=0&portrait=0&share=0&watchlater=0&like=0&controls=0&dnt=1`;
       modal.classList.add('is-open');
       document.body.style.overflow = 'hidden';
+      var _mp = initVimeoControls(modalIframe, document.querySelector('.modal-video-wrap'));
+      _mp.on('ended', closeModal);
     });
-    function closeModal() { modal.classList.remove('is-open'); modalIframe.src = ''; document.body.style.overflow = ''; }
+    function closeModal() {
+      modal.classList.remove('is-open'); modalIframe.src = ''; document.body.style.overflow = '';
+      document.querySelectorAll('.modal-video-wrap .vp-controls,.modal-video-wrap .vp-click-overlay,.modal-video-wrap .vp-pause-indicator').forEach(function(el){el.remove();});
+    }
     modalClose.addEventListener('click', closeModal);
     modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+    // Grade iframe (always loaded): reset to start on ended
+    (function() {
+      var _gi = document.querySelector('.grade-video-wrap iframe');
+      if (_gi && _gi.src) {
+        var _egp = initVimeoControls(_gi, _gi.parentElement);
+        _egp.on('ended', function() { _egp.setCurrentTime(0).then(function() { _egp.pause(); }); });
+      }
+    })();
 
     // Mobile/tablet: pull video slide out of track, place it above the frame slider
     (function() {
