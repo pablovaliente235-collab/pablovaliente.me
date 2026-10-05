@@ -55,7 +55,6 @@
     .intro-meta { display: flex; gap: 40px; margin-top: 28px; }
     .meta-label { font-size: 8px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.35; margin-bottom: 4px; }
     .meta-value { font-size: 12px; font-weight: 300; opacity: 0.7; line-height: 1.5; }
-    .hero-media { padding: 0 60px 20px; }
 
     /* DCTL BLOCKS */
     .dctl-section { padding: 80px 60px; border-top: 1px solid rgba(40,40,40,0.1); }
@@ -131,7 +130,7 @@
     }
 
     @media (min-width: 769px) and (max-width: 1024px) {
-      .intro-section, .dctl-section, .last-section, .hero-media { padding-left: 40px; padding-right: 40px; }
+      .intro-section, .dctl-section, .last-section { padding-left: 40px; padding-right: 40px; }
       .intro-section { gap: 48px; } .dctl-head { gap: 48px; }
       .last-section footer { left: 40px; right: 40px; bottom: 40px; }
     }
@@ -140,7 +139,6 @@
       .header-nav { display: none; }
       #burger-btn { display: block; }
       .intro-section { grid-template-columns: 1fr; gap: 32px; padding: 100px 24px 48px; }
-      .hero-media { padding: 0 24px 16px; }
       .dctl-section { padding: 56px 24px; }
       .dctl-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 28px; }
       .dctl-ui { max-width: 300px; }
@@ -222,10 +220,6 @@ document.documentElement.lang=l;})();
         </div>
       </div>
     </section>
-
-        <div class="hero-media">
-      <div class="ph r16x9"><img src="assets/dctl/master-grade-after-1.webp" alt="PV Master Grade Free Edition hero frame, graded" loading="lazy"></div>
-    </div>
 
     <!-- PV MASTER GRADE -->
     <section class="dctl-section" id="pv-master-grade">
