@@ -191,6 +191,13 @@
     .drt-arrow { background: none; border: none; cursor: pointer; color: rgba(40,40,40,0.35); width: 32px; height: 28px; display: flex; align-items: center; justify-content: center; padding: 0; transition: color 0.2s; }
     .drt-arrow:hover { color: #282828; }
     .last-section { padding-top: 96px; }
+    .guide-title { font-size: clamp(40px, 6vw, 88px); }
+    .guide-steps { list-style: none; margin: 4vh auto 0; padding: 0; max-width: 520px; text-align: left; counter-reset: none; }
+    .guide-steps li { display: flex; gap: 20px; align-items: baseline; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.12); font-size: 14px; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.7); }
+    .guide-steps li:last-child { border-bottom: 1px solid rgba(255,255,255,0.12); }
+    .guide-num { flex: 0 0 auto; font-size: 10px; letter-spacing: 0.12em; color: rgba(255,255,255,0.4); }
+    .guide-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 4vh; }
+    .last-section .btn { background: #F2F0EF; color: #0a0a0a; }
     #pv-master-grade .dctl-split .gallery-card { order: -1; }
     .last-section { align-items: center; text-align: center; }
     .last-section .soon-text { margin-left: auto; margin-right: auto; }
@@ -349,15 +356,20 @@ document.documentElement.lang=l;})();
 
     <!-- COMING SOON — OFX -->
     <section class="last-section">
-      <div>
-        <span class="section-label">PV Master Grade OFX</span>
-        <h2 class="soon-title">Coming soon</h2>
-        <p class="soon-text"><span class="es">PV Master Grade existe también como plugin OpenFX, acelerado por GPU. Parte de la misma base de color que la edición gratuita y añade las herramientas de precisión y de acabado:</span><span class="en">PV Master Grade also exists as an OpenFX plugin, GPU-accelerated. It builds on the same color foundation as the free edition and adds the precision and finishing tools:</span></p>
-        <p class="soon-text"><span class="es">Hue Grade con los seis vectores completos (rojo, amarillo, verde, cian, azul y magenta), con saturación y crosstalk.</span><span class="en">Hue Grade with all six vectors (red, yellow, green, cyan, blue and magenta), with saturation and crosstalk.</span></p>
-        <p class="soon-text"><span class="es">Gamma, toe y hombro fílmico, e iluminante de destino.</span><span class="en">Gamma, toe and filmic shoulder, plus target illuminant.</span></p>
-        <p class="soon-text"><span class="es">Saturación por rangos, Red Damping, Cool Boost y Density Focus.</span><span class="en">Saturation by range, Red Damping, Cool Boost and Density Focus.</span></p>
-        <p class="soon-text"><span class="es">Split Tone de 3 zonas, LUTs, halation y grano.</span><span class="en">Three-zone Split Tone, LUTs, halation and grain.</span></p>
-        <p class="soon-text"><span class="es">Actualmente en fase beta.</span><span class="en">Currently in beta.</span></p>
+      <div class="guide">
+        <span class="section-label"><span class="es">Descarga e instalación</span><span class="en">Download &amp; installation</span></span>
+        <h2 class="soon-title guide-title"><span class="es">Instalación</span><span class="en">Installation</span></h2>
+        <ol class="guide-steps">
+          <li><span class="guide-num">1</span><span class="es">Abre "Project Settings".</span><span class="en">Open "Project Settings".</span></li>
+          <li><span class="guide-num">2</span><span class="es">Ve a "Color Management" y pulsa "Open LUT Folder".</span><span class="en">Go to "Color Management" and click "Open LUT Folder".</span></li>
+          <li><span class="guide-num">3</span><span class="es">Copia los archivos .dctle dentro de la carpeta DCTL.</span><span class="en">Copy the .dctle files into the DCTL folder.</span></li>
+          <li><span class="guide-num">4</span><span class="es">Reinicia DaVinci Resolve.</span><span class="en">Restart DaVinci Resolve.</span></li>
+        </ol>
+        <div class="guide-buttons">
+          <a href="assets/dctl/PV-DRT.dctle" class="btn" download>PV DRT</a>
+          <a href="assets/dctl/PV-Master-Grade-Free-Edition.dctle" class="btn" download>PV Master Grade</a>
+        </div>
+        <p class="soon-text"><span class="es">Los DCTL solo funcionan en DaVinci Resolve Studio. Desarrollados y probados en DaVinci Resolve Studio 21 sobre macOS. Formato: DCTL cifrado (.dctle).</span><span class="en">The DCTLs only work in DaVinci Resolve Studio. Developed and tested in DaVinci Resolve Studio 21 on macOS. Format: encrypted DCTL (.dctle).</span></p>
       </div>
       <footer>
         <span class="footer-copy">&copy; <span class="footer-year"></span> Pablo Valiente. All rights reserved.</span>
