@@ -176,6 +176,9 @@
     .dctl-split { margin-bottom: 0; }
     .dctl-split .dctl-head { margin-bottom: 0; grid-template-columns: auto minmax(0, 1fr); }
     .dctl-split .dctl-ui img { height: calc((100cqw - 56px) / 2 * 9 / 16); }
+    .intro-section { align-content: center; row-gap: 5vh; }
+    .intro-media { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; max-width: calc(2 * 34vh * 16 / 9 + 24px); margin: 0 auto; }
+    .intro-media .ph { border-radius: 8px; overflow: hidden; }
     .last-section { padding-top: 96px; }
     #pv-master-grade .dctl-split .gallery-card { order: -1; }
     .last-section { align-items: center; text-align: center; }
@@ -190,6 +193,7 @@
       .dctl-section .ba-pair { max-width: none; }
       .intro-section { padding: 88px 24px 40px; align-content: start; }
       #pv-master-grade .dctl-split .gallery-card { order: 0; }
+      .intro-media { grid-template-columns: 1fr; gap: 12px; max-width: none; }
     }
   </style>
 <script>
@@ -260,6 +264,10 @@ document.documentElement.lang=l;})();
           <div><p class="meta-label"><span class="es">Formato</span><span class="en">Format</span></p><p class="meta-value">.dctle</p></div>
           <div><p class="meta-label"><span class="es">Precio</span><span class="en">Price</span></p><p class="meta-value"><span class="es">Gratis</span><span class="en">Free</span></p></div>
         </div>
+      </div>
+      <div class="intro-media">
+        <div class="ph r16x9"><img src="assets/dctl/drt-after-1.webp" alt="PV DRT example frame" loading="lazy"></div>
+        <div class="ph r16x9"><img src="assets/dctl/master-grade-after-2.webp" alt="PV Master Grade example frame" loading="lazy"></div>
       </div>
     </section>
 
