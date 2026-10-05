@@ -253,6 +253,7 @@ document.documentElement.lang=l;})();
           <div class="feature-body">
             <p><span class="es">Exposure trabaja en stops sobre luz lineal, igual que abrir o cerrar el diafragma. El balance de blancos se ajusta en Kelvin con Tint y adapta el color como lo hace el ojo, conservando la luminosidad de la imagen en lugar de teñirla.</span><span class="en">Exposure works in stops on linear light, just like opening or closing the aperture. White balance is set in Kelvin with Tint and adapts color the way the eye does, preserving the image's luminance instead of tinting it.</span></p>
             <p><span class="es">El contraste gira alrededor de un punto de pivote que tú eliges y conserva la proporción entre los canales, por lo que los colores no se desvían al subirlo. En los extremos cae con suavidad en vez de aplastar negros y blancos. Shadows y Highlights actúan solo sobre su zona y dejan intactos los tonos medios.</span><span class="en">Contrast pivots around a point you choose and preserves the ratio between channels, so colors don't drift as you raise it. At the extremes it rolls off smoothly instead of crushing blacks and whites. Shadows and Highlights act only on their own range and leave the midtones untouched.</span></p>
+            <p><span class="es">Flare añade un velo de luz que eleva los negros, como lo haría la luz parásita dentro de una óptica. Highlight Rolloff controla cómo caen las altas luces hacia el blanco.</span><span class="en">Flare adds a veil of light that lifts the blacks, the way stray light inside a lens would. Highlight Rolloff controls how the highlights roll off toward white.</span></p>
           </div>
         </div>
         <div class="feature">
@@ -260,6 +261,12 @@ document.documentElement.lang=l;})();
           <div class="feature-body">
             <p><span class="es">Tres formas distintas de trabajar el color, que se pueden combinar:</span><span class="en">Three different ways to work with color, which can be combined:</span></p>
             <p><span class="es"><strong>Saturation</strong> separa los colores entre sí con un carácter más limpio que una saturación convencional. <strong>Filmic Saturation</strong> añade color y, a la vez, densidad a los tonos más saturados, como ocurre en la película. <strong>Density</strong> oscurece los colores en proporción a lo saturados que están, para darles peso sin tocar los neutros.</span><span class="en"><strong>Saturation</strong> separates colors from each other with a cleaner character than conventional saturation. <strong>Filmic Saturation</strong> adds color and, at the same time, density to the most saturated tones, as happens in film. <strong>Density</strong> darkens colors in proportion to how saturated they are, giving them weight without touching neutrals.</span></p>
+          </div>
+        </div>
+        <div class="feature">
+          <h3 class="feature-title"><span class="es">Hue y Density RGB</span><span class="en">RGB Hue &amp; Density</span></h3>
+          <div class="feature-body">
+            <p><span class="es">Controles de Hue y Density independientes para el rojo, el verde y el azul: desplazan el tono de cada primario y dan peso a su color.</span><span class="en">Independent Hue and Density controls for red, green and blue: they shift the hue of each primary and give weight to its color.</span></p>
           </div>
         </div>
         <div class="feature">
@@ -394,9 +401,10 @@ document.documentElement.lang=l;})();
         <span class="section-label">PV Master Grade OFX</span>
         <h2 class="soon-title">Coming soon</h2>
         <p class="soon-text"><span class="es">PV Master Grade existe también como plugin OpenFX, acelerado por GPU. Parte de la misma base de color que la edición gratuita y añade las herramientas de precisión y de acabado:</span><span class="en">PV Master Grade also exists as an OpenFX plugin, GPU-accelerated. It builds on the same color foundation as the free edition and adds the precision and finishing tools:</span></p>
-        <p class="soon-text"><span class="es">Emulación de película con siete stocks, entre ellos Kodak 2383 y Fuji 3513, y formatos de Super 8 a 65 mm. Un control de piel que conserva su tono y su color tras aplicar la emulación.</span><span class="en">Film emulation with seven stocks, including Kodak 2383 and Fuji 3513, and formats from Super 8 to 65 mm. A skin control that preserves its hue and color after the emulation is applied.</span></p>
-        <p class="soon-text"><span class="es">Un etalonaje de precisión por seis vectores de color, cada uno con su tono, saturación y densidad. Saturación independiente según lo saturado que ya está un color y según la zona tonal.</span><span class="en">Precision grading across six color vectors, each with its own hue, saturation and density. Independent saturation based on how saturated a color already is and on the tonal range.</span></p>
-        <p class="soon-text"><span class="es">Split Tone de tres zonas con densidad por zona. Halation y grano analógico con distribución tonal. Y el base grade completo, con gamma, flare, pie de curva y hombro fílmico.</span><span class="en">Three-zone Split Tone with density per zone. Halation and analog grain with tonal distribution. And the complete base grade, with gamma, flare, curve toe and filmic shoulder.</span></p>
+        <p class="soon-text"><span class="es">Hue Grade con los seis vectores completos (rojo, amarillo, verde, cian, azul y magenta), con saturación y crosstalk.</span><span class="en">Hue Grade with all six vectors (red, yellow, green, cyan, blue and magenta), with saturation and crosstalk.</span></p>
+        <p class="soon-text"><span class="es">Gamma, toe y hombro fílmico, e iluminante de destino.</span><span class="en">Gamma, toe and filmic shoulder, plus target illuminant.</span></p>
+        <p class="soon-text"><span class="es">Saturación por rangos, Red Damping, Cool Boost y Density Focus.</span><span class="en">Saturation by range, Red Damping, Cool Boost and Density Focus.</span></p>
+        <p class="soon-text"><span class="es">Split Tone de 3 zonas, LUTs, halation y grano.</span><span class="en">Three-zone Split Tone, LUTs, halation and grain.</span></p>
         <p class="soon-text"><span class="es">Actualmente en fase beta.</span><span class="en">Currently in beta.</span></p>
       </div>
       <footer>
