@@ -249,7 +249,7 @@ document.documentElement.lang=l;})();
         <div class="dctl-ui"><img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" loading="lazy"></div>
         <div class="drt-card">
           <div class="ba-slider" style="--pos:50%">
-            <div class="ph r16x9"><img class="ba-after" src="assets/dctl/drt-after-3.webp" alt="PV DRT, example 3" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-3.webp" alt="Rec709, example 3" loading="lazy"></div>
+            <div class="ph r16x9"><img class="ba-after" src="assets/dctl/drt-after-1.webp" alt="PV DRT, example 1" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-1.webp" alt="Rec709, example 1" loading="lazy"></div>
             <span class="ba-label ba-l">Rec709</span><span class="ba-label ba-r">PV DRT</span>
             <span class="ba-handle"></span>
             <input type="range" min="0" max="100" value="50" aria-label="Rec709 / PV DRT">
@@ -304,7 +304,7 @@ document.documentElement.lang=l;})();
     function markLang(){langBtns.forEach(function(b){b.classList.toggle('is-on',b.dataset.setLang===document.documentElement.lang);});}
     langBtns.forEach(function(b){b.addEventListener('click',function(){document.documentElement.lang=b.dataset.setLang;try{localStorage.setItem('pv-lang',b.dataset.setLang);}catch(e){}markLang();});});
     markLang();
-    var DRT_EX=[3,1],drtIdx=0,drtCard=document.querySelector('#pv-drt .drt-card');
+    var DRT_EX=[1,3],drtIdx=0,drtCard=document.querySelector('#pv-drt .drt-card');
     function drtShow(n,keep){drtIdx=(n+DRT_EX.length)%DRT_EX.length;var k=DRT_EX[drtIdx],a=drtCard.querySelector('.ba-after'),b=drtCard.querySelector('.ba-before'),sl=drtCard.querySelector('.ba-slider');a.src='assets/dctl/drt-after-'+k+'.webp';b.src='assets/dctl/drt-before-'+k+'.webp';a.alt='PV DRT, example '+k;b.alt='Rec709, example '+k;if(!keep){sl.style.setProperty('--pos','50%');sl.querySelector('input').value=50;}}
     drtCard.querySelector('.drt-prev').addEventListener('click',function(){drtShow(drtIdx-1);});
     drtCard.querySelector('.drt-next').addEventListener('click',function(){drtShow(drtIdx+1);});
