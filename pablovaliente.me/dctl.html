@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Free DCTLs — Pablo Valiente | DaVinci Resolve Tools</title>
-  <meta name="description" content="Two free DCTLs for DaVinci Resolve by Pablo Valiente, colorist based in Berlin. Download and use them in your own grades."/>
+  <title>PV Color Tools — Pablo Valiente | Free DCTLs for DaVinci Resolve</title>
+  <meta name="description" content="PV Master Grade Free Edition and PV DRT: two free DCTLs for DaVinci Resolve Studio by Pablo Valiente, colorist based in Berlin."/>
   <link rel="canonical" href="https://pablovaliente.me/dctl"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://pablovaliente.me/dctl"/>
-  <meta property="og:title" content="Free DCTLs — Pablo Valiente | DaVinci Resolve Tools"/>
+  <meta property="og:title" content="PV Color Tools — Pablo Valiente | Free DCTLs for DaVinci Resolve"/>
   <meta property="og:image" content="https://pablovaliente.me/assets/projects/project-1/Frames/frame-03.webp"/>
   <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
   <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png"/>
@@ -82,6 +82,35 @@
     footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; font-size: 15px; }
     .mail-short { display: none; }
 
+    /* FEATURES / TABLE / INFO */
+    .feature-list { margin-top: 56px; border-top: 1px solid rgba(40,40,40,0.1); }
+    .feature { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; padding: 28px 0; border-bottom: 1px solid rgba(40,40,40,0.1); }
+    .feature-title { font-size: 22px; font-weight: 500; letter-spacing: -0.01em; }
+    .feature-body p { font-size: 14px; font-weight: 300; line-height: 1.75; opacity: 0.65; }
+    .feature-body p + p { margin-top: 12px; }
+    .feature-body strong { font-weight: 500; }
+    .node-table { width: 100%; border-collapse: collapse; }
+    .node-table th { text-align: left; font-size: 9px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.35; padding: 0 24px 12px 0; border-bottom: 1px solid rgba(40,40,40,0.1); }
+    .node-table td { font-size: 14px; font-weight: 300; line-height: 1.6; padding: 18px 24px 18px 0; border-bottom: 1px solid rgba(40,40,40,0.1); opacity: 0.75; vertical-align: top; }
+    .node-table td:nth-child(2) { font-weight: 500; white-space: nowrap; }
+    .notes { margin-top: 28px; max-width: 560px; }
+    .notes .meta-label { margin-bottom: 8px; }
+    .notes p:not(.meta-label) { font-size: 13px; font-weight: 300; line-height: 1.75; opacity: 0.65; }
+    .info-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .btn-row .btn { margin-top: 0; }
+    .steps { list-style: none; counter-reset: s; }
+    .steps li { counter-increment: s; font-size: 14px; font-weight: 300; line-height: 1.6; opacity: 0.65; padding: 8px 0 8px 28px; position: relative; }
+    .steps li::before { content: counter(s) "."; position: absolute; left: 0; opacity: 0.6; }
+    .license-label { margin-top: 36px; }
+    .soon-text { max-width: 680px; }
+    @media (max-width: 768px) {
+      .feature { grid-template-columns: 1fr; gap: 12px; }
+      .info-cols { grid-template-columns: 1fr; gap: 40px; }
+      .node-table td:nth-child(2) { white-space: normal; }
+      .node-table th, .node-table td { padding-right: 12px; }
+    }
+
     @media (min-width: 769px) and (max-width: 1024px) {
       .intro-section, .dctl-section, .last-section, .hero-media { padding-left: 40px; padding-right: 40px; }
       .intro-section { gap: 48px; } .dctl-head { gap: 48px; }
@@ -154,86 +183,201 @@
   <main>
     <section class="intro-section">
       <div>
-        <span class="section-label">Free Tools for DaVinci Resolve</span>
-        <h1 class="intro-title">Free<br>DCTLs</h1>
+        <span class="section-label">DCTLs para DaVinci Resolve · Gratuitos</span>
+        <h1 class="intro-title">PV Color<br>Tools</h1>
       </div>
       <div>
-        <p class="intro-text">Two DCTLs I built for my own grading work, now free to download. Drop them into your Resolve LUT folder, restart, and use them on any node.</p>
-        <p class="intro-text">More tools are on the way — including a paid OFX plugin.</p>
+        <p class="intro-text">PV Color Tools es un conjunto de herramientas de etalonaje para DaVinci Resolve creado por Pablo Valiente. Cubre el recorrido completo de la imagen: el etalonaje en luz lineal dentro de DaVinci Wide Gamut y la transformación final a pantalla.</p>
+        <p class="intro-text">Las dos herramientas están pensadas para trabajar juntas, pero cada una funciona por separado. Ambas son gratuitas.</p>
         <div class="intro-meta">
-          <div><p class="meta-label">Software</p><p class="meta-value">DaVinci Resolve 18+</p></div>
-          <div><p class="meta-label">Format</p><p class="meta-value">.dctl</p></div>
-          <div><p class="meta-label">Price</p><p class="meta-value">Free</p></div>
+          <div><p class="meta-label">Software</p><p class="meta-value">DaVinci Resolve Studio</p></div>
+          <div><p class="meta-label">Formato</p><p class="meta-value">.dctle</p></div>
+          <div><p class="meta-label">Precio</p><p class="meta-value">Gratis</p></div>
         </div>
       </div>
     </section>
 
-    <!-- HERO IMAGE / CLIP: replace the placeholder with <img src="assets/dctl/hero.webp" alt="..."> -->
+    <!-- HERO: sustituye el recuadro por <img src="assets/dctl/hero.webp" alt="PV Color Tools"> -->
     <div class="hero-media">
-      <div class="ph r16x9">Hero image or clip</div>
+      <div class="ph r16x9">Imagen o clip principal</div>
     </div>
 
-    <!-- DCTL 01 -->
-    <section class="dctl-section" id="dctl-1">
+    <!-- PV MASTER GRADE -->
+    <section class="dctl-section" id="pv-master-grade">
       <div class="dctl-head">
         <div>
-          <span class="section-label">DCTL 01</span>
-          <h2 class="dctl-name">DCTL Name 01</h2>
+          <span class="section-label">DCTL · v1.0</span>
+          <h2 class="dctl-name">PV Master Grade<br>Free Edition</h2>
         </div>
         <div>
-          <p class="dctl-desc">Short description of what this DCTL does and when to use it.</p>
-          <a href="assets/dctl/dctl-01.dctl" class="btn" download>Download — Free</a>
+          <p class="dctl-desc">PV Master Grade reúne en un solo nodo los ajustes con los que se construye un etalonaje: exposición, balance de blancos, contraste, saturación y look. Trabaja en luz lineal dentro de DaVinci Wide Gamut, de modo que cada control responde como lo haría la luz real y no como un simple desplazamiento de valores.</p>
+          <p class="dctl-desc">Es la edición gratuita del plugin OFX PV Master Grade y usa su misma matemática de color. Con todos los controles en su valor por defecto, la imagen no cambia.</p>
+          <a href="assets/dctl/PV-Master-Grade-Free-Edition.dctle" class="btn" download>Descargar — Gratis</a>
         </div>
       </div>
+
       <div class="gallery-card">
         <div class="ba-grid">
-          <div class="ba-item"><span class="ba-label">Before</span><div class="ph r16x9">Before frame / clip</div></div>
-          <div class="ba-item"><span class="ba-label">After</span><div class="ph r16x9">After frame / clip</div></div>
+          <div class="ba-item"><span class="ba-label">Antes</span><div class="ph r16x9">Frame / clip antes</div></div>
+          <div class="ba-item"><span class="ba-label">Después</span><div class="ph r16x9">Frame / clip después</div></div>
         </div>
         <div class="ba-grid">
-          <div class="ba-item"><span class="ba-label">Before</span><div class="ph r16x9">Before frame / clip</div></div>
-          <div class="ba-item"><span class="ba-label">After</span><div class="ph r16x9">After frame / clip</div></div>
+          <div class="ba-item"><span class="ba-label">Antes</span><div class="ph r16x9">Frame / clip antes</div></div>
+          <div class="ba-item"><span class="ba-label">Después</span><div class="ph r16x9">Frame / clip después</div></div>
         </div>
         <div class="ui-row">
-          <div><div class="ph r4x3">DCTL interface screenshot</div><span class="caption">Interface</span></div>
-          <div><div class="ph r4x3">Parameters / scopes</div><span class="caption">Parameters</span></div>
+          <div><div class="ph r4x3">Captura de la interfaz</div><span class="caption">Interfaz</span></div>
+          <div><div class="ph r4x3">Parámetros / scopes</div><span class="caption">Parámetros</span></div>
+        </div>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature">
+          <h3 class="feature-title">Base Grade</h3>
+          <div class="feature-body">
+            <p>Exposure trabaja en stops sobre luz lineal, igual que abrir o cerrar el diafragma. El balance de blancos se ajusta en Kelvin con Tint y adapta el color como lo hace el ojo, conservando la luminosidad de la imagen en lugar de teñirla.</p>
+            <p>El contraste gira alrededor de un punto de pivote que tú eliges y conserva la proporción entre los canales, por lo que los colores no se desvían al subirlo. En los extremos cae con suavidad en vez de aplastar negros y blancos. Shadows y Highlights actúan solo sobre su zona y dejan intactos los tonos medios.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <h3 class="feature-title">Saturación y densidad</h3>
+          <div class="feature-body">
+            <p>Tres formas distintas de trabajar el color, que se pueden combinar:</p>
+            <p><strong>Saturation</strong> separa los colores entre sí con un carácter más limpio que una saturación convencional. <strong>Filmic Saturation</strong> añade color y, a la vez, densidad a los tonos más saturados, como ocurre en la película. <strong>Density</strong> oscurece los colores en proporción a lo saturados que están, para darles peso sin tocar los neutros.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <h3 class="feature-title">Split Tone</h3>
+          <div class="feature-body">
+            <p>Tiñe las sombras y las altas luces con temperaturas independientes, del azul frío al ámbar cálido, con un control de balance para decidir dónde se cruzan.</p>
+            <p>Está construido para no estropear lo que no debe tocar: los tonos de piel quedan fuera del tinte, y los negros profundos y los blancos se mantienen limpios.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <h3 class="feature-title">Bleach Bypass</h3>
+          <div class="feature-body">
+            <p>Reproduce el aspecto del proceso de blanqueo omitido en el revelado: más contraste y menos color, con esa textura dura y plateada tan reconocible. Un solo control regula la intensidad.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <h3 class="feature-title">Sharpen / OLPF</h3>
+          <div class="feature-body">
+            <p>Un único control con dos sentidos. Hacia la derecha realza el detalle sobre la luminancia, sin halos de color. Hacia la izquierda suaviza la imagen como un filtro óptico de paso bajo, útil para quitar la dureza digital del material muy nítido. Se adapta a la resolución del proyecto.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- DCTL 02 -->
-    <section class="dctl-section" id="dctl-2">
+    <!-- PV DRT -->
+    <section class="dctl-section" id="pv-drt">
       <div class="dctl-head">
         <div>
-          <span class="section-label">DCTL 02</span>
-          <h2 class="dctl-name">DCTL Name 02</h2>
+          <span class="section-label">DCTL · v1.5</span>
+          <h2 class="dctl-name">PV DRT</h2>
         </div>
         <div>
-          <p class="dctl-desc">Short description of what this DCTL does and when to use it.</p>
-          <a href="assets/dctl/dctl-02.dctl" class="btn" download>Download — Free</a>
+          <p class="dctl-desc">PV DRT es la transformación de salida: convierte la imagen de DaVinci Wide Gamut a lo que finalmente se ve en pantalla. Va en el último nodo, después del etalonaje, y sustituye a cualquier otro DRT o LUT de salida.</p>
+          <a href="assets/dctl/PV-DRT.dctle" class="btn" download>Descargar — Gratis</a>
         </div>
       </div>
+
       <div class="gallery-card">
         <div class="ba-grid">
-          <div class="ba-item"><span class="ba-label">Before</span><div class="ph r16x9">Before frame / clip</div></div>
-          <div class="ba-item"><span class="ba-label">After</span><div class="ph r16x9">After frame / clip</div></div>
+          <div class="ba-item"><span class="ba-label">Antes</span><div class="ph r16x9">Frame / clip antes</div></div>
+          <div class="ba-item"><span class="ba-label">Después</span><div class="ph r16x9">Frame / clip después</div></div>
         </div>
         <div class="ba-grid">
-          <div class="ba-item"><span class="ba-label">Before</span><div class="ph r16x9">Before frame / clip</div></div>
-          <div class="ba-item"><span class="ba-label">After</span><div class="ph r16x9">After frame / clip</div></div>
+          <div class="ba-item"><span class="ba-label">Antes</span><div class="ph r16x9">Frame / clip antes</div></div>
+          <div class="ba-item"><span class="ba-label">Después</span><div class="ph r16x9">Frame / clip después</div></div>
         </div>
         <div class="ui-row">
-          <div><div class="ph r4x3">DCTL interface screenshot</div><span class="caption">Interface</span></div>
-          <div><div class="ph r4x3">Parameters / scopes</div><span class="caption">Parameters</span></div>
+          <div><div class="ph r4x3">Captura de la interfaz</div><span class="caption">Interfaz</span></div>
+          <div><div class="ph r4x3">Parámetros / scopes</div><span class="caption">Parámetros</span></div>
+        </div>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature">
+          <h3 class="feature-title">Curva tonal</h3>
+          <div class="feature-body">
+            <p>Su curva tonal coloca el gris medio donde debe estar, mantiene el negro exacto y lleva las altas luces hasta el blanco con un hombro largo, sin recortes bruscos. Los grises permanecen neutros en toda la escala.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <h3 class="feature-title">Tratamiento del color</h3>
+          <div class="feature-body">
+            <p>El color se trata con cuidado en cada zona. Los tonos suaves, como la piel, apenas se modifican y no cambian de tono al variar la exposición. Los colores muy saturados se comprimen de forma progresiva para caber en la pantalla sin romperse. En las altas luces, el color se desvanece hacia el blanco de manera continua: los cielos sobreexpuestos y las nubes de un atardecer conservan su degradado, y las luces incandescentes mantienen su calidez natural.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <h3 class="feature-title">Controles y salida</h3>
+          <div class="feature-body">
+            <p>Incluye controles para ajustar el contraste, el pie de las sombras, la compresión de saturación y la densidad, además de tono y pureza independientes para cada color. Ofrece salida en Rec.709, P3-D65 y Rec.2020, con las curvas BT.1886, sRGB, gamma 2.2 y gamma 2.6.</p>
+            <p>PV DRT es una transformación para SDR. No genera salida HDR.</p>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- ORDEN DE NODOS -->
+    <section class="dctl-section" id="node-order">
+      <div class="dctl-head">
+        <div>
+          <span class="section-label">Flujo de trabajo</span>
+          <h2 class="dctl-name">Orden de nodos<br>recomendado</h2>
+        </div>
+        <div></div>
+      </div>
+      <table class="node-table">
+        <thead><tr><th>Orden</th><th>Herramienta</th><th>Por qué va aquí</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Conversión de entrada</td><td>Lleva el material de cámara a DaVinci Wide Gamut / Intermediate.</td></tr>
+          <tr><td>2</td><td>PV Master Grade</td><td>El etalonaje se hace en luz lineal, antes de cualquier transformación de salida.</td></tr>
+          <tr><td>3</td><td>PV DRT</td><td>Último nodo: convierte la imagen etalonada a la pantalla.</td></tr>
+        </tbody>
+      </table>
+      <div class="notes">
+        <p class="meta-label">Notas</p>
+        <p>PV Master Grade trabaja de DaVinci Wide Gamut a DaVinci Wide Gamut: no convierte la imagen a pantalla por sí solo.</p>
+        <p>No combines PV DRT con otro DRT o LUT de salida en la misma cadena.</p>
+      </div>
+    </section>
+
+    <!-- DESCARGA / INSTALACIÓN / REQUISITOS -->
+    <section class="dctl-section" id="download">
+      <div class="info-cols">
+        <div>
+          <span class="section-label">Descarga</span>
+          <p class="dctl-desc">PV Master Grade Free Edition y PV DRT son gratuitos.<br>Formato: DCTL cifrado (.dctle).</p>
+          <div class="btn-row">
+            <a href="assets/dctl/PV-Master-Grade-Free-Edition.dctle" class="btn" download>PV Master Grade</a>
+            <a href="assets/dctl/PV-DRT.dctle" class="btn" download>PV DRT</a>
+          </div>
+        </div>
+        <div>
+          <span class="section-label">Instalación</span>
+          <ol class="steps">
+            <li>Abre "Project Settings".</li>
+            <li>Ve a "Color Management" y pulsa "Open LUT Folder".</li>
+            <li>Copia los archivos .dctle dentro de la carpeta DCTL.</li>
+            <li>Reinicia DaVinci Resolve.</li>
+          </ol>
+        </div>
+        <div>
+          <span class="section-label">Requisitos</span>
+          <p class="dctl-desc">Los DCTL solo funcionan en DaVinci Resolve Studio.<br>Desarrollados y probados en DaVinci Resolve Studio 21 sobre macOS.</p>
+          <span class="section-label license-label">Licencia</span>
+          <p class="dctl-desc">© 2026 Pablo Valiente González. Todos los derechos reservados.<br>Uso gratuito. No se permite modificar ni vender estas herramientas.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMING SOON — OFX -->
     <section class="last-section">
       <div>
-        <span class="section-label">OFX Plugin</span>
+        <span class="section-label">PV Master Grade OFX</span>
         <h2 class="soon-title">Coming soon</h2>
-        <p class="soon-text">A paid OFX plugin for DaVinci Resolve is in development.</p>
+        <p class="soon-text">PV Master Grade existe también como plugin OpenFX, acelerado por GPU. Parte de la misma base de color que la edición gratuita y añade las herramientas de precisión y de acabado: emulación de película con siete stocks (entre ellos Kodak 2383 y Fuji 3513) y formatos de Super 8 a 65 mm, control de piel, etalonaje de precisión por seis vectores de color, Split Tone de tres zonas, halation y grano analógico. Actualmente en fase beta.</p>
       </div>
       <footer>
         <span class="footer-copy">&copy; <span class="footer-year"></span> Pablo Valiente. All rights reserved.</span>
