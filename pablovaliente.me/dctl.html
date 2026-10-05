@@ -177,18 +177,13 @@
     .intro-media { grid-column: 1 / -1; display: flex; justify-content: center; align-items: flex-start; gap: 24px; }
     .intro-media img { display: block; height: 38vh; width: auto; border-radius: 14px; }
 
-    /* DRT hero zone: blurred example 03, interface left, text right */
-    .drt-hero { position: relative; background: #0a0a0a; overflow: hidden; }
-    .drt-bg { position: absolute; inset: 0; overflow: hidden; }
-    .drt-bg img { width: 100%; height: 100%; object-fit: cover; display: block; filter: blur(8px); transform: scale(1.05); }
-    .drt-overlay { position: absolute; inset: 0; background: rgba(10,10,10,0.65); }
-    .drt-content { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: 72px; color: rgba(255,255,255,0.9); }
-    .drt-content .dctl-ui img { height: 66vh; width: auto; max-width: 100%; }
-    .drt-text { max-width: 480px; display: flex; flex-direction: column; gap: 24px; }
-    .drt-hero .section-label { color: rgba(255,255,255,0.5); opacity: 1; }
-    .drt-hero .dctl-name { color: #fff; white-space: nowrap; }
-    .drt-hero .dctl-desc { color: #fff; }
-    .drt-hero .btn { background: #F2F0EF; color: #0a0a0a; }
+    /* DRT zone: title + text on top, interface left, example 03 right (inverse of Master Grade) */
+    .drt-layout { --h: min(56vh, calc((100vw - 160px) / 2.403)); display: grid; grid-template-columns: auto auto; justify-content: center; align-items: start; column-gap: 40px; row-gap: 5vh; }
+    .drt-top { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 480px); justify-content: space-between; align-items: end; gap: 56px; }
+    .drt-top .dctl-name { white-space: nowrap; }
+    .drt-top .dctl-desc + .btn { margin-top: 18px; }
+    .drt-layout .dctl-ui img { height: var(--h); width: auto; }
+    .drt-layout .ba-slider { width: calc(var(--h) * 16 / 9); }
     /* DRT gallery zone: two equal examples */
     .gallery-card-two { background: #E9E7E6; padding: 28px; box-shadow: 0 1px 8px rgba(0,0,0,0.04); max-width: none; width: 100%; margin: 0 auto; }
     .gallery-two { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; max-width: calc(2 * 50vh * 16 / 9 + 4px); margin: 0 auto; }
@@ -206,9 +201,10 @@
       .dctl-section .dctl-ui { max-width: 240px; }
       .dctl-section .ba-pair { max-width: none; }
       .intro-section { padding: 88px 24px 40px; align-content: start; }
-      .drt-content { flex-direction: column; align-items: flex-start; gap: 24px; }
-      .drt-content .dctl-ui img { height: auto; width: 100%; max-width: 240px; }
-      .drt-hero { justify-content: flex-start; }
+      .drt-layout { grid-template-columns: 1fr; row-gap: 24px; }
+      .drt-top { grid-template-columns: 1fr; gap: 20px; }
+      .drt-layout .dctl-ui img { height: auto; width: 100%; max-width: 240px; }
+      .drt-layout .ba-slider { width: 100%; }
       .gallery-card-two { padding: 12px; }
       .gallery-two { grid-template-columns: 1fr; gap: 8px; max-width: none; }
       #pv-master-grade .dctl-split .gallery-card { order: 0; }
@@ -292,20 +288,24 @@ document.documentElement.lang=l;})();
     </section>
 
     <!-- PV DRT -->
-    <section class="dctl-section drt-hero" id="pv-drt">
-      <div class="drt-bg"><img src="assets/dctl/drt-after-3.webp" alt="" loading="lazy"/></div>
-      <div class="drt-overlay"></div>
-      <div class="drt-content">
+    <section class="dctl-section" id="pv-drt">
+      <div class="drt-layout">
+        <div class="drt-top">
+          <div>
+            <span class="section-label">DCTL · v1.5</span>
+            <h2 class="dctl-name">PV DRT</h2>
+          </div>
+          <div>
+            <p class="dctl-desc"><span class="es">PV DRT es la transformación de salida: convierte la imagen de DaVinci Wide Gamut a lo que finalmente se ve en pantalla. Va en el último nodo, después del etalonaje, y sustituye a cualquier otro DRT o LUT de salida.</span><span class="en">PV DRT is the output transform: it converts the image from DaVinci Wide Gamut to what is finally seen on screen. It goes in the last node, after the grade, and replaces any other output DRT or LUT.</span></p>
+            <a href="assets/dctl/PV-DRT.dctle" class="btn" download><span class="es">Descargar — Gratis</span><span class="en">Download — Free</span></a>
+          </div>
+        </div>
         <div class="dctl-ui"><img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" loading="lazy"></div>
-        <div class="drt-text">
-        <div>
-          <span class="section-label">DCTL · v1.5</span>
-          <h2 class="dctl-name">PV DRT</h2>
-        </div>
-        <div>
-          <p class="dctl-desc"><span class="es">PV DRT es la transformación de salida: convierte la imagen de DaVinci Wide Gamut a lo que finalmente se ve en pantalla. Va en el último nodo, después del etalonaje, y sustituye a cualquier otro DRT o LUT de salida.</span><span class="en">PV DRT is the output transform: it converts the image from DaVinci Wide Gamut to what is finally seen on screen. It goes in the last node, after the grade, and replaces any other output DRT or LUT.</span></p>
-          <a href="assets/dctl/PV-DRT.dctle" class="btn" download><span class="es">Descargar — Gratis</span><span class="en">Download — Free</span></a>
-        </div>
+        <div class="ba-slider" style="--pos:50%">
+          <div class="ph r16x9"><img class="ba-after" src="assets/dctl/drt-after-3.webp" alt="PV DRT, example 3" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-3.webp" alt="Rec709, example 3" loading="lazy"></div>
+          <span class="ba-label ba-l">Rec709</span><span class="ba-label ba-r">PV DRT</span>
+          <span class="ba-handle"></span>
+          <input type="range" min="0" max="100" value="50" aria-label="Rec709 / PV DRT">
         </div>
       </div>
     </section>
