@@ -66,7 +66,9 @@
     .dctl-desc + .btn { margin-top: 24px; }
     .ba-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1320px; margin: 0 auto; }
     .dctl-split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; margin-bottom: 56px; }
-    .dctl-split .dctl-head { grid-template-columns: 220px minmax(0, 1fr); gap: 32px; margin-bottom: 0; align-items: center; }
+    .dctl-split { container-type: inline-size; }
+    .dctl-split .dctl-head { grid-template-columns: auto minmax(0, 1fr); gap: 32px; margin-bottom: 0; align-items: center; }
+    .dctl-split .dctl-ui img { width: auto; height: calc((100cqw - 56px) / 2 * 9 / 16); }
     .dctl-split .gallery-card { max-width: none; margin: 0; }
     .gallery-card { max-width: 1200px; margin: 0 auto; }
     .ba-slider { border-radius: 8px; }
@@ -144,6 +146,7 @@
       .ba-pair, .dctl-split { grid-template-columns: 1fr; gap: 16px; }
       .dctl-split { gap: 28px; }
       .dctl-split .dctl-head { grid-template-columns: 1fr; }
+      .dctl-split .dctl-ui img { width: 100%; height: auto; }
       .dctl-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 28px; }
       .dctl-ui { max-width: 300px; }
       .last-section { padding: 80px 24px 40px; }
