@@ -165,30 +165,30 @@
     /* ── HOME HERO: title + intro text on top, three 3:4 cards below ── */
     .intro-section { scroll-snap-align: start; }
     .home-hero { display: flex; align-items: center; justify-content: center; padding: 96px 60px 40px; }
-    .hh { --cw: min(calc((100vw - 168px) / 3), 38vh); width: calc(var(--cw) * 3 + 48px); max-width: 100%; }
+    .hh { --cw: min(calc((100vw - 168px) / 3), calc((100vh - 420px) * 0.75)); width: calc(var(--cw) * 3 + 48px); max-width: 100%; }
     .hh-top { display: grid; grid-template-columns: var(--cw) minmax(0, 1fr); gap: 24px; align-items: start; margin-bottom: 4vh; }
-    .hh-title { font-size: 24px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.2; display: flex; align-items: center; gap: 8px; }
+    .hh-title { font-size: calc(var(--cw) * 0.07); font-weight: 500; letter-spacing: -0.01em; line-height: 1.2; display: flex; align-items: center; gap: 8px; }
     .hh-title::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: #282828; flex: 0 0 auto; }
-    .hh-p { font-size: 17px; font-weight: 300; line-height: 1.45; opacity: 0.9; max-width: calc(var(--cw) * 2 + 24px); }
+    .hh-p { font-size: calc(var(--cw) * 0.05); font-weight: 300; line-height: 1.45; opacity: 0.9; max-width: calc(var(--cw) * 2 + 24px); }
     .hh-p + .hh-p { margin-top: 10px; opacity: 0.6; }
     .hh-cards { display: grid; grid-template-columns: repeat(3, var(--cw)); gap: 24px; }
     .hc { margin: 0; outline: none; }
     .hc-box { position: relative; width: var(--cw); aspect-ratio: 3 / 4; overflow: hidden; border-radius: 6px; background: #151515; }
-    .hc figcaption { margin-top: 12px; font-size: 12px; font-weight: 400; color: #282828; }
+    .hc figcaption { margin-top: 12px; font-size: calc(var(--cw) * 0.036); font-weight: 400; color: #282828; }
     .hc-box > img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
-    .hc-guide { background: #E9E7E6; padding: 22px; display: flex; align-items: center; }
+    .hc-guide { background: #E9E7E6; padding: calc(var(--cw) * 0.065); display: flex; align-items: center; }
     .hc-steps { list-style: none; margin: 0; padding: 0; width: 100%; }
-    .hc-steps li { display: flex; gap: 14px; align-items: baseline; padding: 12px 0; border-top: 1px solid rgba(40,40,40,0.15); font-size: 13px; font-weight: 400; line-height: 1.45; color: #282828; }
+    .hc-steps li { display: flex; gap: 14px; align-items: baseline; padding: 12px 0; border-top: 1px solid rgba(40,40,40,0.15); font-size: calc(var(--cw) * 0.04); font-weight: 400; line-height: 1.45; color: #282828; }
     .hc-steps li:last-child { border-bottom: 1px solid rgba(40,40,40,0.15); }
     .hc-num { flex: 0 0 auto; font-size: 10px; letter-spacing: 0.12em; opacity: 0.45; }
-    .hc-over { position: absolute; inset: 0; z-index: 2; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; background: rgba(10,10,10,0.88); color: rgba(255,255,255,0.9); opacity: 0; transition: opacity 0.3s ease; overflow: hidden; }
+    .hc-over { position: absolute; inset: 0; z-index: 2; padding: calc(var(--cw) * 0.058); display: flex; flex-direction: column; justify-content: space-between; gap: 10px; background: rgba(10,10,10,0.88); color: rgba(255,255,255,0.9); opacity: 0; transition: opacity 0.3s ease; overflow: hidden; }
     .hc:hover .hc-over, .hc:focus-within .hc-over, .hc:focus .hc-over { opacity: 1; }
-    .hc-name { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; }
+    .hc-name { font-size: calc(var(--cw) * 0.053); font-weight: 500; letter-spacing: -0.01em; }
     .hc-detail { flex: 1 1 auto; min-height: 0; overflow-y: auto; scrollbar-width: none; }
     .hc-detail::-webkit-scrollbar { display: none; }
-    .hc-detail .drt-p { font-size: 10.5px; line-height: 1.5; opacity: 0.8; }
+    .hc-detail .drt-p { font-size: calc(var(--cw) * 0.031); line-height: 1.5; opacity: 0.8; }
     .hc-detail .drt-p + .drt-p { margin-top: 6px; }
-    .hc-over .btn { align-self: flex-start; background: #F2F0EF; color: #0a0a0a; padding: 10px 20px; font-size: 12px; }
+    .hc-over .btn { align-self: flex-start; background: #F2F0EF; color: #0a0a0a; padding: 10px 20px; font-size: calc(var(--cw) * 0.036); }
     /* footer now lives at the bottom of the last zone */
     .dctl-section { position: relative; }
     .page-footer { position: absolute; bottom: 20px; left: 60px; right: 60px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 8px 48px; }
