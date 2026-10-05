@@ -179,9 +179,10 @@
 
     /* DRT zone: title + text on top, interface left, example 03 right (inverse of Master Grade) */
     .drt-layout { --h: min(56vh, calc((100vw - 160px) / 2.403)); display: grid; grid-template-columns: auto auto; justify-content: center; align-items: start; column-gap: 40px; row-gap: 5vh; }
-    .drt-top { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 480px); justify-content: space-between; align-items: end; gap: 56px; }
-    .drt-top .dctl-name { white-space: nowrap; }
-    .drt-top .dctl-desc + .btn { margin-top: 18px; }
+    .drt-top { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 480px) auto; justify-content: space-between; align-items: center; gap: 56px; }
+    .drt-top > div:first-child { position: relative; }
+    .drt-top .section-label { position: absolute; left: 0; bottom: 100%; margin-bottom: 6px; white-space: nowrap; }
+    .drt-top .dctl-name { white-space: nowrap; font-size: clamp(44px, 6vw, 92px); }
     .drt-layout .dctl-ui img { height: var(--h); width: auto; }
     .drt-layout .ba-slider { width: calc(var(--h) * 16 / 9); }
     /* DRT gallery zone: two equal examples */
@@ -202,7 +203,9 @@
       .dctl-section .ba-pair { max-width: none; }
       .intro-section { padding: 88px 24px 40px; align-content: start; }
       .drt-layout { grid-template-columns: 1fr; row-gap: 24px; }
-      .drt-top { grid-template-columns: 1fr; gap: 20px; }
+      .drt-top { grid-template-columns: 1fr; gap: 20px; justify-items: start; }
+      .drt-top .dctl-name { font-size: 44px; }
+      .drt-top .section-label { position: static; margin-bottom: 8px; }
       .drt-layout .dctl-ui img { height: auto; width: 100%; max-width: 240px; }
       .drt-layout .ba-slider { width: 100%; }
       .gallery-card-two { padding: 12px; }
@@ -297,6 +300,8 @@ document.documentElement.lang=l;})();
           </div>
           <div>
             <p class="dctl-desc"><span class="es">PV DRT es la transformación de salida: convierte la imagen de DaVinci Wide Gamut a lo que finalmente se ve en pantalla. Va en el último nodo, después del etalonaje, y sustituye a cualquier otro DRT o LUT de salida.</span><span class="en">PV DRT is the output transform: it converts the image from DaVinci Wide Gamut to what is finally seen on screen. It goes in the last node, after the grade, and replaces any other output DRT or LUT.</span></p>
+          </div>
+          <div>
             <a href="assets/dctl/PV-DRT.dctle" class="btn" download><span class="es">Descargar — Gratis</span><span class="en">Download — Free</span></a>
           </div>
         </div>
