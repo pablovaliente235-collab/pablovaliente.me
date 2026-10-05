@@ -308,6 +308,18 @@ document.documentElement.lang=l;})();
     function drtShow(n){drtIdx=(n+DRT_EX.length)%DRT_EX.length;var k=DRT_EX[drtIdx],a=drtCard.querySelector('.ba-after'),b=drtCard.querySelector('.ba-before'),sl=drtCard.querySelector('.ba-slider');a.src='assets/dctl/drt-after-'+k+'.webp';b.src='assets/dctl/drt-before-'+k+'.webp';a.alt='PV DRT, example '+k;b.alt='Rec709, example '+k;sl.style.setProperty('--pos','50%');sl.querySelector('input').value=50;}
     drtCard.querySelector('.drt-prev').addEventListener('click',function(){drtShow(drtIdx-1);});
     drtCard.querySelector('.drt-next').addEventListener('click',function(){drtShow(drtIdx+1);});
+    /* intro animation: before/after sweeps, then the carousel flips through the examples */
+    (function(){
+      if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+      var sl=drtCard.querySelector('.ba-slider'),inp=sl.querySelector('input'),stop=false;
+      function setPos(v){sl.style.setProperty('--pos',v+'%');inp.value=v;}
+      function tween(from,to,ms,done){var t0=null;function step(t){if(stop)return;if(t0===null)t0=t;var p=Math.min((t-t0)/ms,1),e=p<0.5?2*p*p:1-Math.pow(-2*p+2,2)/2;setPos(from+(to-from)*e);if(p<1)requestAnimationFrame(step);else if(done)done();}requestAnimationFrame(step);}
+      function sweep(done){tween(50,6,220,function(){tween(6,94,420,function(){tween(94,50,220,done);});});}
+      ['pointerdown','keydown','touchstart'].forEach(function(ev){drtCard.addEventListener(ev,function(){stop=true;});});
+      function go(){sweep(function(){if(stop)return;drtShow(1);sweep(function(){if(stop)return;drtShow(0);});});}
+      function start(){setTimeout(function(){if(!stop)go();},350);}
+      if(document.readyState==='complete')start();else window.addEventListener('load',start);
+    })();
     DRT_EX.forEach(function(k){new Image().src='assets/dctl/drt-after-'+k+'.webp';new Image().src='assets/dctl/drt-before-'+k+'.webp';});
     /* title height = description paragraph height (cap height matched to paragraph box) */
     function fitDrtTitle(){var t=document.querySelector('.drt-top .dctl-name'),p=document.querySelector('.drt-top .dctl-desc');if(!t||!p||window.innerWidth<=768){if(t)t.style.fontSize='';var m0=document.querySelector('#pv-master-grade .dctl-name');if(m0)m0.style.fontSize='';return;}
