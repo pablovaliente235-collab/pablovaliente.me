@@ -157,6 +157,29 @@
       .mail-full { display: none; }
       .mail-short { display: inline; }
     }
+
+    /* ── PAGE WRAP: one full-viewport zone per scroll (same as project pages) ── */
+    #page-wrap { height: 100vh; height: 100dvh; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; }
+    #page-wrap::-webkit-scrollbar, .intro-section::-webkit-scrollbar, .dctl-section::-webkit-scrollbar, .last-section::-webkit-scrollbar { display: none; }
+    .intro-section, .dctl-section, .last-section { scroll-snap-align: start; scroll-snap-stop: always; height: 100vh; height: 100dvh; min-height: 0; overflow-x: hidden; overflow-y: auto; scrollbar-width: none; }
+    .intro-section { align-content: center; align-items: center; padding-top: 96px; padding-bottom: 48px; }
+    .dctl-section { display: flex; flex-direction: column; justify-content: center; padding: 96px 60px 48px; border-top: 0; }
+    .dctl-section .dctl-head { grid-template-columns: auto minmax(0, 760px); margin-bottom: 4vh; }
+    .dctl-section .dctl-ui img { width: auto; height: 30vh; }
+    .dctl-section .ba-pair { width: 100%; max-width: calc(2 * 38vh * 16 / 9 + 24px); }
+    .dctl-split { margin-bottom: 0; }
+    .dctl-split .dctl-head { margin-bottom: 0; grid-template-columns: auto minmax(0, 1fr); }
+    .dctl-split .dctl-ui img { height: calc((100cqw - 56px) / 2 * 9 / 16); }
+    .last-section { padding-top: 96px; }
+    @media (max-width: 1100px) { .dctl-section, .last-section { padding-left: 40px; padding-right: 40px; } }
+    @media (max-width: 768px) {
+      .dctl-section { padding: 88px 24px 40px; justify-content: flex-start; }
+      .dctl-section .dctl-head { grid-template-columns: 1fr; margin-bottom: 24px; }
+      .dctl-section .dctl-ui img, .dctl-split .dctl-ui img { width: 100%; height: auto; }
+      .dctl-section .dctl-ui { max-width: 240px; }
+      .dctl-section .ba-pair { max-width: none; }
+      .intro-section { padding: 88px 24px 40px; align-content: start; }
+    }
   </style>
 <script>
 (function(){var l;try{l=localStorage.getItem('pv-lang');}catch(e){}
@@ -209,6 +232,7 @@ document.documentElement.lang=l;})();
   </header>
 
   <main>
+  <div id="page-wrap">
     <section class="intro-section">
       <div class="lang-switch" role="group" aria-label="Language">
         <button type="button" data-set-lang="en">EN</button><span>/</span><button type="button" data-set-lang="es">ES</button>
@@ -258,28 +282,6 @@ document.documentElement.lang=l;})();
           <input type="range" min="0" max="100" value="50" aria-label="Before / After">
         </div>
       </div>
-
-      <div class="feature-list">
-        <div class="feature">
-          <h3 class="feature-title"><span class="es">Curva tonal</span><span class="en">Tone curve</span></h3>
-          <div class="feature-body">
-            <p><span class="es">Su curva tonal coloca el gris medio donde debe estar, mantiene el negro exacto y lleva las altas luces hasta el blanco con un hombro largo, sin recortes bruscos. Los grises permanecen neutros en toda la escala.</span><span class="en">Its tone curve places middle gray where it should be, keeps black exact and carries the highlights up to white with a long shoulder, with no harsh clipping. Grays stay neutral across the whole scale.</span></p>
-          </div>
-        </div>
-        <div class="feature">
-          <h3 class="feature-title"><span class="es">Tratamiento del color</span><span class="en">Color handling</span></h3>
-          <div class="feature-body">
-            <p><span class="es">El color se trata con cuidado en cada zona. Los tonos suaves, como la piel, apenas se modifican y no cambian de tono al variar la exposición. Los colores muy saturados se comprimen de forma progresiva para caber en la pantalla sin romperse. En las altas luces, el color se desvanece hacia el blanco de manera continua: los cielos sobreexpuestos y las nubes de un atardecer conservan su degradado, y las luces incandescentes mantienen su calidez natural.</span><span class="en">Color is handled carefully in each range. Soft tones, like skin, are barely modified and do not shift in hue as exposure changes. Highly saturated colors are compressed progressively to fit the display without breaking. In the highlights, color fades toward white continuously: overexposed skies and sunset clouds keep their gradient, and incandescent lights keep their natural warmth.</span></p>
-          </div>
-        </div>
-        <div class="feature">
-          <h3 class="feature-title"><span class="es">Controles y salida</span><span class="en">Controls &amp; output</span></h3>
-          <div class="feature-body">
-            <p><span class="es">Incluye controles para ajustar el contraste, el pie de las sombras, la compresión de saturación y la densidad, además de tono y pureza independientes para cada color. Ofrece salida en Rec.709, P3-D65 y Rec.2020, con las curvas BT.1886, sRGB, gamma 2.2 y gamma 2.6.</span><span class="en">Includes controls to adjust contrast, shadow toe, saturation compression and density, plus independent hue and purity for each color. Output is available in Rec.709, P3-D65 and Rec.2020, with BT.1886, sRGB, gamma 2.2 and gamma 2.6 curves.</span></p>
-            <p><span class="es">PV DRT es una transformación para SDR. No genera salida HDR.</span><span class="en">PV DRT is an SDR transform. It does not produce HDR output.</span></p>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- PV MASTER GRADE -->
@@ -308,103 +310,6 @@ document.documentElement.lang=l;})();
         </div>
         </div>
       </div>
-
-
-      <div class="feature-list">
-        <div class="feature">
-          <h3 class="feature-title">Base Grade</h3>
-          <div class="feature-body">
-            <p><span class="es">Exposure trabaja en stops sobre luz lineal, igual que abrir o cerrar el diafragma. El balance de blancos se ajusta en Kelvin con Tint y adapta el color como lo hace el ojo, conservando la luminosidad de la imagen en lugar de teñirla.</span><span class="en">Exposure works in stops on linear light, just like opening or closing the aperture. White balance is set in Kelvin with Tint and adapts color the way the eye does, preserving the image's luminance instead of tinting it.</span></p>
-            <p><span class="es">El contraste gira alrededor de un punto de pivote que tú eliges y conserva la proporción entre los canales, por lo que los colores no se desvían al subirlo. En los extremos cae con suavidad en vez de aplastar negros y blancos. Shadows y Highlights actúan solo sobre su zona y dejan intactos los tonos medios.</span><span class="en">Contrast pivots around a point you choose and preserves the ratio between channels, so colors don't drift as you raise it. At the extremes it rolls off smoothly instead of crushing blacks and whites. Shadows and Highlights act only on their own range and leave the midtones untouched.</span></p>
-            <p><span class="es">Flare añade un velo de luz que eleva los negros, como lo haría la luz parásita dentro de una óptica. Highlight Rolloff controla cómo caen las altas luces hacia el blanco.</span><span class="en">Flare adds a veil of light that lifts the blacks, the way stray light inside a lens would. Highlight Rolloff controls how the highlights roll off toward white.</span></p>
-          </div>
-        </div>
-        <div class="feature">
-          <h3 class="feature-title"><span class="es">Saturación y densidad</span><span class="en">Saturation &amp; density</span></h3>
-          <div class="feature-body">
-            <p><span class="es">Tres formas distintas de trabajar el color, que se pueden combinar:</span><span class="en">Three different ways to work with color, which can be combined:</span></p>
-            <p><span class="es"><strong>Saturation</strong> separa los colores entre sí con un carácter más limpio que una saturación convencional. <strong>Filmic Saturation</strong> añade color y, a la vez, densidad a los tonos más saturados, como ocurre en la película. <strong>Density</strong> oscurece los colores en proporción a lo saturados que están, para darles peso sin tocar los neutros.</span><span class="en"><strong>Saturation</strong> separates colors from each other with a cleaner character than conventional saturation. <strong>Filmic Saturation</strong> adds color and, at the same time, density to the most saturated tones, as happens in film. <strong>Density</strong> darkens colors in proportion to how saturated they are, giving them weight without touching neutrals.</span></p>
-          </div>
-        </div>
-        <div class="feature">
-          <h3 class="feature-title"><span class="es">Hue y Density RGB</span><span class="en">RGB Hue &amp; Density</span></h3>
-          <div class="feature-body">
-            <p><span class="es">Controles de Hue y Density independientes para el rojo, el verde y el azul: desplazan el tono de cada primario y dan peso a su color.</span><span class="en">Independent Hue and Density controls for red, green and blue: they shift the hue of each primary and give weight to its color.</span></p>
-          </div>
-        </div>
-        <div class="feature">
-          <h3 class="feature-title">Split Tone</h3>
-          <div class="feature-body">
-            <p><span class="es">Tiñe las sombras y las altas luces con temperaturas independientes, del azul frío al ámbar cálido, con un control de balance para decidir dónde se cruzan.</span><span class="en">Tints shadows and highlights with independent temperatures, from cool blue to warm amber, with a balance control to decide where they cross.</span></p>
-            <p><span class="es">Está construido para no estropear lo que no debe tocar: los tonos de piel quedan fuera del tinte, y los negros profundos y los blancos se mantienen limpios.</span><span class="en">It is built not to spoil what it shouldn't touch: skin tones are kept out of the tint, and deep blacks and whites stay clean.</span></p>
-          </div>
-        </div>
-        <div class="feature">
-          <h3 class="feature-title">Bleach Bypass</h3>
-          <div class="feature-body">
-            <p><span class="es">Reproduce el aspecto del proceso de blanqueo omitido en el revelado: más contraste y menos color, con esa textura dura y plateada tan reconocible. Un solo control regula la intensidad.</span><span class="en">Reproduces the look of the skipped bleaching step in film development: more contrast and less color, with that hard, silvery texture so recognizable. A single control sets the intensity.</span></p>
-          </div>
-        </div>
-        <div class="feature">
-          <h3 class="feature-title">Sharpen / OLPF</h3>
-          <div class="feature-body">
-            <p><span class="es">Un único control con dos sentidos. Hacia la derecha realza el detalle sobre la luminancia, sin halos de color. Hacia la izquierda suaviza la imagen como un filtro óptico de paso bajo, útil para quitar la dureza digital del material muy nítido. Se adapta a la resolución del proyecto.</span><span class="en">A single control with two directions. To the right it enhances detail on luminance, without color halos. To the left it softens the image like an optical low-pass filter, useful for taking the digital harshness out of very sharp footage. It adapts to the project resolution.</span></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- NODE ORDER -->
-    <section class="dctl-section" id="node-order">
-      <div class="dctl-head">
-        <div>
-          <span class="section-label"><span class="es">Flujo de trabajo</span><span class="en">Workflow</span></span>
-          <h2 class="dctl-name"><span class="es">Orden de nodos<br>recomendado</span><span class="en">Recommended<br>node order</span></h2>
-        </div>
-        <div></div>
-      </div>
-      <table class="node-table">
-        <thead><tr><th><span class="es">Orden</span><span class="en">Order</span></th><th><span class="es">Herramienta</span><span class="en">Tool</span></th><th><span class="es">Por qué va aquí</span><span class="en">Why it goes here</span></th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td><span class="es">Conversión de entrada</span><span class="en">Input conversion</span></td><td><span class="es">Lleva el material de cámara a DaVinci Wide Gamut / Intermediate.</span><span class="en">Brings camera footage to DaVinci Wide Gamut / Intermediate.</span></td></tr>
-          <tr><td>2</td><td>PV Master Grade</td><td><span class="es">El etalonaje se hace en luz lineal, antes de cualquier transformación de salida.</span><span class="en">Grading is done in linear light, before any output transform.</span></td></tr>
-          <tr><td>3</td><td>PV DRT</td><td><span class="es">Último nodo: convierte la imagen etalonada a la pantalla.</span><span class="en">Last node: converts the graded image to the display.</span></td></tr>
-        </tbody>
-      </table>
-      <div class="notes">
-        <p class="meta-label"><span class="es">Notas</span><span class="en">Notes</span></p>
-        <p><span class="es">PV Master Grade trabaja de DaVinci Wide Gamut a DaVinci Wide Gamut: no convierte la imagen a pantalla por sí solo.</span><span class="en">PV Master Grade works from DaVinci Wide Gamut to DaVinci Wide Gamut: it does not convert the image to display on its own.</span></p>
-        <p><span class="es">No combines PV DRT con otro DRT o LUT de salida en la misma cadena.</span><span class="en">Do not combine PV DRT with another DRT or output LUT in the same chain.</span></p>
-      </div>
-    </section>
-
-    <!-- DOWNLOAD / INSTALL / REQUIREMENTS -->
-    <section class="dctl-section" id="download">
-      <div class="info-cols">
-        <div>
-          <span class="section-label"><span class="es">Descarga</span><span class="en">Download</span></span>
-          <p class="dctl-desc"><span class="es">PV Master Grade Free Edition y PV DRT son gratuitos.<br>Formato: DCTL cifrado (.dctle).</span><span class="en">PV Master Grade Free Edition and PV DRT are free.<br>Format: encrypted DCTL (.dctle).</span></p>
-          <div class="btn-row">
-            <a href="assets/dctl/PV-Master-Grade-Free-Edition.dctle" class="btn" download>PV Master Grade</a>
-            <a href="assets/dctl/PV-DRT.dctle" class="btn" download>PV DRT</a>
-          </div>
-        </div>
-        <div>
-          <span class="section-label"><span class="es">Instalación</span><span class="en">Installation</span></span>
-          <ol class="steps">
-            <li><span class="es">Abre "Project Settings".</span><span class="en">Open "Project Settings".</span></li>
-            <li><span class="es">Ve a "Color Management" y pulsa "Open LUT Folder".</span><span class="en">Go to "Color Management" and click "Open LUT Folder".</span></li>
-            <li><span class="es">Copia los archivos .dctle dentro de la carpeta DCTL.</span><span class="en">Copy the .dctle files into the DCTL folder.</span></li>
-            <li><span class="es">Reinicia DaVinci Resolve.</span><span class="en">Restart DaVinci Resolve.</span></li>
-          </ol>
-        </div>
-        <div>
-          <span class="section-label"><span class="es">Requisitos</span><span class="en">Requirements</span></span>
-          <p class="dctl-desc"><span class="es">Los DCTL solo funcionan en DaVinci Resolve Studio.<br>Desarrollados y probados en DaVinci Resolve Studio 21 sobre macOS.</span><span class="en">The DCTLs only work in DaVinci Resolve Studio.<br>Developed and tested in DaVinci Resolve Studio 21 on macOS.</span></p>
-          <span class="section-label license-label"><span class="es">Licencia</span><span class="en">License</span></span>
-          <p class="dctl-desc"><span class="es">© 2026 Pablo Valiente González. Todos los derechos reservados.<br>Uso gratuito. No se permite modificar ni vender estas herramientas.</span><span class="en">© 2026 Pablo Valiente González. All rights reserved.<br>Free to use. Modifying or selling these tools is not permitted.</span></p>
-        </div>
-      </div>
     </section>
 
     <!-- COMING SOON — OFX -->
@@ -426,6 +331,7 @@ document.documentElement.lang=l;})();
         <a href="https://instagram.com/pvaliente_" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram</a>
       </footer>
     </section>
+  </div><!-- /page-wrap -->
   </main>
 
   <script>
