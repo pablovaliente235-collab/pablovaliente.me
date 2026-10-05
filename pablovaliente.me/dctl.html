@@ -177,8 +177,8 @@
     .dctl-split .dctl-head { margin-bottom: 0; grid-template-columns: auto minmax(0, 1fr); }
     .dctl-split .dctl-ui img { height: calc((100cqw - 56px) / 2 * 9 / 16); }
     .intro-section { align-content: center; row-gap: 5vh; }
-    .intro-media { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; max-width: calc(2 * 34vh * 16 / 9 + 24px); margin: 0 auto; }
-    .intro-media .ph { border-radius: 8px; overflow: hidden; }
+    .intro-media { grid-column: 1 / -1; display: flex; justify-content: center; align-items: flex-start; gap: 24px; }
+    .intro-media img { display: block; height: 38vh; width: auto; border-radius: 14px; }
     .last-section { padding-top: 96px; }
     #pv-master-grade .dctl-split .gallery-card { order: -1; }
     .last-section { align-items: center; text-align: center; }
@@ -193,7 +193,8 @@
       .dctl-section .ba-pair { max-width: none; }
       .intro-section { padding: 88px 24px 40px; align-content: start; }
       #pv-master-grade .dctl-split .gallery-card { order: 0; }
-      .intro-media { grid-template-columns: 1fr; gap: 12px; max-width: none; }
+      .intro-media { gap: 12px; }
+      .intro-media img { height: auto; width: calc(50% - 6px); }
     }
   </style>
 <script>
@@ -266,8 +267,8 @@ document.documentElement.lang=l;})();
         </div>
       </div>
       <div class="intro-media">
-        <div class="ph r16x9"><img src="assets/dctl/drt-after-1.webp" alt="PV DRT example frame" loading="lazy"></div>
-        <div class="ph r16x9"><img src="assets/dctl/master-grade-after-2.webp" alt="PV Master Grade example frame" loading="lazy"></div>
+        <img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" loading="lazy">
+        <img src="assets/dctl/master-grade-ui.webp" alt="PV Master Grade interface in DaVinci Resolve" loading="lazy">
       </div>
     </section>
 
