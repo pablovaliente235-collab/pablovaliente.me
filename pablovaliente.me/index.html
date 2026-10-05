@@ -373,6 +373,13 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
   #bg-3 img { object-position: calc(50% + 150px) center; }
   #bg-4 img { object-position: calc(50% - 270px) center; }
 }
+/* ── Large screens: scale the project carousel with the viewport (identical to the 1920px design at 1920px) ── */
+@media (min-width: 1920px) {
+  .project-list { gap: 4.1667vw; }
+  .project-item { padding: 1.0417vw 0 1.4583vw; }
+  .project-title { font-size: 1.875vw; }
+  .project-category { font-size: 0.46875vw; margin-top: 0.4167vw; margin-bottom: 0.1vw; }
+}
 </style>
 </head>
 <body>
