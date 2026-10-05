@@ -381,7 +381,7 @@ document.documentElement.lang=l;})();
     /* title height = description paragraph height (cap height matched to paragraph box) */
     function fitDrtTitle(){var t=document.querySelector('.drt-top .dctl-name'),p=document.querySelector('.drt-top .dctl-desc');if(!t||!p||window.innerWidth<=768){if(t)t.style.fontSize='';return;}
       var cs=getComputedStyle(t),c=document.createElement('canvas').getContext('2d');c.font=cs.fontWeight+' 100px '+cs.fontFamily;var cap=c.measureText('PV DRT').actualBoundingBoxAscent||72;
-      var ph=p.getBoundingClientRect().height;t.style.fontSize=(ph*100/cap*0.85)+'px';t.style.lineHeight='1';}
+      var ph=p.getBoundingClientRect().height;t.style.fontSize=(ph*100/cap*0.7)+'px';t.style.lineHeight='1';}
     window.addEventListener('resize',fitDrtTitle);document.querySelectorAll('[data-set-lang]').forEach(function(b){b.addEventListener('click',function(){setTimeout(fitDrtTitle,0);});});
     if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitDrtTitle);fitDrtTitle();window.addEventListener('load',fitDrtTitle);
     document.querySelectorAll('.ba-slider input').forEach(function(i){i.addEventListener('input',function(){i.parentNode.style.setProperty('--pos',i.value+'%');});});
