@@ -65,6 +65,12 @@
     .dctl-desc { font-size: 14px; font-weight: 300; line-height: 1.75; opacity: 0.65; }
     .dctl-desc + .btn { margin-top: 24px; }
     .ba-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1320px; margin: 0 auto; }
+    .ba-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; border-radius: 8px; touch-action: pan-y; }
+    .ba-track::-webkit-scrollbar { display: none; }
+    .ba-slide { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
+    .ba-nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 14px; font-size: 10px; letter-spacing: 0.12em; color: rgba(40,40,40,0.5); }
+    .ba-nav button { background: none; border: 1px solid rgba(40,40,40,0.25); width: 34px; height: 28px; cursor: pointer; font: inherit; color: #282828; transition: background 0.2s; }
+    .ba-nav button:hover { background: rgba(40,40,40,0.08); }
     .dctl-split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; margin-bottom: 56px; }
     .dctl-split { container-type: inline-size; }
     .dctl-split .dctl-head { grid-template-columns: auto minmax(0, 1fr); gap: 32px; margin-bottom: 0; align-items: center; }
@@ -254,6 +260,7 @@ document.documentElement.lang=l;})();
 
     <!-- PV DRT -->
     <section class="dctl-section" id="pv-drt">
+      <div class="dctl-split">
       <div class="dctl-head">
         <div class="dctl-ui"><img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" loading="lazy"></div>
         <div class="dctl-text">
@@ -268,18 +275,32 @@ document.documentElement.lang=l;})();
         </div>
       </div>
 
-      <div class="ba-pair">
+        <div class="gallery-card">
+          <div class="ba-carousel">
+            <div class="ba-track">
+              <div class="ba-slide">
         <div class="ba-slider" style="--pos:50%">
           <div class="ph r16x9"><img class="ba-after" src="assets/dctl/drt-after-1.webp" alt="After: PV DRT, example 1" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-1.webp" alt="Before: PV DRT, example 1" loading="lazy"></div>
           <span class="ba-label ba-l"><span class="es">Antes</span><span class="en">Before</span></span><span class="ba-label ba-r"><span class="es">Después</span><span class="en">After</span></span>
           <span class="ba-handle"></span>
           <input type="range" min="0" max="100" value="50" aria-label="Before / After">
         </div>
+              </div>
+              <div class="ba-slide">
         <div class="ba-slider" style="--pos:50%">
           <div class="ph r16x9"><img class="ba-after" src="assets/dctl/drt-after-2.webp" alt="After: PV DRT, example 2" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-2.webp" alt="Before: PV DRT, example 2" loading="lazy"></div>
           <span class="ba-label ba-l"><span class="es">Antes</span><span class="en">Before</span></span><span class="ba-label ba-r"><span class="es">Después</span><span class="en">After</span></span>
           <span class="ba-handle"></span>
           <input type="range" min="0" max="100" value="50" aria-label="Before / After">
+        </div>
+              </div>
+            </div>
+            <div class="ba-nav">
+              <button type="button" class="ba-prev" aria-label="Previous example">&larr;</button>
+              <span class="ba-count">1 / 2</span>
+              <button type="button" class="ba-next" aria-label="Next example">&rarr;</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -339,6 +360,13 @@ document.documentElement.lang=l;})();
     function markLang(){langBtns.forEach(function(b){b.classList.toggle('is-on',b.dataset.setLang===document.documentElement.lang);});}
     langBtns.forEach(function(b){b.addEventListener('click',function(){document.documentElement.lang=b.dataset.setLang;try{localStorage.setItem('pv-lang',b.dataset.setLang);}catch(e){}markLang();});});
     markLang();
+    document.querySelectorAll('.ba-carousel').forEach(function(c){
+      var t=c.querySelector('.ba-track'),n=t.children.length,k=0,cnt=c.querySelector('.ba-count');
+      function go(i){k=(i+n)%n;t.scrollTo({left:k*t.clientWidth,behavior:'smooth'});cnt.textContent=(k+1)+' / '+n;}
+      window.addEventListener('resize',function(){t.scrollTo({left:k*t.clientWidth,behavior:'instant'});});
+      c.querySelector('.ba-prev').addEventListener('click',function(){go(k-1);});
+      c.querySelector('.ba-next').addEventListener('click',function(){go(k+1);});
+    });
     document.querySelectorAll('.ba-slider input').forEach(function(i){i.addEventListener('input',function(){i.parentNode.style.setProperty('--pos',i.value+'%');});});
     document.querySelectorAll('.footer-year').forEach(el => el.textContent = new Date().getFullYear());
     const overlay = document.getElementById('mobile-overlay');
