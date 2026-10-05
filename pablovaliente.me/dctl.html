@@ -59,7 +59,9 @@
 
     /* DCTL BLOCKS */
     .dctl-section { padding: 80px 60px; border-top: 1px solid rgba(40,40,40,0.1); }
-    .dctl-head { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; margin-bottom: 40px; }
+    .dctl-head { display: grid; grid-template-columns: 300px 1fr; gap: 80px; align-items: start; margin-bottom: 40px; }
+    .dctl-text { display: grid; grid-template-columns: 1fr; gap: 28px; }
+    .dctl-ui img { display: block; width: 100%; height: auto; }
     .dctl-name { font-size: clamp(30px, 4vw, 54px); font-weight: 500; letter-spacing: -0.03em; line-height: 0.96; }
     .dctl-desc { font-size: 14px; font-weight: 300; line-height: 1.75; opacity: 0.65; }
     .dctl-desc + .btn { margin-top: 24px; }
@@ -75,8 +77,6 @@
     .ba-nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 14px; font-size: 10px; letter-spacing: 0.12em; color: rgba(40,40,40,0.5); }
     .ba-nav button { background: none; border: 1px solid rgba(40,40,40,0.25); width: 34px; height: 28px; cursor: pointer; font: inherit; color: #282828; transition: background 0.2s; }
     .ba-nav button:hover { background: rgba(40,40,40,0.08); }
-    .ui-single { margin: 28px auto 0; max-width: 380px; }
-    .ui-single img { display: block; width: 100%; height: auto; }
     .ba-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: rgba(242,240,239,0.95); pointer-events: none; z-index: 1; }
     .ba-slider input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 3; }
     .caption { display: block; text-align: center; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(40,40,40,0.35); margin-top: 14px; }
@@ -142,8 +142,8 @@
       .hero-media { padding: 0 24px 16px; }
       .dctl-section { padding: 56px 24px; }
       .dctl-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 28px; }
+      .dctl-ui { max-width: 300px; }
       .gallery-card { padding: 12px; }
-      .ui-single { margin-top: 16px; max-width: 300px; }
       .last-section { padding: 80px 24px 40px; }
       .last-section footer { position: static; flex-wrap: wrap; justify-content: center; gap: 10px 28px; margin-top: 60px; }
       .last-section footer .footer-copy { order: 2; width: 100%; text-align: center; }
@@ -230,6 +230,8 @@ document.documentElement.lang=l;})();
     <!-- PV MASTER GRADE -->
     <section class="dctl-section" id="pv-master-grade">
       <div class="dctl-head">
+        <div class="dctl-ui"><img src="assets/dctl/master-grade-ui.webp" alt="PV Master Grade interface in DaVinci Resolve" loading="lazy"></div>
+        <div class="dctl-text">
         <div>
           <span class="section-label">DCTL · v1.0</span>
           <h2 class="dctl-name">PV Master Grade<br>Free Edition</h2>
@@ -238,6 +240,7 @@ document.documentElement.lang=l;})();
           <p class="dctl-desc"><span class="es">PV Master Grade reúne en un solo nodo los ajustes con los que se construye un etalonaje: exposición, balance de blancos, contraste, saturación y look. Trabaja en luz lineal dentro de DaVinci Wide Gamut, de modo que cada control responde como lo haría la luz real y no como un simple desplazamiento de valores.</span><span class="en">PV Master Grade brings together in a single node the adjustments used to build a grade: exposure, white balance, contrast, saturation and look. It works in linear light within DaVinci Wide Gamut, so every control responds the way real light would, not as a simple shift of values.</span></p>
           <p class="dctl-desc"><span class="es">Es la edición gratuita del plugin OFX PV Master Grade y usa su misma matemática de color. Con todos los controles en su valor por defecto, la imagen no cambia.</span><span class="en">It is the free edition of the PV Master Grade OFX plugin and uses the same color math. With all controls at their default values, the image does not change.</span></p>
           <a href="assets/dctl/PV-Master-Grade-Free-Edition.dctle" class="btn" download><span class="es">Descargar — Gratis</span><span class="en">Download — Free</span></a>
+        </div>
         </div>
       </div>
 
@@ -253,7 +256,6 @@ document.documentElement.lang=l;})();
           <span class="ba-count">1 / 2</span>
           <button type="button" class="ba-next" aria-label="Next example">&rarr;</button>
         </div>
-        <div class="ui-single"><img src="assets/dctl/master-grade-ui.webp" alt="PV Master Grade interface in DaVinci Resolve" loading="lazy"><span class="caption"><span class="es">Interfaz</span><span class="en">Interface</span></span></div>
       </div>
 
       <div class="feature-list">
@@ -303,6 +305,8 @@ document.documentElement.lang=l;})();
     <!-- PV DRT -->
     <section class="dctl-section" id="pv-drt">
       <div class="dctl-head">
+        <div class="dctl-ui"><img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" loading="lazy"></div>
+        <div class="dctl-text">
         <div>
           <span class="section-label">DCTL · v1.5</span>
           <h2 class="dctl-name">PV DRT</h2>
@@ -310,6 +314,7 @@ document.documentElement.lang=l;})();
         <div>
           <p class="dctl-desc"><span class="es">PV DRT es la transformación de salida: convierte la imagen de DaVinci Wide Gamut a lo que finalmente se ve en pantalla. Va en el último nodo, después del etalonaje, y sustituye a cualquier otro DRT o LUT de salida.</span><span class="en">PV DRT is the output transform: it converts the image from DaVinci Wide Gamut to what is finally seen on screen. It goes in the last node, after the grade, and replaces any other output DRT or LUT.</span></p>
           <a href="assets/dctl/PV-DRT.dctle" class="btn" download><span class="es">Descargar — Gratis</span><span class="en">Download — Free</span></a>
+        </div>
         </div>
       </div>
 
@@ -325,7 +330,6 @@ document.documentElement.lang=l;})();
           <span class="ba-count">1 / 2</span>
           <button type="button" class="ba-next" aria-label="Next example">&rarr;</button>
         </div>
-        <div class="ui-single"><img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" loading="lazy"><span class="caption"><span class="es">Interfaz</span><span class="en">Interface</span></span></div>
       </div>
 
       <div class="feature-list">
