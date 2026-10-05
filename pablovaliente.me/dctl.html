@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PV Color Tools — Pablo Valiente | Free DCTLs for DaVinci Resolve</title>
+  <meta name="description" content="PV Master Grade Free Edition and PV DRT: two free DCTLs for DaVinci Resolve Studio by Pablo Valiente, colorist based in Berlin."/>
+  <link rel="canonical" href="https://pablovaliente.me/dctl"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://pablovaliente.me/dctl"/>
+  <meta property="og:title" content="PV Color Tools — Pablo Valiente | Free DCTLs for DaVinci Resolve"/>
+  <meta property="og:image" content="https://pablovaliente.me/assets/dctl/master-grade-after-2.webp"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png"/>
+  <link rel="stylesheet" href="https://use.typekit.net/hgb1zjr.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #F2F0EF; color: #282828; font-family: "neue-haas-grotesk-display", sans-serif; -webkit-font-smoothing: antialiased; }
+
+    /* HEADER */
+    #site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; background: #F2F0EF; }
+    .header-logo { font-size: 18px; font-weight: 500; letter-spacing: 0; text-decoration: none; color: #282828; }
+    .header-nav { display: flex; gap: 40px; align-items: center; }
+    .header-nav a { font-size: 14px; font-weight: 500; letter-spacing: 0; text-decoration: none; color: #282828; opacity: 0.45; transition: opacity 0.2s; }
+    .header-nav a:hover, .header-nav a.is-active, #menu-btn:hover { opacity: 1; }
+    #menu-btn { background: none; border: none; cursor: pointer; padding: 0; font: inherit; font-size: 14px; font-weight: 500; color: #282828; opacity: 0.45; transition: opacity 0.2s; }
+    #burger-btn { display: none; background: none; border: none; cursor: pointer; padding: 4px; color: #282828; }
+
+    /* MOBILE OVERLAY */
+    #mobile-overlay { position: fixed; top: 0; right: 0; bottom: 0; width: min(360px, 86vw); background: #0a0a0a; z-index: 200; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 28px; padding: 0 48px; overflow: hidden; visibility: hidden; transform: translateX(100%); transition: transform 0.35s ease, visibility 0s linear 0.35s; }
+    #mobile-overlay.open { visibility: visible; transform: none; transition: transform 0.35s ease; }
+    #mobile-overlay::before { content: ''; position: absolute; inset: -20px; background-image: var(--overlay-img, none); background-size: cover; background-position: center; filter: blur(24px); z-index: 0; }
+    #mobile-overlay::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.72); z-index: 1; }
+    #mobile-overlay > * { position: relative; z-index: 2; }
+    #mobile-overlay a { font-size: 22px; font-weight: 500; text-decoration: none; color: rgba(255,255,255,0.55); transition: color 0.2s; }
+    #mobile-overlay a:hover, #mobile-overlay a.is-active { color: #fff; }
+    #menu-backdrop { position: fixed; inset: 0; z-index: 199; background: rgba(0,0,0,0.35); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+    #menu-backdrop.open { opacity: 1; pointer-events: auto; }
+    #burger-close { position: absolute !important; top: 24px; right: 24px; background: none; border: none; cursor: pointer; padding: 4px; color: rgba(255,255,255,0.7); }
+
+    /* SHARED */
+    .section-label { font-size: 9px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: #282828; opacity: 0.35; margin-bottom: 20px; display: block; }
+    .ph { position: relative; width: 100%; background: #E0DDDB; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(40,40,40,0.35); padding: 12px; }
+    .ph.r16x9 { aspect-ratio: 16/9; }
+    .ph.r4x3 { aspect-ratio: 4/3; }
+    .ph img, .ph video, .ph iframe { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 0; display: block; }
+    .btn { display: inline-block; font-size: 13px; font-weight: 500; letter-spacing: 0.02em; text-decoration: none; color: #F2F0EF; background: #282828; padding: 14px 28px; transition: opacity 0.2s; }
+    .btn:hover { opacity: 0.75; }
+
+    /* INTRO */
+
+    /* DCTL BLOCKS */
+    .dctl-section { padding: 80px 60px; border-top: 1px solid rgba(40,40,40,0.1); }
+    .dctl-text { display: grid; grid-template-columns: 1fr; gap: 28px; }
+    .dctl-ui img { display: block; width: 100%; height: auto; border-radius: 14px; }
+    .dctl-name { font-size: clamp(30px, 4vw, 54px); font-weight: 500; letter-spacing: -0.03em; line-height: 0.96; }
+    .dctl-desc { font-size: 14px; font-weight: 300; line-height: 1.75; opacity: 0.65; }
+    .dctl-desc + .btn { margin-top: 24px; }
+    .gallery-card { max-width: 1200px; margin: 0 auto; }
+    .ba-slider { border-radius: 8px; }
+    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .ba-item { position: relative; }
+    .ba-label { position: absolute; top: 10px; left: 10px; z-index: 2; font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; color: #282828; background: rgba(242,240,239,0.9); padding: 3px 7px; }
+    .ba-grid + .ba-grid { margin-top: 4px; }
+    .ba-slider { position: relative; overflow: hidden; }
+    .ba-slider + .ba-slider { margin-top: 4px; }
+    .ba-slider .ba-before { clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+    .ba-slider .ba-l { left: 10px; } .ba-slider .ba-r { left: auto; right: 10px; }
+    .ba-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: rgba(242,240,239,0.95); pointer-events: none; z-index: 1; }
+    .ba-slider input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 3; }
+    .caption { display: block; text-align: center; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(40,40,40,0.35); margin-top: 14px; }
+
+    /* LAST SECTION — dark, like project pages */
+
+    /* LANGUAGE */
+    html[lang="en"] .es, html[lang="es"] .en { display: none !important; }
+    .lang-switch { font-size: 13px; letter-spacing: 0.07em; display: flex; gap: 6px; align-items: center; margin-left: 4px; }
+    .lang-switch span { opacity: 0.3; }
+    .lang-switch button { background: none; border: none; cursor: pointer; font: inherit; color: #282828; opacity: 0.35; padding: 2px; transition: opacity 0.2s; }
+    .lang-switch button:hover, .lang-switch button.is-on { opacity: 1; }
+    #mobile-overlay .lang-switch { margin: 12px 0 0; font-size: 13px; color: #fff; }
+    #mobile-overlay .lang-switch button { color: #fff; }
+    #mobile-overlay .lang-switch span { color: #fff; }
+    /* FEATURES / TABLE / INFO */
+    .feature-list { margin-top: 56px; border-top: 1px solid rgba(40,40,40,0.1); }
+    .feature { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; padding: 28px 0; border-bottom: 1px solid rgba(40,40,40,0.1); }
+    .feature-title { font-size: 22px; font-weight: 500; letter-spacing: -0.01em; }
+    .feature-body p { font-size: 14px; font-weight: 300; line-height: 1.75; opacity: 0.65; }
+    .feature-body p + p { margin-top: 12px; }
+    .feature-body strong { font-weight: 500; }
+    .node-table { width: 100%; border-collapse: collapse; }
+    .node-table th { text-align: left; font-size: 9px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.35; padding: 0 24px 12px 0; border-bottom: 1px solid rgba(40,40,40,0.1); }
+    .node-table td { font-size: 14px; font-weight: 300; line-height: 1.6; padding: 18px 24px 18px 0; border-bottom: 1px solid rgba(40,40,40,0.1); opacity: 0.75; vertical-align: top; }
+    .node-table td:nth-child(2) { font-weight: 500; white-space: nowrap; }
+    .notes { margin-top: 28px; max-width: 560px; }
+    .notes .meta-label { margin-bottom: 8px; }
+    .notes p:not(.meta-label) { font-size: 13px; font-weight: 300; line-height: 1.75; opacity: 0.65; }
+    .info-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .btn-row .btn { margin-top: 0; }
+    .steps { list-style: none; counter-reset: s; }
+    .steps li { counter-increment: s; font-size: 14px; font-weight: 300; line-height: 1.6; opacity: 0.65; padding: 8px 0 8px 28px; position: relative; }
+    .steps li::before { content: counter(s) "."; position: absolute; left: 0; opacity: 0.6; }
+    .license-label { margin-top: 36px; }
+    @media (max-width: 768px) {
+      .feature { grid-template-columns: 1fr; gap: 12px; }
+      .info-cols { grid-template-columns: 1fr; gap: 40px; }
+      .node-table td:nth-child(2) { white-space: normal; }
+      .node-table th, .node-table td { padding-right: 12px; }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .intro-section, .dctl-section, .last-section { padding-left: 40px; padding-right: 40px; }
+    }
+    @media (max-width: 768px) {
+      #site-header { padding: 20px 24px; }
+      .header-nav { display: none; }
+      #burger-btn { display: block; }
+      .dctl-section { padding: 56px 24px; }
+              .dctl-ui { max-width: 300px; }
+    }
+
+    /* ── PAGE WRAP: one full-viewport zone per scroll (same as project pages) ── */
+    #page-wrap { height: 100vh; height: 100dvh; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; }
+    #page-wrap::-webkit-scrollbar, .intro-section::-webkit-scrollbar, .dctl-section::-webkit-scrollbar, .last-section::-webkit-scrollbar { display: none; }
+    .intro-section, .dctl-section, .last-section { scroll-snap-align: start; scroll-snap-stop: always; height: 100vh; height: 100dvh; min-height: 0; overflow-x: hidden; overflow-y: auto; scrollbar-width: none; }
+    .dctl-section { display: flex; flex-direction: column; justify-content: center; padding: 96px 60px 48px; border-top: 0; }
+    .dctl-section .dctl-ui img { width: auto; height: 30vh; }
+
+    /* DRT zone: title + text on top, interface left, example 03 right (inverse of Master Grade) */
+    .drt-layout { --h: min(56vh, calc((100vw - 160px) / 2.403)); display: grid; grid-template-columns: auto auto; justify-content: center; align-items: start; column-gap: 40px; row-gap: 5vh; }
+    .drt-top { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 480px); justify-content: space-between; align-items: center; gap: 56px; }
+    .drt-top > div:first-child { position: relative; }
+    .drt-top .section-label { position: absolute; left: 0; bottom: 100%; margin-bottom: 6px; white-space: nowrap; }
+    .drt-top .dctl-name { white-space: nowrap; font-size: 80px; line-height: 1; }
+    .drt-layout .dctl-ui img { height: var(--h); width: auto; }
+    .drt-card { position: relative; width: calc(var(--h) * 16 / 9); }
+    .drt-arrows { position: absolute; top: 100%; left: 0; margin-top: 8px; display: flex; }
+    .drt-arrow { background: none; border: none; cursor: pointer; color: #D6281F; width: 32px; height: 28px; display: flex; align-items: center; justify-content: center; padding: 0; }
+    .drt-dl, .btn.drt-dl { position: absolute; top: 100%; right: 0; margin-top: 8px; height: 28px; display: flex; align-items: center; padding: 0; background: none; border: none; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #D6281F; transition: color 0.2s; }
+    #pv-drt .btn.drt-dl { right: 12px; }
+    #pv-master-grade .btn.drt-dl { right: auto; left: 12px; }
+    .drt-dl:hover, .btn.drt-dl:hover { color: #7A130E; opacity: 1; }
+    .drt-p { font-size: 12px; font-weight: 300; line-height: 1.55; opacity: 0.75; }
+    .drt-p + .drt-p { margin-top: 8px; }
+    @media (max-width: 1100px) { .dctl-section, .last-section { padding-left: 40px; padding-right: 40px; } }
+    @media (max-width: 768px) {
+      .dctl-section { padding: 88px 24px 40px; justify-content: flex-start; }
+        .dctl-section .dctl-ui { max-width: 240px; }
+      .drt-layout { grid-template-columns: 1fr; row-gap: 24px; }
+      .drt-top { grid-template-columns: 1fr; gap: 20px; justify-items: start; }
+        .drt-top .dctl-name { font-size: 36px; white-space: normal; }
+      .drt-top .section-label { position: static; margin-bottom: 8px; }
+      .drt-layout .dctl-ui img { height: auto; width: 100%; max-width: 240px; }
+      .drt-card { width: 100%; }
+      }
+
+
+    /* FOOTER — same as the rest of the site */
+    #site-footer { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: #F2F0EF; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-col { font-size: 11px; font-weight: 400; opacity: 0.35; text-transform: uppercase; letter-spacing: 0.07em; }
+    .footer-col a { color: inherit; text-decoration: none; transition: opacity 0.2s; }
+    .footer-col a:hover { opacity: 1; }
+    footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
+    .footer-col:nth-child(2) { font-size: 15px; }
+    .mail-short { display: none; }
+    .dctl-section { padding-bottom: 84px; }
+    @media (max-width: 768px) {
+      #site-footer { flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 28px; padding: 16px 24px; }
+      .footer-col { text-align: center; }
+      .footer-col:first-child { order: 2; width: 100%; }
+      .footer-col:not(:first-child) { display: block; order: 1; font-size: 11px; letter-spacing: 0.07em; }
+      .footer-col:nth-child(2) { text-transform: uppercase; font-size: 11px; }
+      footer a[href^="mailto:"] { text-transform: uppercase; letter-spacing: 0.07em; font-size: 11px; }
+      .mail-full { display: none; }
+      .mail-short { display: inline; }
+      .dctl-section { padding-bottom: 120px; }
+    }
+  </style>
+<script>
+(function(){var l;try{l=localStorage.getItem('pv-lang');}catch(e){}
+if(l!=='es'&&l!=='en')l=(navigator.language||'en').toLowerCase().indexOf('es')===0?'es':'en';
+document.documentElement.lang=l;})();
+</script>
+</head>
+<body>
+<script>
+(function(){
+  var f=sessionStorage.getItem('slideFrom');
+  if(!f) return;
+  sessionStorage.removeItem('slideFrom');
+  if(window.innerWidth<=767){
+    document.body.style.opacity='0';
+    document.body.style.transform='translateY('+(f==='below'?'60px':'-60px')+')';
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      document.body.style.transition='transform 0.45s cubic-bezier(0.4,0,0.2,1),opacity 0.45s ease';
+      document.body.style.transform='';
+      document.body.style.opacity='1';
+    });});
+  }
+})();
+</script>
+
+  <div id="menu-backdrop"></div>
+  <div id="mobile-overlay" role="dialog" aria-modal="true" aria-label="Navigation">
+    <button id="burger-close" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 1l16 16M17 1L1 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <a href="index.html">Work</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-set-lang="en">EN</button><span>/</span><button type="button" data-set-lang="es">ES</button>
+    </div>
+  </div>
+
+  <header id="site-header">
+    <a href="index.html" class="header-logo">Pablo Valiente</a>
+    <nav class="header-nav">
+      <a href="dctl.html" class="is-active">DCTLs</a>
+      <button type="button" id="menu-btn" aria-haspopup="dialog">MENU</button>
+    </nav>
+    <button id="burger-btn" aria-label="Open menu" aria-expanded="false">
+      <svg width="20" height="14" viewBox="0 0 20 14" fill="none">
+        <rect width="20" height="1.5" fill="currentColor"/>
+        <rect y="6.25" width="20" height="1.5" fill="currentColor"/>
+        <rect y="12.5" width="20" height="1.5" fill="currentColor"/>
+      </svg>
+    </button>
+  </header>
+
+  <main>
+  <div id="page-wrap">
+
+    <section class="dctl-section" id="pv-drt">
+      <div class="drt-layout">
+        <div class="drt-top">
+          <div>
+            <span class="section-label">DCTL · v1.5</span>
+            <h2 class="dctl-name">PV DRT</h2>
+          </div>
+          <div>
+            <p class="dctl-desc"><span class="es">PV DRT es la transformación de salida: convierte la imagen de DaVinci Wide Gamut a lo que finalmente se ve en pantalla. Va en el último nodo, después del etalonaje, y sustituye a cualquier otro DRT o LUT de salida.</span><span class="en">PV DRT is the output transform: it converts the image from DaVinci Wide Gamut to what is finally seen on screen. It goes in the last node, after the grade, and replaces any other output DRT or LUT.</span></p>
+          </div>
+        </div>
+        <div class="dctl-ui"><img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" loading="lazy"></div>
+        <div class="drt-card">
+          <div class="ba-slider" style="--pos:50%">
+            <div class="ph r16x9"><img class="ba-after" src="assets/dctl/drt-after-1.webp" alt="PV DRT, example 1" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-1.webp" alt="Rec709, example 1" loading="lazy"></div>
+            <span class="ba-label ba-l">Rec709</span><span class="ba-label ba-r">PV DRT</span>
+            <span class="ba-handle"></span>
+            <input type="range" min="0" max="100" value="50" aria-label="Rec709 / PV DRT">
+          </div>
+          <div class="drt-arrows">
+            <button type="button" class="drt-arrow drt-prev" aria-label="Previous example"><svg width="8" height="14" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9l8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" class="drt-arrow drt-next" aria-label="Next example"><svg width="8" height="14" viewBox="0 0 10 18" fill="none"><path d="M1 1l8 8-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <a href="assets/dctl/PV-DRT.zip" class="btn drt-dl" download><span class="es">Descargar</span><span class="en">Download</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PV MASTER GRADE -->
+    <section class="dctl-section" id="pv-master-grade">
+      <div class="drt-layout">
+        <div class="drt-top">
+          <div>
+            <span class="section-label">DCTL · v1.0</span>
+            <h2 class="dctl-name">PV Master Grade</h2>
+          </div>
+          <div>
+            <p class="dctl-desc"><span class="es">PV Master Grade reúne en un solo nodo los ajustes de un etalonaje: exposición, balance de blancos, contraste, saturación, densidad y split tone. Trabaja en luz lineal dentro de DaVinci Wide Gamut, así que cada control responde como la luz real.</span><span class="en">PV Master Grade brings the adjustments of a grade into a single node: exposure, white balance, contrast, saturation, density and split tone. It works in linear light within DaVinci Wide Gamut, so every control responds like real light.</span></p>
+          </div>
+        </div>
+        <div class="drt-card">
+          <div class="ba-slider" style="--pos:50%">
+          <div class="ph r16x9"><img class="ba-after" src="assets/dctl/master-grade-after-2.webp" alt="After: PV Master Grade, example 2" loading="lazy"><img class="ba-before" src="assets/dctl/master-grade-before-2.webp" alt="Before: PV Master Grade, example 2" loading="lazy"></div>
+          <span class="ba-label ba-l"><span class="es">Antes</span><span class="en">Before</span></span><span class="ba-label ba-r"><span class="es">Después</span><span class="en">After</span></span>
+          <span class="ba-handle"></span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / After">
+        </div>
+          <a href="assets/dctl/PV-Master-Grade.zip" class="btn drt-dl" download><span class="es">Descargar</span><span class="en">Download</span></a>
+        </div>
+        <div class="dctl-ui"><img src="assets/dctl/master-grade-ui.webp" alt="PV Master Grade interface in DaVinci Resolve" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD / INSTALLATION GUIDE -->
+  </div><!-- /page-wrap -->
+  </main>
+
+  <footer id="site-footer" aria-label="Site footer">
+    <span class="footer-col">&copy; <span class="footer-year"></span> Pablo Valiente. All rights reserved.</span>
+    <span class="footer-col"><a href="mailto:contact@pablovaliente.me"><span class="mail-full">contact@pablovaliente.me</span><span class="mail-short">Mail</span></a></span>
+    <span class="footer-col"><a href="impressum.html">Impressum</a></span>
+    <span class="footer-col"><a href="https://instagram.com/pvaliente_" target="_blank" rel="noopener noreferrer">Instagram</a></span>
+  </footer>
+
+  <script>
+    var langBtns=document.querySelectorAll('[data-set-lang]');
+    function markLang(){langBtns.forEach(function(b){b.classList.toggle('is-on',b.dataset.setLang===document.documentElement.lang);});}
+    langBtns.forEach(function(b){b.addEventListener('click',function(){document.documentElement.lang=b.dataset.setLang;try{localStorage.setItem('pv-lang',b.dataset.setLang);}catch(e){}markLang();});});
+    markLang();
+    var DRT_EX=[1,3],drtIdx=0,drtCard=document.querySelector('#pv-drt .drt-card');
+    function drtShow(n,keep){drtIdx=(n+DRT_EX.length)%DRT_EX.length;var k=DRT_EX[drtIdx],a=drtCard.querySelector('.ba-after'),b=drtCard.querySelector('.ba-before'),sl=drtCard.querySelector('.ba-slider');a.src='assets/dctl/drt-after-'+k+'.webp';b.src='assets/dctl/drt-before-'+k+'.webp';a.alt='PV DRT, example '+k;b.alt='Rec709, example '+k;if(!keep){sl.style.setProperty('--pos','50%');sl.querySelector('input').value=50;}}
+    drtCard.querySelector('.drt-prev').addEventListener('click',function(){drtShow(drtIdx-1);});
+    drtCard.querySelector('.drt-next').addEventListener('click',function(){drtShow(drtIdx+1);});
+    /* intro animation: slider glides left -> right and stays, carousel switches example, slider glides from there back to the left */
+    (function(){
+      if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+      var sl=drtCard.querySelector('.ba-slider'),inp=sl.querySelector('input'),stop=false,R=92,L=8;
+      function setPos(v){sl.style.setProperty('--pos',v+'%');inp.value=v;}
+      function tween(from,to,ms,done){var t0=null;function step(t){if(stop)return;if(t0===null)t0=t;var p=Math.min((t-t0)/ms,1),e=p<0.5?2*p*p:1-Math.pow(-2*p+2,2)/2;setPos(from+(to-from)*e);if(p<1)requestAnimationFrame(step);else if(done)done();}requestAnimationFrame(step);}
+      ['pointerdown','keydown','touchstart'].forEach(function(ev){drtCard.addEventListener(ev,function(){stop=true;});});
+      setPos(L);
+      function go(){tween(L,R,650,function(){setTimeout(function(){if(stop)return;drtShow(1,true);setTimeout(function(){if(stop)return;tween(R,L,650);},200);},250);});}
+      function start(){setTimeout(function(){if(!stop)go();},350);}
+      if(document.readyState==='complete')start();else window.addEventListener('load',start);
+    })();
+    DRT_EX.forEach(function(k){new Image().src='assets/dctl/drt-after-'+k+'.webp';new Image().src='assets/dctl/drt-before-'+k+'.webp';});
+    /* title height = description paragraph height (cap height matched to paragraph box) */
+    function fitDrtTitle(){var t=document.querySelector('.drt-top .dctl-name'),p=document.querySelector('.drt-top .dctl-desc');if(!t||!p||window.innerWidth<=768){if(t)t.style.fontSize='';var m0=document.querySelector('#pv-master-grade .dctl-name');if(m0)m0.style.fontSize='';return;}
+      var cs=getComputedStyle(t),c=document.createElement('canvas').getContext('2d');c.font=cs.fontWeight+' 100px '+cs.fontFamily;var cap=c.measureText('PV DRT').actualBoundingBoxAscent||72;
+      var ph=p.getBoundingClientRect().height;var fs=ph*100/cap*0.6125;t.style.fontSize=fs+'px';t.style.lineHeight='1';var mt=document.querySelector('#pv-master-grade .dctl-name');if(mt){mt.style.fontSize=Math.min(fs,window.innerWidth*0.05)+'px';mt.style.lineHeight='1';}}
+    window.addEventListener('resize',fitDrtTitle);document.querySelectorAll('[data-set-lang]').forEach(function(b){b.addEventListener('click',function(){setTimeout(fitDrtTitle,0);});});
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitDrtTitle);fitDrtTitle();window.addEventListener('load',fitDrtTitle);
+    document.querySelectorAll('.ba-slider input').forEach(function(i){i.addEventListener('input',function(){i.parentNode.style.setProperty('--pos',i.value+'%');});});
+    document.querySelectorAll('.footer-year').forEach(el => el.textContent = new Date().getFullYear());
+    const overlay = document.getElementById('mobile-overlay');
+    const burgerBtn = document.getElementById('burger-btn');
+    const burgerClose = document.getElementById('burger-close');
+    function openMenu() { overlay.style.setProperty('--overlay-img', "url('assets/dctl/drt-after-3.webp')"); overlay.classList.add('open'); document.getElementById('menu-backdrop').classList.add('open'); burgerBtn.setAttribute('aria-expanded','true'); document.body.style.overflow = 'hidden'; }
+    function closeMenu() { overlay.classList.remove('open'); document.getElementById('menu-backdrop').classList.remove('open'); burgerBtn.setAttribute('aria-expanded','false'); document.body.style.overflow = ''; }
+    burgerBtn.addEventListener('click', openMenu);
+    document.getElementById('menu-btn').addEventListener('click', openMenu);
+    burgerClose.addEventListener('click', closeMenu);
+    document.getElementById('menu-backdrop').addEventListener('click', closeMenu);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+  </script>
+</body>
+</html>
