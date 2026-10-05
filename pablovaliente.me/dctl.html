@@ -177,6 +177,10 @@
     .dctl-split .dctl-head { margin-bottom: 0; grid-template-columns: auto minmax(0, 1fr); }
     .dctl-split .dctl-ui img { height: calc((100cqw - 56px) / 2 * 9 / 16); }
     .last-section { padding-top: 96px; }
+    #pv-master-grade .dctl-split .gallery-card { order: -1; }
+    .last-section { align-items: center; text-align: center; }
+    .last-section .soon-text { margin-left: auto; margin-right: auto; }
+    .last-section footer { justify-content: center; gap: 12px 64px; }
     @media (max-width: 1100px) { .dctl-section, .last-section { padding-left: 40px; padding-right: 40px; } }
     @media (max-width: 768px) {
       .dctl-section { padding: 88px 24px 40px; justify-content: flex-start; }
@@ -185,6 +189,7 @@
       .dctl-section .dctl-ui { max-width: 240px; }
       .dctl-section .ba-pair { max-width: none; }
       .intro-section { padding: 88px 24px 40px; align-content: start; }
+      #pv-master-grade .dctl-split .gallery-card { order: 0; }
     }
   </style>
 <script>
