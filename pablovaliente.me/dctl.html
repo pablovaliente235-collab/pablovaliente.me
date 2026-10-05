@@ -72,9 +72,13 @@
     .ba-slider + .ba-slider { margin-top: 4px; }
     .ba-slider .ba-before { clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
     .ba-slider .ba-l { left: 10px; } .ba-slider .ba-r { left: auto; right: 10px; }
+    .ba-nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 14px; font-size: 10px; letter-spacing: 0.12em; color: rgba(40,40,40,0.5); }
+    .ba-nav button { background: none; border: 1px solid rgba(40,40,40,0.25); width: 34px; height: 28px; cursor: pointer; font: inherit; color: #282828; transition: background 0.2s; }
+    .ba-nav button:hover { background: rgba(40,40,40,0.08); }
+    .ui-single { margin: 28px auto 0; max-width: 380px; }
+    .ui-single img { display: block; width: 100%; height: auto; }
     .ba-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: rgba(242,240,239,0.95); pointer-events: none; z-index: 1; }
     .ba-slider input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 3; }
-    .ui-row { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 28px; }
     .caption { display: block; text-align: center; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(40,40,40,0.35); margin-top: 14px; }
 
     /* LAST SECTION — dark, like project pages */
@@ -139,7 +143,7 @@
       .dctl-section { padding: 56px 24px; }
       .dctl-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 28px; }
       .gallery-card { padding: 12px; }
-      .ui-row { grid-template-columns: 1fr; gap: 16px; margin-top: 16px; }
+      .ui-single { margin-top: 16px; max-width: 300px; }
       .last-section { padding: 80px 24px 40px; }
       .last-section footer { position: static; flex-wrap: wrap; justify-content: center; gap: 10px 28px; margin-top: 60px; }
       .last-section footer .footer-copy { order: 2; width: 100%; text-align: center; }
@@ -238,22 +242,18 @@ document.documentElement.lang=l;})();
       </div>
 
       <div class="gallery-card">
-        <div class="ba-slider" style="--pos:50%">
-          <div class="ph r16x9"><img src="assets/dctl/master-grade-after-1.webp" alt="After: PV Master Grade, first frame" loading="lazy"><img class="ba-before" src="assets/dctl/master-grade-before-1.webp" alt="Before: PV Master Grade, first frame, log ungraded" loading="lazy"></div>
+        <div class="ba-slider" style="--pos:50%" data-pairs='[["assets/dctl/master-grade-before-1.webp", "assets/dctl/master-grade-after-1.webp", "Before: PV Master Grade, example 1", "After: PV Master Grade, example 1"], ["assets/dctl/master-grade-before-2.webp", "assets/dctl/master-grade-after-2.webp", "Before: PV Master Grade, example 2", "After: PV Master Grade, example 2"]]'>
+          <div class="ph r16x9"><img class="ba-after" src="assets/dctl/master-grade-after-1.webp" alt="After: PV Master Grade, example 1" loading="lazy"><img class="ba-before" src="assets/dctl/master-grade-before-1.webp" alt="Before: PV Master Grade, example 1" loading="lazy"></div>
           <span class="ba-label ba-l"><span class="es">Antes</span><span class="en">Before</span></span><span class="ba-label ba-r"><span class="es">Después</span><span class="en">After</span></span>
           <span class="ba-handle"></span>
           <input type="range" min="0" max="100" value="50" aria-label="Before / After">
         </div>
-        <div class="ba-slider" style="--pos:50%">
-          <div class="ph r16x9"><img src="assets/dctl/master-grade-after-2.webp" alt="After: PV Master Grade, second frame" loading="lazy"><img class="ba-before" src="assets/dctl/master-grade-before-2.webp" alt="Before: PV Master Grade, second frame, log ungraded" loading="lazy"></div>
-          <span class="ba-label ba-l"><span class="es">Antes</span><span class="en">Before</span></span><span class="ba-label ba-r"><span class="es">Después</span><span class="en">After</span></span>
-          <span class="ba-handle"></span>
-          <input type="range" min="0" max="100" value="50" aria-label="Before / After">
+        <div class="ba-nav">
+          <button type="button" class="ba-prev" aria-label="Previous example">&larr;</button>
+          <span class="ba-count">1 / 2</span>
+          <button type="button" class="ba-next" aria-label="Next example">&rarr;</button>
         </div>
-        <div class="ui-row">
-          <div><div class="ph r4x3"><img src="assets/dctl/master-grade-ui.webp" alt="PV Master Grade interface in DaVinci Resolve" loading="lazy"></div><span class="caption"><span class="es">Interfaz</span><span class="en">Interface</span></span></div>
-          <div><div class="ph r4x3"><span class="es">Parámetros / scopes</span><span class="en">Parameters / scopes</span></div><span class="caption"><span class="es">Parámetros</span><span class="en">Parameters</span></span></div>
-        </div>
+        <div class="ui-single"><img src="assets/dctl/master-grade-ui.webp" alt="PV Master Grade interface in DaVinci Resolve" loading="lazy"><span class="caption"><span class="es">Interfaz</span><span class="en">Interface</span></span></div>
       </div>
 
       <div class="feature-list">
@@ -314,22 +314,18 @@ document.documentElement.lang=l;})();
       </div>
 
       <div class="gallery-card">
-        <div class="ba-slider" style="--pos:50%">
-          <div class="ph r16x9"><img src="assets/dctl/drt-after-1.webp" alt="After: PV DRT, first frame" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-1.webp" alt="Before: PV DRT, first frame, standard color space transform" loading="lazy"></div>
+        <div class="ba-slider" style="--pos:50%" data-pairs='[["assets/dctl/drt-before-1.webp", "assets/dctl/drt-after-1.webp", "Before: PV DRT, example 1", "After: PV DRT, example 1"], ["assets/dctl/drt-before-2.webp", "assets/dctl/drt-after-2.webp", "Before: PV DRT, example 2", "After: PV DRT, example 2"]]'>
+          <div class="ph r16x9"><img class="ba-after" src="assets/dctl/drt-after-1.webp" alt="After: PV DRT, example 1" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-1.webp" alt="Before: PV DRT, example 1" loading="lazy"></div>
           <span class="ba-label ba-l"><span class="es">Antes</span><span class="en">Before</span></span><span class="ba-label ba-r"><span class="es">Después</span><span class="en">After</span></span>
           <span class="ba-handle"></span>
           <input type="range" min="0" max="100" value="50" aria-label="Before / After">
         </div>
-        <div class="ba-slider" style="--pos:50%">
-          <div class="ph r16x9"><img src="assets/dctl/drt-after-2.webp" alt="After: PV DRT, second frame" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-2.webp" alt="Before: PV DRT, second frame, standard color space transform" loading="lazy"></div>
-          <span class="ba-label ba-l"><span class="es">Antes</span><span class="en">Before</span></span><span class="ba-label ba-r"><span class="es">Después</span><span class="en">After</span></span>
-          <span class="ba-handle"></span>
-          <input type="range" min="0" max="100" value="50" aria-label="Before / After">
+        <div class="ba-nav">
+          <button type="button" class="ba-prev" aria-label="Previous example">&larr;</button>
+          <span class="ba-count">1 / 2</span>
+          <button type="button" class="ba-next" aria-label="Next example">&rarr;</button>
         </div>
-        <div class="ui-row">
-          <div><div class="ph r4x3"><img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" loading="lazy"></div><span class="caption"><span class="es">Interfaz</span><span class="en">Interface</span></span></div>
-          <div><div class="ph r4x3"><img src="assets/dctl/drt-scope.webp" alt="Vectorscope of a frame rendered with PV DRT" loading="lazy"></div><span class="caption"><span class="es">Parámetros</span><span class="en">Parameters</span></span></div>
-        </div>
+        <div class="ui-single"><img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" loading="lazy"><span class="caption"><span class="es">Interfaz</span><span class="en">Interface</span></span></div>
       </div>
 
       <div class="feature-list">
@@ -434,7 +430,15 @@ document.documentElement.lang=l;})();
     function markLang(){langBtns.forEach(function(b){b.classList.toggle('is-on',b.dataset.setLang===document.documentElement.lang);});}
     langBtns.forEach(function(b){b.addEventListener('click',function(){document.documentElement.lang=b.dataset.setLang;try{localStorage.setItem('pv-lang',b.dataset.setLang);}catch(e){}markLang();});});
     markLang();
-    document.querySelectorAll('.ba-slider input').forEach(function(i){i.addEventListener('input',function(){i.parentNode.style.setProperty('--pos',i.value+'%');});});
+    document.querySelectorAll('.ba-slider').forEach(function(s){
+      var i=s.querySelector('input'),pairs=JSON.parse(s.dataset.pairs),n=0,card=s.parentNode;
+      var ia=s.querySelector('.ba-after'),ib=s.querySelector('.ba-before'),c=card.querySelector('.ba-count');
+      i.addEventListener('input',function(){s.style.setProperty('--pos',i.value+'%');});
+      function show(k){n=(k+pairs.length)%pairs.length;ib.src=pairs[n][0];ia.src=pairs[n][1];ib.alt=pairs[n][2];ia.alt=pairs[n][3];c.textContent=(n+1)+' / '+pairs.length;}
+      card.querySelector('.ba-prev').addEventListener('click',function(){show(n-1);});
+      card.querySelector('.ba-next').addEventListener('click',function(){show(n+1);});
+      pairs.forEach(function(p){new Image().src=p[0];new Image().src=p[1];});
+    });
     document.querySelectorAll('.footer-year').forEach(el => el.textContent = new Date().getFullYear());
     const overlay = document.getElementById('mobile-overlay');
     const burgerBtn = document.getElementById('burger-btn');
