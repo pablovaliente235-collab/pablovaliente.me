@@ -68,6 +68,12 @@
     .ba-item { position: relative; }
     .ba-label { position: absolute; top: 10px; left: 10px; z-index: 2; font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; color: #282828; background: rgba(242,240,239,0.9); padding: 3px 7px; }
     .ba-grid + .ba-grid { margin-top: 4px; }
+    .ba-slider { position: relative; overflow: hidden; }
+    .ba-slider + .ba-slider { margin-top: 4px; }
+    .ba-slider .ba-before { clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+    .ba-slider .ba-l { left: 10px; } .ba-slider .ba-r { left: auto; right: 10px; }
+    .ba-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: rgba(242,240,239,0.95); pointer-events: none; z-index: 1; }
+    .ba-slider input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 3; }
     .ui-row { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 28px; }
     .caption { display: block; text-align: center; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(40,40,40,0.35); margin-top: 14px; }
 
@@ -232,13 +238,17 @@ document.documentElement.lang=l;})();
       </div>
 
       <div class="gallery-card">
-        <div class="ba-grid">
-          <div class="ba-item"><span class="ba-label"><span class="es">Antes</span><span class="en">Before</span></span><div class="ph r16x9"><img src="assets/dctl/master-grade-before-1.webp" alt="Before: PV Master Grade, first frame, log ungraded" loading="lazy"></div></div>
-          <div class="ba-item"><span class="ba-label"><span class="es">Después</span><span class="en">After</span></span><div class="ph r16x9"><img src="assets/dctl/master-grade-after-1.webp" alt="After: PV Master Grade, first frame" loading="lazy"></div></div>
+        <div class="ba-slider" style="--pos:50%">
+          <div class="ph r16x9"><img src="assets/dctl/master-grade-after-1.webp" alt="After: PV Master Grade, first frame" loading="lazy"><img class="ba-before" src="assets/dctl/master-grade-before-1.webp" alt="Before: PV Master Grade, first frame, log ungraded" loading="lazy"></div>
+          <span class="ba-label ba-l"><span class="es">Antes</span><span class="en">Before</span></span><span class="ba-label ba-r"><span class="es">Después</span><span class="en">After</span></span>
+          <span class="ba-handle"></span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / After">
         </div>
-        <div class="ba-grid">
-          <div class="ba-item"><span class="ba-label"><span class="es">Antes</span><span class="en">Before</span></span><div class="ph r16x9"><img src="assets/dctl/master-grade-before-2.webp" alt="Before: PV Master Grade, second frame, log ungraded" loading="lazy"></div></div>
-          <div class="ba-item"><span class="ba-label"><span class="es">Después</span><span class="en">After</span></span><div class="ph r16x9"><img src="assets/dctl/master-grade-after-2.webp" alt="After: PV Master Grade, second frame" loading="lazy"></div></div>
+        <div class="ba-slider" style="--pos:50%">
+          <div class="ph r16x9"><img src="assets/dctl/master-grade-after-2.webp" alt="After: PV Master Grade, second frame" loading="lazy"><img class="ba-before" src="assets/dctl/master-grade-before-2.webp" alt="Before: PV Master Grade, second frame, log ungraded" loading="lazy"></div>
+          <span class="ba-label ba-l"><span class="es">Antes</span><span class="en">Before</span></span><span class="ba-label ba-r"><span class="es">Después</span><span class="en">After</span></span>
+          <span class="ba-handle"></span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / After">
         </div>
         <div class="ui-row">
           <div><div class="ph r4x3"><img src="assets/dctl/master-grade-ui.webp" alt="PV Master Grade interface in DaVinci Resolve" loading="lazy"></div><span class="caption"><span class="es">Interfaz</span><span class="en">Interface</span></span></div>
@@ -304,13 +314,17 @@ document.documentElement.lang=l;})();
       </div>
 
       <div class="gallery-card">
-        <div class="ba-grid">
-          <div class="ba-item"><span class="ba-label"><span class="es">Antes</span><span class="en">Before</span></span><div class="ph r16x9"><img src="assets/dctl/drt-before-1.webp" alt="Before: PV DRT, first frame, standard color space transform" loading="lazy"></div></div>
-          <div class="ba-item"><span class="ba-label"><span class="es">Después</span><span class="en">After</span></span><div class="ph r16x9"><img src="assets/dctl/drt-after-1.webp" alt="After: PV DRT, first frame" loading="lazy"></div></div>
+        <div class="ba-slider" style="--pos:50%">
+          <div class="ph r16x9"><img src="assets/dctl/drt-after-1.webp" alt="After: PV DRT, first frame" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-1.webp" alt="Before: PV DRT, first frame, standard color space transform" loading="lazy"></div>
+          <span class="ba-label ba-l"><span class="es">Antes</span><span class="en">Before</span></span><span class="ba-label ba-r"><span class="es">Después</span><span class="en">After</span></span>
+          <span class="ba-handle"></span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / After">
         </div>
-        <div class="ba-grid">
-          <div class="ba-item"><span class="ba-label"><span class="es">Antes</span><span class="en">Before</span></span><div class="ph r16x9"><img src="assets/dctl/drt-before-2.webp" alt="Before: PV DRT, second frame, standard color space transform" loading="lazy"></div></div>
-          <div class="ba-item"><span class="ba-label"><span class="es">Después</span><span class="en">After</span></span><div class="ph r16x9"><img src="assets/dctl/drt-after-2.webp" alt="After: PV DRT, second frame" loading="lazy"></div></div>
+        <div class="ba-slider" style="--pos:50%">
+          <div class="ph r16x9"><img src="assets/dctl/drt-after-2.webp" alt="After: PV DRT, second frame" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-2.webp" alt="Before: PV DRT, second frame, standard color space transform" loading="lazy"></div>
+          <span class="ba-label ba-l"><span class="es">Antes</span><span class="en">Before</span></span><span class="ba-label ba-r"><span class="es">Después</span><span class="en">After</span></span>
+          <span class="ba-handle"></span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / After">
         </div>
         <div class="ui-row">
           <div><div class="ph r4x3"><img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" loading="lazy"></div><span class="caption"><span class="es">Interfaz</span><span class="en">Interface</span></span></div>
@@ -420,6 +434,7 @@ document.documentElement.lang=l;})();
     function markLang(){langBtns.forEach(function(b){b.classList.toggle('is-on',b.dataset.setLang===document.documentElement.lang);});}
     langBtns.forEach(function(b){b.addEventListener('click',function(){document.documentElement.lang=b.dataset.setLang;try{localStorage.setItem('pv-lang',b.dataset.setLang);}catch(e){}markLang();});});
     markLang();
+    document.querySelectorAll('.ba-slider input').forEach(function(i){i.addEventListener('input',function(){i.parentNode.style.setProperty('--pos',i.value+'%');});});
     document.querySelectorAll('.footer-year').forEach(el => el.textContent = new Date().getFullYear());
     const overlay = document.getElementById('mobile-overlay');
     const burgerBtn = document.getElementById('burger-btn');
