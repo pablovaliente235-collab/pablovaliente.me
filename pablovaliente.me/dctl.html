@@ -182,7 +182,8 @@
     .drt-top { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 480px); justify-content: space-between; align-items: center; gap: 56px; }
     .drt-top > div:first-child { position: relative; }
     .drt-top .section-label { position: absolute; left: 0; bottom: 100%; margin-bottom: 6px; white-space: nowrap; }
-    .drt-download { grid-column: 1; grid-row: 3; margin-top: -2vh; }
+    .drt-dl { position: absolute; top: 100%; left: 0; min-width: 150px; margin-top: 12px; padding: 8px 0; border-top: 1px solid rgba(40,40,40,0.45); border-bottom: 1px solid rgba(40,40,40,0.45); text-align: center; font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: #282828; transition: opacity 0.2s; white-space: nowrap; }
+    .drt-dl:hover { opacity: 0.55; }
     .drt-top .dctl-name { white-space: nowrap; font-size: 80px; line-height: 1; }
     .drt-layout .dctl-ui img { height: var(--h); width: auto; }
     .drt-card { position: relative; width: calc(var(--h) * 16 / 9); }
@@ -204,9 +205,9 @@
       .intro-section { padding: 88px 24px 40px; align-content: start; }
       .drt-layout { grid-template-columns: 1fr; row-gap: 24px; }
       .drt-top { grid-template-columns: 1fr; gap: 20px; justify-items: start; }
-      .drt-download { grid-column: 1; grid-row: auto; margin-top: 16px; }
-      .drt-top .dctl-name { font-size: 44px; }
+        .drt-top .dctl-name { font-size: 44px; }
       .drt-top .section-label { position: static; margin-bottom: 8px; }
+      .drt-dl { position: static; display: inline-block; margin-top: 12px; }
       .drt-layout .dctl-ui img { height: auto; width: 100%; max-width: 240px; }
       .drt-card { width: 100%; }
       #pv-master-grade .dctl-split .gallery-card { order: 0; }
@@ -296,6 +297,7 @@ document.documentElement.lang=l;})();
           <div>
             <span class="section-label">DCTL · v1.5</span>
             <h2 class="dctl-name">PV DRT</h2>
+            <a href="assets/dctl/PV-DRT.dctle" class="drt-dl" download><span class="es">Descarga</span><span class="en">Download</span></a>
           </div>
           <div>
             <p class="dctl-desc"><span class="es">PV DRT es la transformación de salida: convierte la imagen de DaVinci Wide Gamut a lo que finalmente se ve en pantalla. Va en el último nodo, después del etalonaje, y sustituye a cualquier otro DRT o LUT de salida.</span><span class="en">PV DRT is the output transform: it converts the image from DaVinci Wide Gamut to what is finally seen on screen. It goes in the last node, after the grade, and replaces any other output DRT or LUT.</span></p>
@@ -314,7 +316,6 @@ document.documentElement.lang=l;})();
             <button type="button" class="drt-arrow drt-next" aria-label="Next example"><svg width="8" height="14" viewBox="0 0 10 18" fill="none"><path d="M1 1l8 8-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
         </div>
-        <div class="drt-download"><a href="assets/dctl/PV-DRT.dctle" class="btn" download><span class="es">Descargar — Gratis</span><span class="en">Download — Free</span></a></div>
       </div>
     </section>
 
@@ -381,7 +382,7 @@ document.documentElement.lang=l;})();
     /* title height = description paragraph height (cap height matched to paragraph box) */
     function fitDrtTitle(){var t=document.querySelector('.drt-top .dctl-name'),p=document.querySelector('.drt-top .dctl-desc');if(!t||!p||window.innerWidth<=768){if(t)t.style.fontSize='';return;}
       var cs=getComputedStyle(t),c=document.createElement('canvas').getContext('2d');c.font=cs.fontWeight+' 100px '+cs.fontFamily;var cap=c.measureText('PV DRT').actualBoundingBoxAscent||72;
-      var ph=p.getBoundingClientRect().height;t.style.fontSize=(ph*100/cap*0.7)+'px';t.style.lineHeight='1';}
+      var ph=p.getBoundingClientRect().height;t.style.fontSize=(ph*100/cap*0.35)+'px';t.style.lineHeight='1';}
     window.addEventListener('resize',fitDrtTitle);document.querySelectorAll('[data-set-lang]').forEach(function(b){b.addEventListener('click',function(){setTimeout(fitDrtTitle,0);});});
     if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitDrtTitle);fitDrtTitle();window.addEventListener('load',fitDrtTitle);
     document.querySelectorAll('.ba-slider input').forEach(function(i){i.addEventListener('input',function(){i.parentNode.style.setProperty('--pos',i.value+'%');});});
