@@ -138,9 +138,10 @@
     .drt-top .dctl-name { white-space: nowrap; font-size: 80px; line-height: 1; }
     .drt-layout .dctl-ui img { height: var(--h); width: auto; }
     .drt-card { position: relative; width: calc(var(--h) * 16 / 9); }
-    .drt-arrows { position: absolute; top: 100%; right: 0; margin-top: 8px; display: flex; }
+    .drt-arrows { position: absolute; top: 100%; left: 0; margin-top: 8px; display: flex; }
     .drt-arrow { background: none; border: none; cursor: pointer; color: rgba(40,40,40,0.35); width: 32px; height: 28px; display: flex; align-items: center; justify-content: center; padding: 0; transition: color 0.2s; }
     .drt-arrow:hover { color: #282828; }
+    .drt-dl { position: absolute; top: 100%; right: 0; margin-top: 8px; padding: 9px 18px; font-size: 12px; }
     .drt-p { font-size: 12px; font-weight: 300; line-height: 1.55; opacity: 0.75; }
     .drt-p + .drt-p { margin-top: 8px; }
     @media (max-width: 1100px) { .dctl-section, .last-section { padding-left: 40px; padding-right: 40px; } }
@@ -255,6 +256,7 @@ document.documentElement.lang=l;})();
             <button type="button" class="drt-arrow drt-prev" aria-label="Previous example"><svg width="8" height="14" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9l8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <button type="button" class="drt-arrow drt-next" aria-label="Next example"><svg width="8" height="14" viewBox="0 0 10 18" fill="none"><path d="M1 1l8 8-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
+          <a href="assets/dctl/PV-DRT.dctle" class="btn drt-dl" download><span class="es">Descargar</span><span class="en">Download</span></a>
         </div>
       </div>
     </section>
@@ -278,6 +280,7 @@ document.documentElement.lang=l;})();
           <span class="ba-handle"></span>
           <input type="range" min="0" max="100" value="50" aria-label="Before / After">
         </div>
+          <a href="assets/dctl/PV-Master-Grade-Free-Edition.dctle" class="btn drt-dl" download><span class="es">Descargar</span><span class="en">Download</span></a>
         </div>
         <div class="dctl-ui"><img src="assets/dctl/master-grade-ui.webp" alt="PV Master Grade interface in DaVinci Resolve" loading="lazy"></div>
       </div>
