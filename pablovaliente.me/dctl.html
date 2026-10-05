@@ -182,13 +182,12 @@
     .drt-top { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 480px) auto; justify-content: space-between; align-items: center; gap: 56px; }
     .drt-top > div:first-child { position: relative; }
     .drt-top .section-label { position: absolute; left: 0; bottom: 100%; margin-bottom: 6px; white-space: nowrap; }
-    .drt-top .dctl-name { white-space: nowrap; font-size: clamp(44px, 6vw, 92px); }
+    .drt-top .dctl-name { white-space: nowrap; font-size: 80px; line-height: 1; }
     .drt-layout .dctl-ui img { height: var(--h); width: auto; }
-    .drt-layout .ba-slider { width: calc(var(--h) * 16 / 9); }
-    /* DRT gallery zone: two equal examples */
-    .gallery-card-two { background: #E9E7E6; padding: 28px; box-shadow: 0 1px 8px rgba(0,0,0,0.04); max-width: none; width: 100%; margin: 0 auto; }
-    .gallery-two { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; max-width: calc(2 * 50vh * 16 / 9 + 4px); margin: 0 auto; }
-    .gallery-two .ba-slider { border-radius: 0; aspect-ratio: 16 / 9; }
+    .drt-card { position: relative; width: calc(var(--h) * 16 / 9); }
+    .drt-arrows { position: absolute; top: 100%; right: 0; margin-top: 8px; display: flex; }
+    .drt-arrow { background: none; border: none; cursor: pointer; color: rgba(40,40,40,0.35); width: 32px; height: 28px; display: flex; align-items: center; justify-content: center; padding: 0; transition: color 0.2s; }
+    .drt-arrow:hover { color: #282828; }
     .last-section { padding-top: 96px; }
     #pv-master-grade .dctl-split .gallery-card { order: -1; }
     .last-section { align-items: center; text-align: center; }
@@ -207,9 +206,7 @@
       .drt-top .dctl-name { font-size: 44px; }
       .drt-top .section-label { position: static; margin-bottom: 8px; }
       .drt-layout .dctl-ui img { height: auto; width: 100%; max-width: 240px; }
-      .drt-layout .ba-slider { width: 100%; }
-      .gallery-card-two { padding: 12px; }
-      .gallery-two { grid-template-columns: 1fr; gap: 8px; max-width: none; }
+      .drt-card { width: 100%; }
       #pv-master-grade .dctl-split .gallery-card { order: 0; }
       .intro-media { gap: 12px; }
       .intro-media img { height: auto; width: calc(50% - 6px); }
@@ -306,30 +303,16 @@ document.documentElement.lang=l;})();
           </div>
         </div>
         <div class="dctl-ui"><img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" loading="lazy"></div>
-        <div class="ba-slider" style="--pos:50%">
-          <div class="ph r16x9"><img class="ba-after" src="assets/dctl/drt-after-3.webp" alt="PV DRT, example 3" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-3.webp" alt="Rec709, example 3" loading="lazy"></div>
-          <span class="ba-label ba-l">Rec709</span><span class="ba-label ba-r">PV DRT</span>
-          <span class="ba-handle"></span>
-          <input type="range" min="0" max="100" value="50" aria-label="Rec709 / PV DRT">
-        </div>
-      </div>
-    </section>
-
-    <!-- PV DRT GALLERY -->
-    <section class="dctl-section" id="pv-drt-gallery">
-      <div class="gallery-card gallery-card-two">
-        <div class="gallery-two">
+        <div class="drt-card">
           <div class="ba-slider" style="--pos:50%">
-            <div class="ph r16x9"><img class="ba-after" src="assets/dctl/drt-after-1.webp" alt="PV DRT, example 1" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-1.webp" alt="Rec709, example 1" loading="lazy"></div>
+            <div class="ph r16x9"><img class="ba-after" src="assets/dctl/drt-after-3.webp" alt="PV DRT, example 3" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-3.webp" alt="Rec709, example 3" loading="lazy"></div>
             <span class="ba-label ba-l">Rec709</span><span class="ba-label ba-r">PV DRT</span>
             <span class="ba-handle"></span>
             <input type="range" min="0" max="100" value="50" aria-label="Rec709 / PV DRT">
           </div>
-          <div class="ba-slider" style="--pos:50%">
-            <div class="ph r16x9"><img class="ba-after" src="assets/dctl/drt-after-2.webp" alt="PV DRT, example 2" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-2.webp" alt="Rec709, example 2" loading="lazy"></div>
-            <span class="ba-label ba-l">Rec709</span><span class="ba-label ba-r">PV DRT</span>
-            <span class="ba-handle"></span>
-            <input type="range" min="0" max="100" value="50" aria-label="Rec709 / PV DRT">
+          <div class="drt-arrows">
+            <button type="button" class="drt-arrow drt-prev" aria-label="Previous example"><svg width="8" height="14" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9l8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" class="drt-arrow drt-next" aria-label="Next example"><svg width="8" height="14" viewBox="0 0 10 18" fill="none"><path d="M1 1l8 8-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
         </div>
       </div>
@@ -390,6 +373,17 @@ document.documentElement.lang=l;})();
     function markLang(){langBtns.forEach(function(b){b.classList.toggle('is-on',b.dataset.setLang===document.documentElement.lang);});}
     langBtns.forEach(function(b){b.addEventListener('click',function(){document.documentElement.lang=b.dataset.setLang;try{localStorage.setItem('pv-lang',b.dataset.setLang);}catch(e){}markLang();});});
     markLang();
+    var DRT_EX=[3,1],drtIdx=0,drtCard=document.querySelector('.drt-card');
+    function drtShow(n){drtIdx=(n+DRT_EX.length)%DRT_EX.length;var k=DRT_EX[drtIdx],a=drtCard.querySelector('.ba-after'),b=drtCard.querySelector('.ba-before'),sl=drtCard.querySelector('.ba-slider');a.src='assets/dctl/drt-after-'+k+'.webp';b.src='assets/dctl/drt-before-'+k+'.webp';a.alt='PV DRT, example '+k;b.alt='Rec709, example '+k;sl.style.setProperty('--pos','50%');sl.querySelector('input').value=50;}
+    drtCard.querySelector('.drt-prev').addEventListener('click',function(){drtShow(drtIdx-1);});
+    drtCard.querySelector('.drt-next').addEventListener('click',function(){drtShow(drtIdx+1);});
+    DRT_EX.forEach(function(k){new Image().src='assets/dctl/drt-after-'+k+'.webp';new Image().src='assets/dctl/drt-before-'+k+'.webp';});
+    /* title height = description paragraph height (cap height matched to paragraph box) */
+    function fitDrtTitle(){var t=document.querySelector('.drt-top .dctl-name'),p=document.querySelector('.drt-top .dctl-desc');if(!t||!p||window.innerWidth<=768){if(t)t.style.fontSize='';return;}
+      var cs=getComputedStyle(t),c=document.createElement('canvas').getContext('2d');c.font=cs.fontWeight+' 100px '+cs.fontFamily;var cap=c.measureText('PV DRT').actualBoundingBoxAscent||72;
+      var ph=p.getBoundingClientRect().height;t.style.fontSize=(ph*100/cap)+'px';t.style.lineHeight='1';}
+    window.addEventListener('resize',fitDrtTitle);document.querySelectorAll('[data-set-lang]').forEach(function(b){b.addEventListener('click',function(){setTimeout(fitDrtTitle,0);});});
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitDrtTitle);fitDrtTitle();window.addEventListener('load',fitDrtTitle);
     document.querySelectorAll('.ba-slider input').forEach(function(i){i.addEventListener('input',function(){i.parentNode.style.setProperty('--pos',i.value+'%');});});
     document.querySelectorAll('.footer-year').forEach(el => el.textContent = new Date().getFullYear());
     const overlay = document.getElementById('mobile-overlay');
