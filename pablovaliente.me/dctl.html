@@ -172,13 +172,16 @@
     .drt-arrow { background: none; border: none; cursor: pointer; color: rgba(40,40,40,0.35); width: 32px; height: 28px; display: flex; align-items: center; justify-content: center; padding: 0; transition: color 0.2s; }
     .drt-arrow:hover { color: #282828; }
     .last-section { padding-top: 96px; }
-    .intro-drt-title { font-size: clamp(40px, 4.4vw, 64px); font-weight: 500; letter-spacing: -0.03em; line-height: 1; }
-    .intro-drt { display: flex; align-items: center; justify-content: center; gap: 48px; width: 100%; }
-    .ic-sq { flex: 0 0 auto; width: min(44vh, 400px); aspect-ratio: 1; overflow: hidden; border-radius: 8px; background: #151515; }
+    .intro-drt-title { font-size: clamp(32px, 3.6vw, 52px); font-weight: 500; letter-spacing: -0.03em; line-height: 1; }
+    .intro-drt { display: flex; align-items: stretch; justify-content: center; gap: 48px; width: 100%; }
+    .ic-sq { position: relative; flex: 0 0 auto; width: min(50vh, 460px); aspect-ratio: 1; overflow: hidden; border-radius: 8px; background: #151515; }
+    .ic-sq::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(242,240,239,0) 45%, rgba(242,240,239,0.6) 75%, #F2F0EF 100%); pointer-events: none; }
     .ic-sq img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
-    .intro-drt-text { max-width: 560px; }
-    .drt-p { font-size: 13px; font-weight: 300; line-height: 1.7; opacity: 0.75; }
-    .drt-p + .drt-p { margin-top: 10px; }
+    .intro-drt-text { max-width: 580px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .intro-drt-title { margin-bottom: 0; }
+    .drt-p { font-size: 12px; font-weight: 300; line-height: 1.55; opacity: 0.75; }
+    .drt-p + .drt-p { margin-top: 8px; }
+    .intro-drt-text .btn { padding: 12px 24px; font-size: 12px; }
     .guide { grid-template-columns: minmax(0, 480px) minmax(0, 480px) !important; gap: 8vw; }
     .guide-right .section-label { color: rgba(255,255,255,0.5); opacity: 1; }
     .guide-right .intro-title { font-size: clamp(40px, 5vw, 72px); color: rgba(255,255,255,0.9); }
@@ -264,18 +267,20 @@ document.documentElement.lang=l;})();
   <main>
   <div id="page-wrap">
     <section class="intro-section">
-      <h2 class="intro-drt-title">PV DRT</h2>
       <div class="intro-drt">
         <div class="ic-sq"><img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" loading="lazy"></div>
         <div class="intro-drt-text">
+          <h2 class="intro-drt-title">PV DRT</h2>
+          <div class="intro-drt-body">
             <p class="drt-p"><span class="es">PV DRT es la transformación de salida: convierte la imagen de DaVinci Wide Gamut a lo que finalmente se ve en pantalla. Va en el último nodo, después del etalonaje, y sustituye a cualquier otro DRT o LUT de salida.</span><span class="en">PV DRT is the output transform: it converts the image from DaVinci Wide Gamut to what is finally seen on screen. It goes in the last node, after the grade, and replaces any other output DRT or LUT.</span></p>
             <p class="drt-p"><span class="es">Su curva tonal coloca el gris medio donde debe estar, mantiene el negro exacto y lleva las altas luces hasta el blanco con un hombro largo, sin recortes bruscos. Los grises permanecen neutros en toda la escala.</span><span class="en">Its tone curve places middle gray where it should be, keeps black exact and carries the highlights up to white with a long shoulder, with no harsh clipping. Grays stay neutral across the whole scale.</span></p>
             <p class="drt-p"><span class="es">El color se trata con cuidado en cada zona. Los tonos suaves, como la piel, apenas se modifican y no cambian de tono al variar la exposición. Los colores muy saturados se comprimen de forma progresiva para caber en la pantalla sin romperse. En las altas luces, el color se desvanece hacia el blanco de manera continua: los cielos sobreexpuestos y las nubes de un atardecer conservan su degradado, y las luces incandescentes mantienen su calidez natural.</span><span class="en">Color is handled carefully in each range. Soft tones, like skin, are barely modified and do not shift in hue as exposure changes. Highly saturated colors are compressed progressively to fit the display without breaking. In the highlights, color fades toward white continuously: overexposed skies and sunset clouds keep their gradient, and incandescent lights keep their natural warmth.</span></p>
             <p class="drt-p"><span class="es">Incluye controles para ajustar el contraste, el pie de las sombras, la compresión de saturación y la densidad, además de tono y pureza independientes para cada color. Ofrece salida en Rec.709, P3-D65 y Rec.2020, con las curvas BT.1886, sRGB, gamma 2.2 y gamma 2.6.</span><span class="en">Includes controls to adjust contrast, shadow toe, saturation compression and density, plus independent hue and purity for each color. Output is available in Rec.709, P3-D65 and Rec.2020, with BT.1886, sRGB, gamma 2.2 and gamma 2.6 curves.</span></p>
             <p class="drt-p"><span class="es">PV DRT es una transformación para SDR. No genera salida HDR.</span><span class="en">PV DRT is an SDR transform. It does not produce HDR output.</span></p>
+          </div>
+          <a href="assets/dctl/PV-DRT.dctle" class="btn" download><span class="es">Descargar</span><span class="en">Download</span></a>
         </div>
       </div>
-      <a href="assets/dctl/PV-DRT.dctle" class="btn" download><span class="es">Descargar</span><span class="en">Download</span></a>
     </section>
 
     <!-- PV DRT -->
