@@ -242,13 +242,11 @@
     .header-nav a { font-size: 14px; }
     #mobile-overlay { position: fixed; top: 0; right: 0; bottom: 0; width: min(360px, 86vw); background: #0a0a0a; z-index: 200; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 28px; padding: 0 48px; overflow: hidden; visibility: hidden; transform: translateX(100%); transition: transform 0.35s ease, visibility 0s linear 0.35s; }
     #mobile-overlay.open { visibility: visible; transform: none; transition: transform 0.35s ease; }
-    #mobile-overlay::before { content: ''; position: absolute; inset: -20px; background-image: var(--overlay-img, none); background-size: cover; background-position: center; filter: blur(24px); z-index: 0; }
-    #mobile-overlay::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.72); z-index: 1; }
     #mobile-overlay > * { position: relative; z-index: 2; }
     
     #mobile-overlay a { font-family: "neue-haas-grotesk-display", sans-serif; font-size: 22px; font-weight: 500; letter-spacing: 0; text-transform: none; text-decoration: none; color: rgba(255,255,255,0.55); transition: color 0.2s; }
     #mobile-overlay a:hover, #mobile-overlay a.is-active { color: #fff; }
-    #menu-backdrop { position: fixed; inset: 0; z-index: 199; background: rgba(0,0,0,0.35); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+    #menu-backdrop { position: fixed; inset: 0; z-index: 199; background: rgba(0,0,0,0.25); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
     #menu-backdrop.open { opacity: 1; pointer-events: auto; }
     #burger-close { position: absolute !important; top: 24px; right: 24px; background: none; border: none; cursor: pointer; padding: 4px; color: rgba(255,255,255,0.7); }
     @media (min-width: 769px) { #mobile-overlay .drawer-dctl { display: none; } }
