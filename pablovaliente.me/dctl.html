@@ -179,14 +179,6 @@
       .dctl-section { padding-bottom: 120px; }
     }
 
-    .drt-top { grid-template-columns: auto minmax(0, 600px); }
-    #pv-drt .drt-layout { --h: min(52vh, calc(85vh - 282px), calc((100vw - 160px) / 2.403)); }
-    .drt-notes { margin-top: 14px; }
-    .drt-notes-title { font-size: 9px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.35; margin-bottom: 6px; }
-    .drt-notes ul { list-style: none; }
-    .drt-notes li { font-size: 12px; font-weight: 300; line-height: 1.5; opacity: 0.75; padding-left: 14px; position: relative; }
-    .drt-notes li + li { margin-top: 4px; }
-    .drt-notes li::before { content: "–"; position: absolute; left: 0; opacity: 0.6; }
     /* ── MOBILE: natural page scroll, stacked layout ── */
     .ba-slider input { touch-action: pan-y; }
     @media (max-width: 768px) {
@@ -268,19 +260,11 @@ document.documentElement.lang=l;})();
       <div class="drt-layout">
         <div class="drt-top">
           <div>
-            <span class="section-label">DCTL · v1.6</span>
+            <span class="section-label">DCTL · v1.5</span>
             <h2 class="dctl-name">PV DRT</h2>
           </div>
           <div>
             <p class="dctl-desc"><span class="es">PV DRT es la transformación de salida: convierte la imagen de DaVinci Wide Gamut a lo que finalmente se ve en pantalla. Va en el último nodo, después del etalonaje, y sustituye a cualquier otro DRT o LUT de salida.</span><span class="en">PV DRT is the output transform: it converts the image from DaVinci Wide Gamut to what is finally seen on screen. It goes in the last node, after the grade, and replaces any other output DRT or LUT.</span></p>
-            <div class="drt-notes">
-              <p class="drt-notes-title"><span class="es">Novedades de la v1.6</span><span class="en">What's new in v1.6</span></p>
-              <ul>
-                <li><span class="es">Cielos sobreexpuestos y nubes de atardecer: transición más suave al blanco, sin cortes ni aros en las zonas claras.</span><span class="en">Overexposed skies and sunset clouds: smoother roll-off into white, with no hard cuts or rings in bright areas.</span></li>
-                <li><span class="es">Luces incandescentes (ventanas, bombillas): ahora salen amarillo cálido, no rosadas.</span><span class="en">Incandescent lights (windows, bulbs): now a warm yellow, not pink.</span></li>
-                <li><span class="es">Cielos azules y cian claros: aguantan mejor al subir la saturación, sin oscurecerse de golpe y con menos banding y grano.</span><span class="en">Bright blue and cyan skies: hold up better when you raise saturation, with no sudden darkening and less banding and grain.</span></li>
-              </ul>
-            </div>
           </div>
         </div>
         <div class="dctl-ui"><img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" loading="lazy"></div>
