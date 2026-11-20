@@ -91,5 +91,47 @@
     window.addEventListener(t, guard, { capture: true, passive: t !== 'keydown' });
   });
 
+  // ── Book a call (Calendly popup). Calendly's script loads only when someone is about to book. ──
+  var CAL_URL = 'https://calendly.com/pablovaliente/discovery-call';
+  var calState = 'idle';
+  function loadCalendly() {
+    if (calState !== 'idle') return;
+    calState = 'loading';
+    var css = document.createElement('link');
+    css.rel = 'stylesheet'; css.href = 'https://assets.calendly.com/assets/external/widget.css';
+    document.head.appendChild(css);
+    var s = document.createElement('script');
+    s.src = 'https://assets.calendly.com/assets/external/widget.js'; s.async = true;
+    s.onload = function () { calState = 'ready'; };
+    s.onerror = function () { calState = 'failed'; };
+    document.head.appendChild(s);
+  }
+  function bookLink(cls) {
+    var a = document.createElement('a');
+    a.href = CAL_URL; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.className = cls; a.setAttribute('data-book', ''); a.textContent = 'Book a call';
+    return a;
+  }
+  document.querySelectorAll('#site-header .header-nav').forEach(function (nav) {
+    if (nav.querySelector('[data-book]')) return;
+    nav.insertBefore(bookLink('header-book'), nav.querySelector('#menu-btn'));
+  });
+  var foot = menu.querySelector('.kmenu-foot');
+  if (foot && !foot.querySelector('[data-book]')) foot.insertBefore(bookLink('kmenu-book'), foot.firstChild);
+  document.addEventListener('mouseover', function (e) { if (e.target.closest && e.target.closest('[data-book]')) loadCalendly(); });
+  document.addEventListener('focusin', function (e) { if (e.target.closest && e.target.closest('[data-book]')) loadCalendly(); });
+  document.addEventListener('touchstart', function (e) { if (e.target.closest && e.target.closest('[data-book]')) loadCalendly(); }, { passive: true });
+  menuBtn && menuBtn.addEventListener('click', loadCalendly);
+  burgers.forEach(function (b) { b.addEventListener('click', loadCalendly); });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('[data-book]');
+    if (!a) return;
+    // If Calendly is not ready (still loading, blocked, offline) the link opens the booking page in a new tab.
+    if (calState !== 'ready' || !window.Calendly) { loadCalendly(); return; }
+    e.preventDefault();
+    if (isOpen()) close();
+    window.Calendly.initPopupWidget({ url: CAL_URL + '?hide_gdpr_banner=1' });
+  });
+
   window.pvMenu = { open: open, close: close, toggle: toggle, isOpen: isOpen };
 })();
