@@ -158,8 +158,34 @@
         #video-modal iframe { width: 100vw; height: calc(100vw * 9 / 16); max-height: calc(100svh - 68px); flex-shrink: 0; }
 
     </style>
+<link rel="stylesheet" href="/kmenu.css"/>
 </head>
 <body class="antialiased">
+<header id="site-header" class="pv-de">
+  <a href="/" class="header-logo">Pablo Valiente</a>
+  <nav class="header-nav" aria-label="Main navigation">
+    <a href="/dctl.html">DCTLs</a>
+    <button type="button" id="menu-btn" aria-haspopup="dialog" aria-expanded="false" aria-controls="kmenu">MENU</button>
+  </nav>
+  <button type="button" id="burger-btn" aria-label="Open menu" aria-expanded="false"><svg width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true"><rect width="20" height="1.5" fill="currentColor"/><rect y="6.25" width="20" height="1.5" fill="currentColor"/><rect y="12.5" width="20" height="1.5" fill="currentColor"/></svg></button>
+</header>
+<!-- Kinetic menu (shared: /kmenu.css, /kmenu.js) -->
+<div id="kmenu" class="kmenu" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
+  <nav class="kmenu-nav" aria-label="Main menu">
+    <a href="/" class="kmenu-link" data-go="top"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Home</span></a>
+    <a href="/#works" class="kmenu-link kmenu-only-desktop" data-go="works"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Works</span></a>
+    <a href="/dctl.html" class="kmenu-link"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">DCTLs</span></a>
+    <a href="/about.html" class="kmenu-link"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">About</span></a>
+    <a href="/contact.html" class="kmenu-link"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Contact</span></a>
+  </nav>
+  <div class="kmenu-marquee" aria-hidden="true"><div class="kmenu-marquee-track">Pablo Valiente — Director of Photography · Video Editor · Colorist — Berlin · Ibiza — Pablo Valiente — Director of Photography · Video Editor · Colorist — Berlin · Ibiza — Pablo Valiente — Director of Photography · Video Editor · Colorist — Berlin · Ibiza — Pablo Valiente — Director of Photography · Video Editor · Colorist — Berlin · Ibiza — Pablo Valiente — Director of Photography · Video Editor · Colorist — Berlin · Ibiza — Pablo Valiente — Director of Photography · Video Editor · Colorist — Berlin · Ibiza — Pablo Valiente — Director of Photography · Video Editor · Colorist — Berlin · Ibiza — Pablo Valiente — Director of Photography · Video Editor · Colorist — Berlin · Ibiza — </div></div>
+  <div class="kmenu-foot">
+    <a href="/impressum.html">Impressum</a>
+    <a href="mailto:contact@pablovaliente.me">contact@pablovaliente.me</a>
+    <a href="https://instagram.com/pvaliente_" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <div class="kmenu-lang" role="group" aria-label="Language"><button type="button" data-kmenu-lang="de">DE</button><span>/</span><button type="button" data-kmenu-lang="en">EN</button></div>
+  </div>
+</div>
     <div class="grain" aria-hidden="true"></div>
     <div class="ruler-left" aria-hidden="true"></div>
     <div class="ruler-top" aria-hidden="true"></div>
@@ -594,5 +620,6 @@
         </div>
         <iframe id="video-modal-iframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
     </div>
+<script src="/kmenu.js"></script>
 </body>
 </html>
