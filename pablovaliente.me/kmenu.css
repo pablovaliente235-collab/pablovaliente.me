@@ -40,6 +40,12 @@ body.is-dark-section #site-header.pv-de { color: #F2F0EF; }
 .kmenu *, .kmenu *::before, .kmenu *::after { box-sizing: border-box; }
 .kmenu-marquee { position: absolute; left: 0; right: 0; bottom: 64px; overflow: hidden; white-space: nowrap; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; line-height: 1.4; color: rgba(242,240,239,0.28); pointer-events: none; }
 .kmenu-marquee-track { display: inline-block; animation: kmarquee 32s linear infinite; }
+/* reviews: sentence case for readability, speed set in kmenu.js from the text length */
+.kmenu-marquee { text-transform: none; letter-spacing: 0.02em; font-size: 13px; color: rgba(242,240,239,0.5); }
+.km-set { display: inline; }
+.km-rev { padding-right: 72px; }
+.km-stars { letter-spacing: 0.15em; margin-right: 6px; color: rgba(242,240,239,0.8); }
+.km-by { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; margin-left: 6px; }
 @keyframes kmarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .kmenu-nav { display: flex; flex-direction: column; align-items: flex-start; counter-reset: kmenu; }
 .kmenu-link { counter-increment: kmenu; display: flex; align-items: flex-start; gap: 18px; text-decoration: none; color: inherit; transition: opacity 0.3s ease; }

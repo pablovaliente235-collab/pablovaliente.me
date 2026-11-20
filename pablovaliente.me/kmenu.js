@@ -127,7 +127,12 @@
   var foot = menu.querySelector('.kmenu-foot');
   if (foot && !foot.querySelector('[data-book]')) foot.insertBefore(bookLink('kmenu-book'), foot.firstChild);
   // keep the marquee just above the foot links, however many lines they wrap to
-  function placeMarquee() { if (foot) menu.style.setProperty('--kfoot-h', foot.offsetHeight + 'px'); }
+  var mqTrack = menu.querySelector('.kmenu-marquee-track');
+  function placeMarquee() {
+    if (foot) menu.style.setProperty('--kfoot-h', foot.offsetHeight + 'px');
+    // constant reading speed (~50 px/s) whatever the length of the reviews
+    if (mqTrack && mqTrack.offsetWidth) mqTrack.style.animationDuration = Math.round(mqTrack.offsetWidth / 2 / 50) + 's';
+  }
   placeMarquee();
   window.addEventListener('resize', placeMarquee);
   [menuBtn].concat(burgers).forEach(function (b) { if (b) b.addEventListener('click', placeMarquee); });
