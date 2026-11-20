@@ -157,7 +157,7 @@
     .mail-short { display: none; }
     .dctl-section { padding-bottom: 84px; }
     @media (max-width: 768px) {
-      #site-footer { flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 28px; padding: 16px 24px; }
+      #site-footer { position: static; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 28px; padding: 16px 24px calc(16px + env(safe-area-inset-bottom, 0px)); }
       .footer-col { text-align: center; }
       .footer-col:first-child { order: 2; width: 100%; }
       .footer-col:not(:first-child) { display: block; order: 1; font-size: 11px; letter-spacing: 0.07em; }
@@ -165,7 +165,16 @@
       footer a[href^="mailto:"] { text-transform: uppercase; letter-spacing: 0.07em; font-size: 11px; }
       .mail-full { display: none; }
       .mail-short { display: inline; }
-      .dctl-section { padding-bottom: 120px; }
+      .dctl-section { padding-bottom: 56px; }
+    }
+
+    /* Short viewports (landscape phones, small laptops): start at the top of each zone and keep clear of the fixed footer */
+    @media (min-width: 769px) and (max-height: 760px) {
+      .dctl-section { padding-bottom: 96px; }
+    }
+    @media (min-width: 769px) and (max-height: 640px) {
+      .dctl-section { justify-content: flex-start; }
+      .drt-layout { --h: min(44vh, calc((100vw - 160px) / 2.403)); }
     }
 
     /* ── MOBILE: natural page scroll, stacked layout ── */
@@ -174,7 +183,7 @@
       #page-wrap { height: auto; overflow: visible; scroll-snap-type: none; }
       .dctl-section { height: auto; min-height: 0; overflow: visible; scroll-snap-align: none; scroll-snap-stop: normal; display: block; padding: 96px 24px 56px; }
       .dctl-section + .dctl-section { border-top: 1px solid rgba(40,40,40,0.1); padding-top: 48px; }
-      #pv-master-grade { padding-bottom: 150px; }
+      #pv-master-grade { padding-bottom: 56px; }
       .drt-layout { display: flex; flex-direction: column; gap: 24px; }
       .drt-top { order: 2; display: block; }
       .drt-top .dctl-name { font-size: clamp(30px, 9.5vw, 40px); }
@@ -187,6 +196,15 @@
       .drt-dl, .btn.drt-dl, #pv-drt .btn.drt-dl, #pv-master-grade .btn.drt-dl { height: 44px; font-size: 13px; }
       .dctl-ui, .drt-layout .dctl-ui, .dctl-section .dctl-ui { order: 1; width: 100%; max-width: none; }
       .dctl-section .dctl-ui img, .drt-layout .dctl-ui img { width: 100%; max-width: none; height: auto; }
+    }
+  
+    /* Tablet portrait: footer wraps to two rows (copyright below) instead of squeezing, and the page keeps clear of it */
+    @media (min-width: 769px) and (max-width: 1023px) {
+      #site-footer { flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 28px; padding: 14px 24px; }
+      .footer-col { text-align: center; }
+      .footer-col:first-child { order: 2; width: 100%; }
+      .footer-col:not(:first-child) { order: 1; }
+      .dctl-section { padding-bottom: 112px; }
     }
   </style>
 <link rel="stylesheet" href="/kmenu.css"/>
@@ -220,7 +238,6 @@
     </nav>
     <div class="kmenu-marquee" aria-label="Client reviews"><div class="kmenu-marquee-track"><span class="km-set"><span class="km-rev"><span class="km-stars" aria-label="5 out of 5 stars">★★★★★</span> “Very fast and professional! I enjoyed working with Pablo.” <span class="km-by">— Kim M., De Montage · Norway</span></span><span class="km-rev"><span class="km-stars" aria-label="5 out of 5 stars">★★★★★</span> “Every once in a while, I come across an editor who exceeds my expectations and delivers the finest quality work, without needing coaching or training. Pablo is that editor. He’s a knowledgeable producer; he understands the intricacies of high-end color grading and storytelling, and he’s even a filmmaker himself — and he’s helped me improve my understanding of videography in complex and mixed lighting situations. He lives up to 100% of what he advertises. I can’t recommend Pablo enough.” <span class="km-by">— Jim Nevill Productions</span></span></span><span class="km-set" aria-hidden="true"><span class="km-rev"><span class="km-stars" aria-label="5 out of 5 stars">★★★★★</span> “Very fast and professional! I enjoyed working with Pablo.” <span class="km-by">— Kim M., De Montage · Norway</span></span><span class="km-rev"><span class="km-stars" aria-label="5 out of 5 stars">★★★★★</span> “Every once in a while, I come across an editor who exceeds my expectations and delivers the finest quality work, without needing coaching or training. Pablo is that editor. He’s a knowledgeable producer; he understands the intricacies of high-end color grading and storytelling, and he’s even a filmmaker himself — and he’s helped me improve my understanding of videography in complex and mixed lighting situations. He lives up to 100% of what he advertises. I can’t recommend Pablo enough.” <span class="km-by">— Jim Nevill Productions</span></span></span></div></div>
     <div class="kmenu-foot">
-      <a href="/impressum.html">Impressum</a>
       <a href="mailto:contact@pablovaliente.me">contact@pablovaliente.me</a>
       <a href="https://instagram.com/pvaliente_" target="_blank" rel="noopener noreferrer">Instagram</a>
       <div class="kmenu-lang" role="group" aria-label="Language"><button type="button" data-set-lang="en">EN</button><span>/</span><button type="button" data-set-lang="es">ES</button></div>
