@@ -139,4 +139,9 @@
   });
 
   window.pvMenu = { open: open, close: close, toggle: toggle, isOpen: isOpen };
+  window.pvBook = {
+    load: loadCalendly,
+    ready: function () { return calState === 'ready' && !!window.Calendly; },
+    open: function () { if (isOpen()) close(); window.Calendly.initPopupWidget({ url: CAL_URL + '?hide_gdpr_banner=1' }); }
+  };
 })();
