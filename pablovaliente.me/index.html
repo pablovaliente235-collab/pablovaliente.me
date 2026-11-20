@@ -380,6 +380,17 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
   .project-title { font-size: 1.875vw; }
   .project-category { font-size: 0.46875vw; margin-top: 0.4167vw; margin-bottom: 0.1vw; }
 }
+/* ── Desktop: second snap page (embedded works homepage) ── */
+.snap-page { display: block; width: 100%; height: 100vh; scroll-snap-align: start; scroll-snap-stop: always; }
+#de-home { position: relative; z-index: 150; background: #0a0a0a; overflow: hidden; }
+#de-home-frame { display: block; width: 100%; height: 100%; border: 0; }
+@media (min-width: 768px) {
+  html { height: auto; overflow-x: hidden; overflow-y: auto; scroll-snap-type: y mandatory; }
+  body { height: auto; overflow: visible; }
+}
+@media (max-width: 767px) {
+  .snap-page { display: none; }
+}
 </style>
 </head>
 <body>
@@ -812,5 +823,35 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </div>
+
+<!-- Desktop page 2: pablovaliente.de homepage (iframe, desktop only) -->
+<div class="snap-page" aria-hidden="true"></div>
+<section id="de-home" class="snap-page">
+  <iframe id="de-home-frame" title="Pablo Valiente — Works" data-src="works.html"></iframe>
+</section>
+<script>
+(function () {
+  var frame = document.getElementById('de-home-frame');
+  var mq = window.matchMedia('(min-width: 768px)');
+  function attachWheel() {
+    try {
+      var w = frame.contentWindow;
+      if (!w || w.__pvWheel) return;
+      w.__pvWheel = true;
+      w.addEventListener('wheel', function (e) {
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && e.deltaY < 0 && window.scrollY > 0) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, { passive: true });
+    } catch (err) {}
+  }
+  function load() {
+    if (mq.matches && !frame.getAttribute('src')) frame.setAttribute('src', frame.getAttribute('data-src'));
+  }
+  frame.addEventListener('load', attachWheel);
+  load();
+  if (mq.addEventListener) mq.addEventListener('change', load); else if (mq.addListener) mq.addListener(load);
+})();
+</script>
 </body>
 </html>
