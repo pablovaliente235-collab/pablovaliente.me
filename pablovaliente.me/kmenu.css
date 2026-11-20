@@ -79,7 +79,7 @@ html.kmenu-lock, html.kmenu-lock body { overflow: hidden !important; }
 .calendly-overlay { z-index: 9500 !important; }
 
 /* ── Kinetic list (in-page, e.g. Contact options) ── */
-.klist { --kcfs: clamp(34px, min(6.2vw, calc((100vh - 330px) / 4.4)), 112px); display: flex; flex-direction: column; counter-reset: klist; }
+.klist { --kcfs: clamp(30px, min(5.4vw, calc((100vh - 360px) / 5.9)), 104px); display: flex; flex-direction: column; counter-reset: klist; }
 .klist-item { counter-increment: klist; display: grid; grid-template-columns: auto 1fr; column-gap: 16px; padding: 18px 0 20px; border-top: 1px solid rgba(40,40,40,0.12); text-decoration: none; color: inherit; transition: opacity 0.3s ease; }
 .klist-item:last-child { border-bottom: 1px solid rgba(40,40,40,0.12); }
 .klist:hover .klist-item { opacity: 0.3; }
