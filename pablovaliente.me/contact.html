@@ -105,6 +105,10 @@
     }
     .email-link:hover { opacity: 0.35; }
 
+    /* BOOK A CALL (Calendly inline) */
+    .contact-book .contact-label { margin-bottom: 12px; }
+    .calendly-inline-widget { min-width: 320px; width: 100%; height: min(700px, calc(100vh - 170px)); }
+
     /* FOOTER */
     #site-footer {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
@@ -126,7 +130,8 @@
       #burger-btn { display: block; }
       main { position: static; display: block; padding: 100px 24px 120px; }
       .contact-wrap { grid-template-columns: 1fr; gap: 0; }
-      .contact-wrap > div:first-child { display: none; }
+      .contact-book { order: 2; margin-top: 48px; }
+      .calendly-inline-widget { height: 700px; }
       .contact-title { white-space: normal; }
       #site-footer { flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 28px; padding: 16px 24px; }
       .footer-col { text-align: center; }
@@ -196,7 +201,12 @@
   <main>
     <div class="contact-wrap">
 
-      <div></div>
+      <div class="contact-book">
+        <span class="contact-label">Book a call</span>
+        <!-- Calendly inline widget -->
+        <div class="calendly-inline-widget" data-url="https://calendly.com/pablovaliente/discovery-call?hide_gdpr_banner=1"></div>
+        <noscript><a class="email-link" href="https://calendly.com/pablovaliente/discovery-call">Book a 30-minute discovery call</a></noscript>
+      </div>
 
       <div class="contact-right">
         <span class="contact-label">Contact</span>
@@ -252,5 +262,6 @@
   })();
   </script>
 <script src="/kmenu.js"></script>
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 </html>

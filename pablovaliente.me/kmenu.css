@@ -72,3 +72,8 @@ html.kmenu-lock, html.kmenu-lock body { overflow: hidden !important; }
   .kmenu, .kmenu.open, .kmenu-word .ch { transition: none !important; }
   .kmenu-marquee-track { animation: none; }
 }
+
+/* ── Book a call ── */
+.kmenu-foot .kmenu-book { font-weight: 500; }
+.kmenu.open .kmenu-foot .kmenu-book { opacity: 1; }
+.calendly-overlay { z-index: 9500 !important; }
