@@ -91,7 +91,7 @@ const i18n = {
     menu_about:     'Über mich',
     menu_impressum: 'Impressum',
     /* ── Spec labels (shared) ── */
-    label_work:        'Arbeit',
+    label_work:        'Projekt',
     label_description: 'Beschreibung',
     label_camera:      'Kamera',
     label_software:    'Software',
@@ -208,7 +208,7 @@ const i18n = {
     menu_about:     'About',
     menu_impressum: 'Impressum',
     /* ── Spec labels (shared) ── */
-    label_work:        'Work',
+    label_work:        'Project',
     label_description: 'Description',
     label_camera:      'Camera',
     label_software:    'Software',

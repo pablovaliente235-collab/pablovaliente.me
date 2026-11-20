@@ -57,6 +57,13 @@
     a.addEventListener('click', function (e) {
       var go = a.getAttribute('data-go');
       var home = document.getElementById('de-home');
+      // mobile home: Film / Photography are sections of the vertical slider
+      if (go && window.pvMobileHome && window.innerWidth <= 767) {
+        e.preventDefault();
+        close();
+        window.pvMobileHome.go(go === 'works' ? 'photo' : 'film');
+        return;
+      }
       if (go && home) {
         e.preventDefault();
         close();
@@ -119,6 +126,11 @@
   }
   var foot = menu.querySelector('.kmenu-foot');
   if (foot && !foot.querySelector('[data-book]')) foot.insertBefore(bookLink('kmenu-book'), foot.firstChild);
+  // keep the marquee just above the foot links, however many lines they wrap to
+  function placeMarquee() { if (foot) menu.style.setProperty('--kfoot-h', foot.offsetHeight + 'px'); }
+  placeMarquee();
+  window.addEventListener('resize', placeMarquee);
+  [menuBtn].concat(burgers).forEach(function (b) { if (b) b.addEventListener('click', placeMarquee); });
   document.addEventListener('mouseover', function (e) { if (e.target.closest && e.target.closest('[data-book]')) loadCalendly(); });
   document.addEventListener('focusin', function (e) { if (e.target.closest && e.target.closest('[data-book]')) loadCalendly(); });
   document.addEventListener('touchstart', function (e) { if (e.target.closest && e.target.closest('[data-book]')) loadCalendly(); }, { passive: true });

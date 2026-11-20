@@ -62,11 +62,11 @@ body.is-dark-section #site-header.pv-de { color: #F2F0EF; }
 .kmenu-lang button:hover, .kmenu-lang button.is-on { opacity: 1; text-decoration: underline; }
 html.kmenu-lock, html.kmenu-lock body { overflow: hidden !important; }
 @media (max-width: 767px) {
-  .kmenu { --kfs: clamp(30px, min(15vw, calc((100svh - 290px) / 4.1)), 96px); padding: 88px 24px 120px; justify-content: flex-start; }
+  .kmenu { --kfs: clamp(28px, min(13.5vw, calc((100svh - 290px) / 5.3)), 96px); padding: 88px 24px 120px; justify-content: flex-start; }
   .kmenu-only-desktop { display: none; }
   .kmenu-foot { left: 24px; right: 24px; flex-wrap: wrap; gap: 12px 24px; }
   .kmenu-lang { margin-left: 0; }
-  .kmenu-marquee { bottom: 72px; }
+  .kmenu-marquee { bottom: calc(24px + var(--kfoot-h, 32px) + 18px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .kmenu, .kmenu.open, .kmenu-word .ch { transition: none !important; }
