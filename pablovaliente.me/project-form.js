@@ -15,7 +15,7 @@
 
   // ── option lists ──
   var LENGTHS = [o('<30s', 'Under 30 s', 'Menos de 30 s'), o('30-60s', '30–60 s'), o('1-3min', '1–3 min'), o('3min+', '3 min +')];
-  var FORMATS = [o('16:9', '16:9 Horizontal'), o('9:16', '9:16 Vertical'), o('1:1', '1:1 Square', '1:1 Cuadrado'), o('4:5', '4:5 Feed')];
+  var FORMATS = [o('16:9', '16:9 Horizontal', '16:9 horizontal'), o('9:16', '9:16 Vertical', '9:16 vertical'), o('1:1', '1:1 Square', '1:1 Cuadrado'), o('4:5', '4:5 Feed', '4:5 feed')];
   var SIZES = [o('<100', 'Under 100 m²', 'Menos de 100 m²'), o('100-250', '100–250 m²'), o('250-500', '250–500 m²'), o('500+', '500 m² +')];
   var BUDGETS = {
     production: [o('<2000', 'Under €2,000', 'Menos de 2.000 €'), o('2000-4000', '€2,000 – 4,000', '2.000 – 4.000 €'), o('4000-8000', '€4,000 – 8,000', '4.000 – 8.000 €'), o('8000-15000', '€8,000 – 15,000', '8.000 – 15.000 €'), o('15000+', '€15,000 +', '15.000 € +'), o('unsure', 'Not sure yet', 'Aún no lo sé')],
@@ -30,12 +30,12 @@
       fields: [{ id: 'type', type: 'cards', req: true, opts: [
         o('production', 'Full production', 'Producción completa', L('Video from concept to delivery: real estate, hotels, brands.', 'Vídeo de la idea a la entrega: inmobiliaria, hoteles, marcas.')),
         o('photo', 'Photography', 'Fotografía', L('Architecture, interiors and real estate.', 'Arquitectura, interiores e inmobiliaria.')),
-        o('post', 'Editing & colour', 'Edición y color', L('You already have the footage.', 'Ya tienes el material grabado.')),
+        o('post', 'Editing & color', 'Edición y color', L('You already have the footage.', 'Ya tienes el material grabado.')),
         o('other', 'Something else', 'Otra cosa', L('Tell me in a few words.', 'Cuéntamelo en pocas palabras.'))] }] },
 
     // Full production
     { id: 'p-kind', when: is('production'), title: L('What kind of video?', '¿Qué tipo de vídeo?'),
-      fields: [{ id: 'kind', type: 'single', req: true, opts: [o('realestate', 'Real estate & interiors', 'Inmobiliaria e interiores'), o('hotel', 'Hotel & hospitality', 'Hotel y hospitality'), o('brand', 'Brand film', 'Película de marca'), o('social', 'Social media campaign', 'Campaña para redes'), o('event', 'Event', 'Evento'), o('short', 'Short film', 'Cortometraje'), o('other', 'Other', 'Otro')] }] },
+      fields: [{ id: 'kind', type: 'single', req: true, opts: [o('realestate', 'Real estate & interiors', 'Inmobiliaria e interiores'), o('hotel', 'Hotel & hospitality', 'Hotel y hostelería'), o('brand', 'Brand film', 'Película de marca'), o('social', 'Social media campaign', 'Campaña para redes'), o('event', 'Event', 'Evento'), o('short', 'Short film', 'Cortometraje'), o('other', 'Other', 'Otro')] }] },
     { id: 'p-concept', when: is('production'), title: L('How far along is the idea?', '¿En qué punto está la idea?'),
       fields: [{ id: 'concept', type: 'single', req: true, opts: [o('ready', 'Script or clear idea ready', 'Tengo guion o una idea clara'), o('help', 'I need help with the concept', 'Necesito ayuda con la idea'), o('unsure', 'Not sure yet', 'Aún no lo sé')] }] },
     { id: 'p-deliv', when: is('production'), title: L('What do you need delivered?', '¿Qué necesitas que te entregue?'),
@@ -57,7 +57,7 @@
 
     // Photography
     { id: 'f-kind', when: is('photo'), title: L('What should I photograph?', '¿Qué fotografío?'),
-      fields: [{ id: 'kind', type: 'single', req: true, opts: [o('architecture', 'Architecture', 'Arquitectura'), o('interiors', 'Interiors', 'Interiores'), o('listing', 'Real estate listing', 'Anuncio inmobiliario'), o('hospitality', 'Hotel & hospitality', 'Hotel y hospitality')] }] },
+      fields: [{ id: 'kind', type: 'single', req: true, opts: [o('architecture', 'Architecture', 'Arquitectura'), o('interiors', 'Interiors', 'Interiores'), o('listing', 'Real estate listing', 'Anuncio inmobiliario'), o('hospitality', 'Hotel & hospitality', 'Hotel y hostelería')] }] },
     { id: 'f-scope', when: is('photo'), title: L('How big is it?', '¿Cómo de grande es?'),
       fields: [{ id: 'properties', type: 'counter', label: L('Properties / locations', 'Propiedades / localizaciones'), min: 1, max: 20, def: 1 },
                { id: 'size', type: 'single', req: true, label: L('Approximate size', 'Tamaño aproximado'), opts: SIZES },
@@ -68,9 +68,9 @@
     { id: 'f-usage', when: is('photo'), title: L('Where will they be used?', '¿Dónde se usarán?'),
       fields: [{ id: 'usage', type: 'multi', req: true, opts: [o('web', 'Website / listing portal', 'Web / portal inmobiliario'), o('social', 'Social media', 'Redes sociales'), o('print', 'Print / advertising', 'Impresión / publicidad')] }] },
 
-    // Editing & colour
+    // Editing & color
     { id: 'e-service', when: is('post'), title: L('What do you need?', '¿Qué necesitas?'),
-      fields: [{ id: 'service', type: 'single', req: true, opts: [o('edit', 'Editing', 'Edición'), o('grade', 'Colour grading', 'Etalonaje'), o('both', 'Editing + colour', 'Edición + color'), o('look', 'Custom look / DCTL', 'Look a medida / DCTL')] }] },
+      fields: [{ id: 'service', type: 'single', req: true, opts: [o('edit', 'Editing', 'Edición'), o('grade', 'Color grading', 'Etalonaje'), o('both', 'Editing + color', 'Edición + color'), o('look', 'Custom look / DCTL', 'Look a medida / DCTL')] }] },
     { id: 'e-footage', when: is('post'), title: L('About your footage.', 'Sobre tu material.'),
       fields: [{ id: 'camera', type: 'single', req: true, label: L('Camera', 'Cámara'), opts: [o('sony', 'Sony'), o('arri', 'ARRI'), o('red', 'RED'), o('bmd', 'Blackmagic'), o('canon', 'Canon'), o('panasonic', 'Panasonic'), o('phone', 'Phone / drone', 'Móvil / dron'), o('other', 'Other', 'Otra')] },
                { id: 'log', type: 'single', req: true, label: L('Recorded in', 'Grabado en'), opts: [o('log', 'Log / RAW'), o('709', 'Rec.709 / standard', 'Rec.709 / estándar'), o('unsure', 'Not sure', 'No lo sé')] },
@@ -79,7 +79,7 @@
       fields: [{ id: 'pieces', type: 'counter', label: L('Number of pieces', 'Número de piezas'), min: 1, max: 30, def: 1 },
                { id: 'length', type: 'single', req: true, label: L('Final length', 'Duración final'), opts: LENGTHS },
                { id: 'formats', type: 'multi', req: true, label: L('Formats', 'Formatos'), opts: FORMATS },
-               { id: 'colorspace', type: 'single', req: true, label: L('Delivery colour space', 'Espacio de color de entrega'), opts: [o('709', 'Rec.709'), o('p3', 'P3'), o('hdr', 'HDR'), o('unsure', 'Not sure', 'No lo sé')] }] },
+               { id: 'colorspace', type: 'single', req: true, label: L('Delivery color space', 'Espacio de color de entrega'), opts: [o('709', 'Rec.709'), o('p3', 'P3'), o('hdr', 'HDR'), o('unsure', 'Not sure', 'No lo sé')] }] },
     { id: 'e-extras', when: is('post'), title: L('Almost there.', 'Ya casi.'),
       fields: [{ id: 'status', type: 'single', req: true, label: L('Is it shot?', '¿Está grabado?'), opts: [o('shot', 'Already shot', 'Ya está grabado'), o('soon', 'Shooting soon', 'Se graba pronto'), o('notyet', 'Not shot yet', 'Aún no')] },
                { id: 'extras', type: 'multi', label: L('Extras (optional)', 'Extras (opcional)'), opts: [o('sound', 'Sound mix', 'Mezcla de sonido'), o('music', 'Music', 'Música'), o('subs', 'Subtitles', 'Subtítulos'), o('titles', 'Titles / motion graphics', 'Rótulos / motion graphics')] }] },
@@ -386,16 +386,7 @@
     }
   });
 
-  // ── language switch (same as the DCTL page: localStorage 'pv-lang') ──
-  var langBtns = document.querySelectorAll('[data-set-lang]');
-  function markLang() { langBtns.forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-set-lang') === lang()); }); }
-  langBtns.forEach(function (b) {
-    b.addEventListener('click', function () {
-      document.documentElement.lang = b.getAttribute('data-set-lang');
-      try { localStorage.setItem('pv-lang', document.documentElement.lang); } catch (e) {}
-      markLang(); render(0);
-    });
-  });
-  markLang();
+  // ── language: switch buttons + storage live in /js/lang.js; re-render on every change ──
+  if (window.pvLang) window.pvLang.on(function () { render(0); });
   render(1);
 })();

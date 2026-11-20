@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
+<script>(function(){var l;try{l=localStorage.getItem('pv-lang')}catch(e){}document.documentElement.lang=(l==='es')?'es':'en';})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Start a project — Pablo Valiente | DoP, Video Editor &amp; Colorist</title>
-  <meta name="description" content="Tell me about your project in a few clicks: full video production, architecture and real estate photography, or editing and colour grading."/>
+  <title data-es="Empezar un proyecto — Pablo Valiente | DoP, editor de vídeo y colorista">Start a project — Pablo Valiente | DoP, Video Editor &amp; Colorist</title>
+  <meta name="description" content="Tell me about your project in a few clicks: full video production, architecture and real estate photography, or editing and color grading." data-es-content="Cuéntame tu proyecto en pocos clics: producción de vídeo completa, fotografía de arquitectura e inmobiliaria, o edición y etalonaje."/>
   <meta property="og:title" content="Start a project — Pablo Valiente"/>
   <meta property="og:url" content="https://pablovaliente.me/start-a-project"/>
   <meta property="og:type" content="website"/>
@@ -17,11 +18,7 @@
   <link rel="stylesheet" href="https://use.typekit.net/hgb1zjr.css"/>
   <link rel="stylesheet" href="/project-form.css"/>
   <link rel="stylesheet" href="/kmenu.css"/>
-  <script>
-  (function(){var l;try{l=localStorage.getItem('pv-lang');}catch(e){}
-  if(l!=='es'&&l!=='en')l='en';document.documentElement.lang=l;})();
-  </script>
-</head>
+  </head>
 <body>
   <!-- Kinetic menu (shared: /kmenu.css, /kmenu.js) -->
   <div id="kmenu" class="kmenu" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
@@ -71,6 +68,7 @@
   </footer>
 
   <script>document.querySelectorAll('.footer-year').forEach(function(el){el.textContent=new Date().getFullYear();});</script>
+  <script src="/js/lang.js"></script>
   <script src="/project-form.js"></script>
 <script src="/kmenu.js"></script>
 </body>
