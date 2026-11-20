@@ -1,0 +1,19 @@
+/* Footer of the photography pages — same content and look as the rest of pablovaliente.me */
+#site-footer .pv-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 20px 40px; font-family: "neue-haas-grotesk-display", sans-serif; }
+#site-footer .pv-foot-copy,
+#site-footer .pv-foot-link { font-size: 11px; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.4; color: #282828 !important; opacity: 0.35; text-decoration: none; transition: opacity 0.2s, color 0.5s; }
+#site-footer .pv-foot-link:hover { opacity: 0.8; }
+#site-footer .pv-foot-mail { font-size: 15px; text-transform: none; letter-spacing: 0; }
+#site-footer .pv-foot-social { display: inline-flex; gap: 24px; align-items: center; }
+#site-footer .pv-foot .mail-short { display: none; }
+/* over dark sections (end of project pages) */
+body.is-dark-section #site-footer .pv-foot-copy,
+body.is-dark-section #site-footer .pv-foot-link { color: rgba(255,255,255,0.45) !important; opacity: 1; }
+body.is-dark-section #site-footer .pv-foot-link:hover { color: rgba(255,255,255,0.9) !important; }
+@media (max-width: 1023px) {
+  #site-footer .pv-foot { justify-content: center; flex-wrap: wrap; gap: 6px 26px; padding: 12px 20px 14px; }
+  #site-footer .pv-foot-copy { display: none; }
+  #site-footer .pv-foot-mail { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; }
+  #site-footer .pv-foot .mail-full { display: none; }
+  #site-footer .pv-foot .mail-short { display: inline; }
+}
