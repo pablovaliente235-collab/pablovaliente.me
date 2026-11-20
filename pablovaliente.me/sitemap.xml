@@ -4,14 +4,14 @@
 
   <url>
     <loc>https://pablovaliente.me/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://pablovaliente.me/bellamar</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -22,7 +22,7 @@
 
   <url>
     <loc>https://pablovaliente.me/marvell</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -33,7 +33,7 @@
 
   <url>
     <loc>https://pablovaliente.me/ordinary</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -44,7 +44,7 @@
 
   <url>
     <loc>https://pablovaliente.me/zufaellige-begegnung</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -55,7 +55,7 @@
 
   <url>
     <loc>https://pablovaliente.me/perdido-en-una-perdiz</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -66,7 +66,7 @@
 
   <url>
     <loc>https://pablovaliente.me/esparadis</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -77,34 +77,72 @@
 
   <url>
     <loc>https://pablovaliente.me/about</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/architecture/</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://pablovaliente.me/assets/projects/monasterio-san-miguel/frames/frame-portada.webp</image:loc>
+      <image:title>Monasterio de San Miguel — Architectural Photography, Spain</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/architecture/japanese/</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://pablovaliente.me/assets/projects/japanisches-heiligtum/frames/frame-portada.webp</image:loc>
+      <image:title>Japanese Shrine — Architectural Photography, Kyoto</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/architecture/iglesia-yaguaron/</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://pablovaliente.me/assets/projects/iglesia-yaguaron/frames/frame-portada.webp</image:loc>
+      <image:title>Iglesia de Yaguarón — Architectural Photography, Paraguay</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/hospitality/</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://pablovaliente.me/assets/projects/bellamar-hotel-ibiza/frames/frame-portada.webp</image:loc>
+      <image:title>Hotel &amp; Hospitality Photography and Video — Bellamar Hotel Ibiza</image:title>
+    </image:image>
   </url>
 
   <url>
     <loc>https://pablovaliente.me/contact</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://pablovaliente.me/impressum</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <url>
     <loc>https://pablovaliente.me/dctl</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://pablovaliente.me/start-a-project</loc>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
