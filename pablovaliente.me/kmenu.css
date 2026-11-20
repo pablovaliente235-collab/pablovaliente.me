@@ -98,3 +98,7 @@ html.kmenu-lock, html.kmenu-lock body { overflow: hidden !important; }
 @media (prefers-reduced-motion: reduce) {
   .kword .ch { transition: none !important; }
 }
+
+/* ── Footer: Instagram + LinkedIn side by side ── */
+.footer-social { display: inline-flex; gap: 24px; align-items: center; order: 1; }
+#site-footer .footer-social, .last-section footer .footer-social { display: inline-flex; gap: 24px; }

@@ -117,10 +117,6 @@
     a.className = cls; a.setAttribute('data-book', ''); a.textContent = 'Book a call';
     return a;
   }
-  document.querySelectorAll('#site-header .header-nav').forEach(function (nav) {
-    if (nav.querySelector('[data-book]')) return;
-    nav.insertBefore(bookLink('header-book'), nav.querySelector('#menu-btn'));
-  });
   var foot = menu.querySelector('.kmenu-foot');
   if (foot && !foot.querySelector('[data-book]')) foot.insertBefore(bookLink('kmenu-book'), foot.firstChild);
   document.addEventListener('mouseover', function (e) { if (e.target.closest && e.target.closest('[data-book]')) loadCalendly(); });
