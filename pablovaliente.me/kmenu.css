@@ -73,7 +73,7 @@ html.kmenu-lock, html.kmenu-lock body { overflow: hidden !important; }
   .kmenu { --kfs: clamp(28px, min(13.5vw, calc((100svh - 290px) / 5.3)), 96px); padding: 88px 24px 120px; justify-content: flex-start; }
   .kmenu-only-desktop { display: none; }
   .kmenu-foot { left: 24px; right: 24px; flex-wrap: wrap; gap: 12px 24px; }
-  .kmenu-lang { margin-left: 0; }
+  .kmenu-lang { margin-left: -2px; }
   .kmenu-marquee { bottom: calc(24px + var(--kfoot-h, 32px) + 18px); }
 }
 @media (prefers-reduced-motion: reduce) {
