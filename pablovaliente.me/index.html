@@ -139,7 +139,7 @@ body {
     .header-nav a { font-size: 14px; }
 
     /* ── KINETIC MENU (one menu for the whole page) ── */
-    .kmenu { position: fixed; inset: 0; z-index: 250; background: #0a0a0a; color: #F2F0EF; display: flex; flex-direction: column; justify-content: center; padding: 96px 40px 40px; overflow: hidden; visibility: hidden; clip-path: inset(0 0 100% 0); transition: clip-path 0.75s cubic-bezier(0.77,0,0.18,1), visibility 0s linear 0.75s; }
+    .kmenu { --kfs: clamp(32px, min(8.4vw, calc((100vh - 250px) / 5.1)), 320px); position: fixed; inset: 0; z-index: 250; background: #0a0a0a; color: #F2F0EF; display: flex; flex-direction: column; justify-content: center; padding: 96px 40px 120px; overflow: hidden; visibility: hidden; clip-path: inset(0 0 100% 0); transition: clip-path 0.75s cubic-bezier(0.77,0,0.18,1), visibility 0s linear 0.75s; }
     .kmenu.open { visibility: visible; clip-path: inset(0 0 0 0); transition: clip-path 0.75s cubic-bezier(0.77,0,0.18,1); }
     .kmenu-marquee { position: absolute; left: 0; right: 0; bottom: 64px; overflow: hidden; white-space: nowrap; font-family: "neue-haas-grotesk-display", sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(242,240,239,0.28); pointer-events: none; }
     .kmenu-marquee-track { display: inline-block; animation: kmarquee 32s linear infinite; }
@@ -150,8 +150,8 @@ body {
     .kmenu-link { display: flex; align-items: flex-start; gap: 18px; text-decoration: none; color: inherit; font-family: "neue-haas-grotesk-display", sans-serif; transition: opacity 0.3s ease; }
     .kmenu-nav:hover .kmenu-link { opacity: 0.3; }
     .kmenu-nav .kmenu-link:hover, .kmenu-nav .kmenu-link:focus-visible { opacity: 1; }
-    .kmenu-idx { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; padding-top: 1.1vw; opacity: 0.45; }
-    .kmenu-word { display: block; overflow: hidden; font-size: clamp(48px, 8.4vw, 168px); font-weight: 500; letter-spacing: -0.04em; line-height: 0.98; padding-bottom: 0.04em; }
+    .kmenu-idx { font-size: clamp(10px, calc(var(--kfs) * 0.085), 16px); font-weight: 500; letter-spacing: 0.12em; padding-top: calc(var(--kfs) * 0.09); opacity: 0.45; }
+    .kmenu-word { display: block; overflow: hidden; font-size: var(--kfs); font-weight: 500; letter-spacing: -0.04em; line-height: 0.98; padding-bottom: 0.04em; }
     .kmenu-word .ch { display: inline-block; white-space: pre; transform: translateY(105%); text-shadow: 0 1.05em 0 currentColor; transition: transform 0.7s cubic-bezier(0.22,1,0.36,1); transition-delay: calc(var(--d, 0) * 1ms); }
     .kmenu.open .kmenu-word .ch { transform: translateY(0); }
     .kmenu.open .kmenu-link:hover .ch { transform: translateY(-1.05em); transition-duration: 0.45s; transition-delay: calc(var(--i, 0) * 22ms); }
@@ -161,10 +161,8 @@ body {
     .kmenu-foot a:hover { text-decoration: underline; }
     body.menu-open { overflow: hidden; }
     @media (max-width: 767px) {
-      .kmenu { padding: 88px 24px 96px; justify-content: flex-start; }
+      .kmenu { --kfs: clamp(30px, min(15vw, calc((100svh - 290px) / 4.1)), 96px); padding: 88px 24px 120px; justify-content: flex-start; }
       .kmenu-only-desktop { display: none; }
-      .kmenu-word { font-size: clamp(44px, 15vw, 88px); }
-      .kmenu-idx { padding-top: 10px; }
       .kmenu-foot { left: 24px; right: 24px; flex-wrap: wrap; gap: 12px 24px; }
       .kmenu-marquee { bottom: 72px; }
     }
