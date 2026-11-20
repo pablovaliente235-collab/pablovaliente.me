@@ -1,0 +1,20 @@
+# Worker that receives the "Start a project" brief and emails it to Pablo.
+# Deployed from this folder (Cloudflare: Workers & Pages → Create → Import a repository,
+# root directory "brief-mailer"). The recipient lives in the TO_EMAIL secret, not in the repo.
+name = "pv-brief-mailer"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+workers_dev = false
+
+routes = [
+  { pattern = "pablovaliente.me/api/brief", zone_name = "pablovaliente.me" },
+  { pattern = "www.pablovaliente.me/api/brief", zone_name = "pablovaliente.me" }
+]
+
+# Cloudflare Email Routing: can only send to verified destination addresses.
+send_email = [
+  { name = "MAILER" }
+]
+
+[vars]
+FROM_EMAIL = "web@pablovaliente.me"

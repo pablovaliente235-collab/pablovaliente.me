@@ -335,9 +335,17 @@
     };
     function done() { busy = false; sent = true; try { sessionStorage.removeItem(STORE); } catch (e) {} render(1); }
     function fail() { busy = false; render(0); showFail(params); }
-    loadEmailJS(function () {
-      window.emailjs.send(EMAILJS.service, EMAILJS.template, params).then(done, fail);
-    }, fail);
+    function viaEmailJS() {
+      loadEmailJS(function () {
+        window.emailjs.send(EMAILJS.service, EMAILJS.template, params).then(done, fail);
+      }, fail);
+    }
+    // 1st: own Cloudflare endpoint (straight to Gmail) · 2nd: EmailJS · 3rd: mailto fallback
+    fetch('/api/brief', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: params.first_name, email: params.email, subject: params.subject, message: params.message, lang: lang(), website: '' })
+    }).then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { if (j && j.ok) done(); else viaEmailJS(); }, viaEmailJS);
   }
   function showFail(p) {
     var box = el('div', 'pf-fail');
