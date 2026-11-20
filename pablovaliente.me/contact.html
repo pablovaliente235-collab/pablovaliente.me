@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
+<script>(function(){var l;try{l=localStorage.getItem('pv-lang')}catch(e){}document.documentElement.lang=(l==='es')?'es':'en';})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact — Pablo Valiente | DoP, Video Editor &amp; Colorist, Spain</title>
-  <meta name="description" content="Contact Pablo Valiente — DoP, Video Editor &amp; Colorist based in Spain, with bases in Germany and the USA. Available worldwide."/>
-  <meta property="og:title" content="Contact — Pablo Valiente | DoP, Video Editor &amp; Colorist, Spain"/>
+  <title data-es="Contacto — Pablo Valiente | Director de fotografía, editor de vídeo y colorista, España">Contact — Pablo Valiente | DoP, Video Editor &amp; Colorist, Spain</title>
+  <meta name="description" content="Contact Pablo Valiente — DoP, Video Editor &amp; Colorist based in Spain, with bases in Germany and the USA. Available worldwide." data-es-content="Contacta con Pablo Valiente: director de fotografía, editor de vídeo y colorista afincado en España, con bases en Alemania y EE. UU. Disponible en todo el mundo."/>
+  <meta property="og:title" content="Contact — Pablo Valiente | DoP, Video Editor &amp; Colorist, Spain" data-es-content="Contacto — Pablo Valiente | Director de fotografía, editor de vídeo y colorista, España"/>
   <meta property="og:url" content="https://pablovaliente.me/contact"/>
   <meta property="og:type" content="website"/>
   <meta property="og:image" content="https://pablovaliente.me/assets/projects/project-1/Frames/frame-03.webp"/>
@@ -145,6 +146,8 @@
     .header-nav a { font-size: 14px; }
     
     #menu-btn { color: #282828; opacity: 0.45; transition: opacity 0.2s; } #menu-btn:hover { opacity: 1; }
+    /* ES: longer kinetic words need a slightly smaller size on narrow screens */
+    @media (max-width: 767px) { html[lang="es"] .klist { --kcfs: clamp(30px, 10.5vw, 56px); } }
   </style>
 <link rel="stylesheet" href="/kmenu.css"/>
 </head>
@@ -178,6 +181,7 @@
       <a href="/impressum.html">Impressum</a>
       <a href="mailto:contact@pablovaliente.me">contact@pablovaliente.me</a>
       <a href="https://instagram.com/pvaliente_" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <div class="kmenu-lang" role="group" aria-label="Language"><button type="button" data-set-lang="en">EN</button><span>/</span><button type="button" data-set-lang="es">ES</button></div>
     </div>
   </div>
 
@@ -200,17 +204,17 @@
     <div class="contact-wrap">
 
       <div class="contact-ways">
-        <span class="contact-label">Get in touch</span>
+        <span class="contact-label" data-es="Contacto">Get in touch</span>
         <nav class="klist" aria-label="Contact options">
           <a class="klist-item" href="/start-a-project.html">
             <span class="klist-idx" aria-hidden="true"></span>
-            <span class="kword">Start a project</span>
-            <span class="klist-meta">2-minute brief · get a quote</span>
+            <span class="kword" data-es="Nuevo proyecto">Start a project</span>
+            <span class="klist-meta" data-es="Brief de 2 minutos · pide presupuesto">2-minute brief · get a quote</span>
           </a>
           <a class="klist-item" href="https://calendly.com/pablovaliente/discovery-call" target="_blank" rel="noopener noreferrer" data-book>
             <span class="klist-idx" aria-hidden="true"></span>
-            <span class="kword">Book a call</span>
-            <span class="klist-meta">30-min discovery call · Google Meet</span>
+            <span class="kword" data-es="Reservar llamada">Book a call</span>
+            <span class="klist-meta" data-es="Llamada de 30 min · Google Meet">30-min discovery call · Google Meet</span>
           </a>
           <a class="klist-item" href="https://wa.me/491633461889?text=Hi%20Pablo%2C%20I%27d%20like%20to%20talk%20about%20a%20project." target="_blank" rel="noopener noreferrer">
             <span class="klist-idx" aria-hidden="true"></span>
@@ -226,11 +230,11 @@
       </div>
 
       <div class="contact-right">
-        <span class="contact-label">Contact</span>
-        <h1 class="contact-title" style="margin-bottom:32px">Let's work together.</h1>
+        <span class="contact-label" data-es="Contacto">Contact</span>
+        <h1 class="contact-title" style="margin-bottom:32px" data-es="Trabajemos juntos.">Let's work together.</h1>
         <div class="contact-body">
-          <p>Based in Spain, with bases in Germany and the USA. Available worldwide for production, post-production, editing and color grading.</p>
-          <p>Let's discuss how we can bring a high-end cinematic standard to your upcoming project, campaign, or digital content.</p>
+          <p data-es="Afincado en España, con bases en Alemania y EE. UU. Disponible en todo el mundo para producción, posproducción, edición y etalonaje.">Based in Spain, with bases in Germany and the USA. Available worldwide for production, post-production, editing and color grading.</p>
+          <p data-es="Hablemos de cómo llevar un estándar cinematográfico de primer nivel a tu próximo proyecto, campaña o contenido digital.">Let's discuss how we can bring a high-end cinematic standard to your upcoming project, campaign, or digital content.</p>
         </div>
       </div>
 
@@ -272,6 +276,7 @@
     }, { passive: true });
   })();
   </script>
+<script src="/js/lang.js"></script>
 <script src="/kmenu.js"></script>
 </body>
 </html>

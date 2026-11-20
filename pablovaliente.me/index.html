@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
+<script>(function(){var l;try{l=localStorage.getItem('pv-lang')}catch(e){}document.documentElement.lang=(l==='es')?'es':'en';})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Pablo Valiente — DoP, Video Editor &amp; Colorist | Spain · Worldwide</title>
-<meta name="description" content="Pablo Valiente — DaVinci Resolve-certified DoP, Video Editor and Colorist based in Spain, with bases in Germany and the USA. Available worldwide."/>
+<title data-es="Pablo Valiente — DoP, editor de vídeo y colorista | España · Todo el mundo">Pablo Valiente — DoP, Video Editor &amp; Colorist | Spain · Worldwide</title>
+<meta name="description" content="Pablo Valiente — DaVinci Resolve-certified DoP, Video Editor and Colorist based in Spain, with bases in Germany and the USA. Available worldwide." data-es-content="Pablo Valiente — director de fotografía, editor de vídeo y colorista certificado en DaVinci Resolve, con sede en España y bases en Alemania y EE. UU. Disponible en todo el mundo."/>
 <meta property="og:title" content="Pablo Valiente — DoP, Video Editor &amp; Colorist | Spain · Worldwide"/>
 <meta property="og:description" content="DaVinci Resolve-certified DoP, Video Editor and Colorist based in Spain, with bases in Germany and the USA. Available worldwide."/>
 <meta property="og:image" content="https://pablovaliente.me/assets/projects/project-1/Frames/frame-03.webp"/>
@@ -643,6 +644,7 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
     <a href="/impressum.html">Impressum</a>
     <a href="mailto:contact@pablovaliente.me">contact@pablovaliente.me</a>
     <a href="https://instagram.com/pvaliente_" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <div class="kmenu-lang" role="group" aria-label="Language"><button type="button" data-set-lang="en">EN</button><span>/</span><button type="button" data-set-lang="es">ES</button></div>
   </div>
 </div>
 
@@ -653,7 +655,7 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
       <a class="project-item" href="bellamar.html" data-bg="bg-0">
         <div class="project-text">
         <span class="project-title">Bellamar Hotel Beach &amp; Spa</span>
-        <span class="project-category">Hospitality Brand Production</span>
+        <span class="project-category" data-es="Producción para hostelería">Hospitality Brand Production</span>
         </div>
       </a>
     </li>
@@ -661,7 +663,7 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
       <a class="project-item" href="marvell.html" data-bg="bg-1">
         <div class="project-text">
         <span class="project-title">Marvell Club</span>
-        <span class="project-category">Hospitality Brand Production</span>
+        <span class="project-category" data-es="Producción para hostelería">Hospitality Brand Production</span>
         </div>
       </a>
     </li>
@@ -669,7 +671,7 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
       <a class="project-item" href="ordinary.html" data-bg="bg-2">
         <div class="project-text">
         <span class="project-title">The Ordinary</span>
-        <span class="project-category">Editing &amp; Color Grading</span>
+        <span class="project-category" data-es="Edición y etalonaje">Editing &amp; Color Grading</span>
         </div>
       </a>
     </li>
@@ -677,7 +679,7 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
       <a class="project-item" href="perdido-en-una-perdiz.html" data-bg="bg-4">
         <div class="project-text">
         <span class="project-title">Perdido en una perdiz</span>
-        <span class="project-category">Editing &amp; Color Grading</span>
+        <span class="project-category" data-es="Edición y etalonaje">Editing &amp; Color Grading</span>
         </div>
       </a>
     </li>
@@ -685,7 +687,7 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
       <a class="project-item" href="zufaellige-begegnung.html" data-bg="bg-3">
         <div class="project-text">
         <span class="project-title">Zufällige Begegnung</span>
-        <span class="project-category">Short Film Production</span>
+        <span class="project-category" data-es="Producción de cortometraje">Short Film Production</span>
         </div>
       </a>
     </li>
@@ -693,7 +695,7 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
       <a class="project-item" href="esparadis.html" data-bg="bg-6">
         <div class="project-text">
         <span class="project-title">Es Paradis</span>
-        <span class="project-category">Social Media Content</span>
+        <span class="project-category" data-es="Contenido para redes sociales">Social Media Content</span>
         </div>
       </a>
     </li>
@@ -708,6 +710,7 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
   <span class="footer-col footer-social"><a href="https://instagram.com/pvaliente_" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.linkedin.com/in/valiente-pablo" target="_blank" rel="noopener noreferrer">LinkedIn</a></span>
 </footer>
 
+<script src="/js/lang.js"></script>
 <script>
 'use strict';
 
@@ -853,6 +856,14 @@ document.addEventListener('DOMContentLoaded', function() {
     { href: 'hospitality/',                   title: 'Bellamar Hotel<br>Ibiza',     category: 'Hospitality Brand Production', bg: 'bg-p3', sec: 'photo' },
   ];
   projects.forEach(function (p) { if (!p.sec) p.sec = 'film'; });
+  var CAT_ES = {
+    'Hospitality Brand Production': 'Producción para hostelería',
+    'Editing & Color Grading': 'Edición y etalonaje',
+    'Short Film Production': 'Producción de cortometraje',
+    'Social Media Content': 'Contenido para redes sociales',
+    'Architectural Photography': 'Fotografía de arquitectura'
+  };
+  function catOf(p) { return window.pvLang && pvLang.get() === 'es' ? (CAT_ES[p.category] || p.category) : p.category; }
   function secList(sec) { return projects.filter(function (p) { return p.sec === sec; }); }
   function firstOf(sec) { for (var i = 0; i < projects.length; i++) if (projects[i].sec === sec) return i; return 0; }
   // photo backgrounds load only when needed (current + next)
@@ -901,13 +912,14 @@ document.addEventListener('DOMContentLoaded', function() {
     infoEl.classList.add('is-fading');
     setTimeout(function() {
       titleEl.innerHTML = projects[idx].title;
-      catEl.textContent   = projects[idx].category;
+      catEl.textContent   = catOf(projects[idx]);
       infoEl.classList.remove('is-fading');
     }, 150);
     loadBg(idx); loadBg(idx + 1);
     showBg(projects[idx].bg);
     updateIndicator();
   }
+  if (window.pvLang) pvLang.on(function () { catEl.textContent = catOf(projects[idx]); });
   window.pvMobileHome = { go: function (sec) { goTo(firstOf(sec)); } };
 
   function navigateTo(url, forward) {
@@ -921,7 +933,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (/^#(works|photography)$/.test(location.hash)) idx = firstOf('photo');
   titleEl.innerHTML = projects[idx].title;
-  catEl.textContent   = projects[idx].category;
+  catEl.textContent   = catOf(projects[idx]);
   loadBg(idx); loadBg(idx + 1);
   showBg(projects[idx].bg);
   updateIndicator();
@@ -975,7 +987,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="mobile-tiktok" aria-label="Browse projects">
   <div class="mtk-tabs" aria-label="Section">
     <button type="button" class="mtk-tab is-on" data-sec="film">Film</button>
-    <button type="button" class="mtk-tab" data-sec="photo">Photography</button>
+    <button type="button" class="mtk-tab" data-sec="photo" data-es="Fotografía">Photography</button>
   </div>
   <div class="mtk-row">
     <div class="mtk-info" id="mtkInfo">
@@ -983,7 +995,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <h2 class="mtk-title" id="mtkTitle"></h2>
       <div class="mtk-hint" id="mtkHint">
         <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M10 1l5 4-5 4M1 5h14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Open project
+        <span data-es="Ver proyecto">Open project</span>
       </div>
     </div>
     <div class="mtk-indicator" id="mtkIndicator">
@@ -1000,7 +1012,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="snap-page" aria-hidden="true"></div>
 <section id="de-home" class="snap-page" aria-label="Photography">
   <div id="works" aria-hidden="true"></div>
-  <iframe id="de-home-frame" title="Pablo Valiente — Works" data-src="works.html"></iframe>
+  <iframe id="de-home-frame" title="Pablo Valiente — Works" data-es-title="Pablo Valiente — Trabajos" data-src="works.html"></iframe>
 </section>
 <script>
 (function () {

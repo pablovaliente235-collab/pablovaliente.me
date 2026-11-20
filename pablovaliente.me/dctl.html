@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="utf-8"/>
+<script>(function(){var l;try{l=localStorage.getItem('pv-lang')}catch(e){}document.documentElement.lang=(l==='es')?'es':'en';})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PV Color Tools — Pablo Valiente | Free DCTLs for DaVinci Resolve</title>
-  <meta name="description" content="PV Master Grade Free Edition and PV DRT: two free DCTLs for DaVinci Resolve Studio by Pablo Valiente, colorist based in Spain, available worldwide."/>
+  <title data-es="PV Color Tools — Pablo Valiente | DCTLs gratuitos para DaVinci Resolve">PV Color Tools — Pablo Valiente | Free DCTLs for DaVinci Resolve</title>
+  <meta name="description" content="PV Master Grade Free Edition and PV DRT: two free DCTLs for DaVinci Resolve Studio by Pablo Valiente, colorist based in Spain, available worldwide." data-es-content="PV Master Grade Free Edition y PV DRT: dos DCTLs gratuitos para DaVinci Resolve Studio de Pablo Valiente, colorista con sede en España, disponible en todo el mundo."/>
   <link rel="canonical" href="https://pablovaliente.me/dctl"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://pablovaliente.me/dctl"/>
@@ -188,11 +189,6 @@
       .dctl-section .dctl-ui img, .drt-layout .dctl-ui img { width: 100%; max-width: none; height: auto; }
     }
   </style>
-<script>
-(function(){var l;try{l=localStorage.getItem('pv-lang');}catch(e){}
-if(l!=='es'&&l!=='en')l='en';
-document.documentElement.lang=l;})();
-</script>
 <link rel="stylesheet" href="/kmenu.css"/>
 </head>
 <body>
@@ -260,7 +256,7 @@ document.documentElement.lang=l;})();
             <p class="dctl-desc"><span class="es">PV DRT es la transformación de salida: convierte la imagen de DaVinci Wide Gamut a lo que finalmente se ve en pantalla. Va en el último nodo, después del etalonaje, y sustituye a cualquier otro DRT o LUT de salida.</span><span class="en">PV DRT is the output transform: it converts the image from DaVinci Wide Gamut to what is finally seen on screen. It goes in the last node, after the grade, and replaces any other output DRT or LUT.</span></p>
           </div>
         </div>
-        <div class="dctl-ui"><img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" loading="lazy"></div>
+        <div class="dctl-ui"><img src="assets/dctl/drt-ui.webp" alt="PV DRT interface in DaVinci Resolve" data-es-alt="Interfaz de PV DRT en DaVinci Resolve" loading="lazy"></div>
         <div class="drt-card">
           <div class="ba-slider" style="--pos:50%">
             <div class="ph r16x9"><img class="ba-after" src="assets/dctl/drt-after-1.webp" alt="PV DRT, example 1" loading="lazy"><img class="ba-before" src="assets/dctl/drt-before-1.webp" alt="CST&lt;Rec709, example 1" loading="lazy"></div>
@@ -291,14 +287,14 @@ document.documentElement.lang=l;})();
         </div>
         <div class="drt-card">
           <div class="ba-slider" style="--pos:50%">
-          <div class="ph r16x9"><img class="ba-after" src="assets/dctl/master-grade-after-2.webp" alt="After: PV Master Grade, example 2" loading="lazy"><img class="ba-before" src="assets/dctl/master-grade-before-2.webp" alt="Before: PV Master Grade, example 2" loading="lazy"></div>
+          <div class="ph r16x9"><img class="ba-after" src="assets/dctl/master-grade-after-2.webp" alt="After: PV Master Grade, example 2" data-es-alt="Después: PV Master Grade, ejemplo 2" loading="lazy"><img class="ba-before" src="assets/dctl/master-grade-before-2.webp" alt="Before: PV Master Grade, example 2" data-es-alt="Antes: PV Master Grade, ejemplo 2" loading="lazy"></div>
           <span class="ba-label ba-l"><span class="es">Antes</span><span class="en">Before</span></span><span class="ba-label ba-r"><span class="es">Después</span><span class="en">After</span></span>
           <span class="ba-handle"></span>
           <input type="range" min="0" max="100" value="50" aria-label="Before / After">
         </div>
           <a href="assets/dctl/PV-Master-Grade.zip" class="btn drt-dl" download><span class="es">Descargar</span><span class="en">Download</span></a>
         </div>
-        <div class="dctl-ui"><img src="assets/dctl/master-grade-ui.webp" alt="PV Master Grade interface in DaVinci Resolve" loading="lazy"></div>
+        <div class="dctl-ui"><img src="assets/dctl/master-grade-ui.webp" alt="PV Master Grade interface in DaVinci Resolve" data-es-alt="Interfaz de PV Master Grade en DaVinci Resolve" loading="lazy"></div>
       </div>
     </section>
 
@@ -313,13 +309,12 @@ document.documentElement.lang=l;})();
     <span class="footer-col footer-social"><a href="https://instagram.com/pvaliente_" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.linkedin.com/in/valiente-pablo" target="_blank" rel="noopener noreferrer">LinkedIn</a></span>
   </footer>
 
+  <script src="/js/lang.js"></script>
   <script>
-    var langBtns=document.querySelectorAll('[data-set-lang]');
-    function markLang(){langBtns.forEach(function(b){b.classList.toggle('is-on',b.dataset.setLang===document.documentElement.lang);});}
-    langBtns.forEach(function(b){b.addEventListener('click',function(){document.documentElement.lang=b.dataset.setLang;try{localStorage.setItem('pv-lang',b.dataset.setLang);}catch(e){}markLang();});});
-    markLang();
     var DRT_EX=[1,3],drtIdx=0,drtCard=document.querySelector('#pv-drt .drt-card');
-    function drtShow(n,keep){drtIdx=(n+DRT_EX.length)%DRT_EX.length;var k=DRT_EX[drtIdx],a=drtCard.querySelector('.ba-after'),b=drtCard.querySelector('.ba-before'),sl=drtCard.querySelector('.ba-slider');a.src='assets/dctl/drt-after-'+k+'.webp';b.src='assets/dctl/drt-before-'+k+'.webp';a.alt='PV DRT, example '+k;b.alt='CST<Rec709, example '+k;if(!keep){sl.style.setProperty('--pos','50%');sl.querySelector('input').value=50;}}
+    function setDrtAlts(){var k=DRT_EX[drtIdx];drtCard.querySelector('.ba-after').alt=pvLang.t('PV DRT, example '+k,'PV DRT, ejemplo '+k);drtCard.querySelector('.ba-before').alt=pvLang.t('CST<Rec709, example '+k,'CST<Rec709, ejemplo '+k);}
+    pvLang.on(setDrtAlts);setDrtAlts();
+    function drtShow(n,keep){drtIdx=(n+DRT_EX.length)%DRT_EX.length;var k=DRT_EX[drtIdx],a=drtCard.querySelector('.ba-after'),b=drtCard.querySelector('.ba-before'),sl=drtCard.querySelector('.ba-slider');a.src='assets/dctl/drt-after-'+k+'.webp';b.src='assets/dctl/drt-before-'+k+'.webp';setDrtAlts();if(!keep){sl.style.setProperty('--pos','50%');sl.querySelector('input').value=50;}}
     drtCard.querySelector('.drt-prev').addEventListener('click',function(){drtShow(drtIdx-1);});
     drtCard.querySelector('.drt-next').addEventListener('click',function(){drtShow(drtIdx+1);});
     /* intro animation: slider glides left -> right and stays, carousel switches example, slider glides from there back to the left */
@@ -339,7 +334,7 @@ document.documentElement.lang=l;})();
     function fitDrtTitle(){var t=document.querySelector('.drt-top .dctl-name'),p=document.querySelector('.drt-top .dctl-desc');if(!t||!p||window.innerWidth<=768){if(t)t.style.fontSize='';var m0=document.querySelector('#pv-master-grade .dctl-name');if(m0)m0.style.fontSize='';return;}
       var cs=getComputedStyle(t),c=document.createElement('canvas').getContext('2d');c.font=cs.fontWeight+' 100px '+cs.fontFamily;var cap=c.measureText('PV DRT').actualBoundingBoxAscent||72;
       var ph=p.getBoundingClientRect().height;var fs=ph*100/cap*0.6125;t.style.fontSize=fs+'px';t.style.lineHeight='1';var mt=document.querySelector('#pv-master-grade .dctl-name');if(mt){mt.style.fontSize=Math.min(fs,window.innerWidth*0.05)+'px';mt.style.lineHeight='1';}}
-    window.addEventListener('resize',fitDrtTitle);document.querySelectorAll('[data-set-lang]').forEach(function(b){b.addEventListener('click',function(){setTimeout(fitDrtTitle,0);});});
+    window.addEventListener('resize',fitDrtTitle);pvLang.on(function(){setTimeout(fitDrtTitle,0);});
     if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitDrtTitle);fitDrtTitle();window.addEventListener('load',fitDrtTitle);
     document.querySelectorAll('.ba-slider input').forEach(function(i){i.addEventListener('input',function(){i.parentNode.style.setProperty('--pos',i.value+'%');});});
     document.querySelectorAll('.footer-year').forEach(el => el.textContent = new Date().getFullYear());

@@ -7,9 +7,15 @@
   var menuBtn = document.getElementById('menu-btn');
   var burgers = [document.getElementById('burger-btn'), document.getElementById('burgerBtn')].filter(Boolean);
 
+  var L = window.pvLang || { get: function () { return 'en'; }, t: function (en) { return en; }, on: function () {}, apply: function () {} };
+  // menu words (EN text is the markup; ES from data-es or this map). "Film" and "DCTLs" stay as they are in both languages.
+  var WORDS_ES = { 'Photography': 'Fotografía', 'About': 'Sobre mí', 'Contact': 'Contacto' };
+
   // split words into letters for the kinetic animation
   function splitWord(word, base, step) {
-    var text = word.textContent;
+    if (word.getAttribute('data-en') === null) word.setAttribute('data-en', word.textContent);
+    var en = word.getAttribute('data-en');
+    var text = L.get() === 'es' ? (word.getAttribute('data-es') || WORDS_ES[en] || en) : en;
     word.setAttribute('aria-label', text);
     word.textContent = '';
     Array.from(text).forEach(function (ch, i) {
@@ -22,16 +28,19 @@
       word.appendChild(s);
     });
   }
-  menu.querySelectorAll('.kmenu-word').forEach(function (word, wi) { splitWord(word, 120 + wi * 70, 28); });
+  var splits = [];
+  function split(word, base, step) { splits.push([word, base, step]); splitWord(word, base, step); }
+  menu.querySelectorAll('.kmenu-word').forEach(function (word, wi) { split(word, 120 + wi * 70, 28); });
   document.querySelectorAll('.klist').forEach(function (list) {
-    list.querySelectorAll('.kword').forEach(function (word, wi) { splitWord(word, 250 + wi * 110, 30); });
+    list.querySelectorAll('.kword').forEach(function (word, wi) { split(word, 250 + wi * 110, 30); });
     requestAnimationFrame(function () { requestAnimationFrame(function () { list.classList.add('is-in'); }); });
   });
+  L.on(function () { splits.forEach(function (x) { splitWord(x[0], x[1], x[2]); }); setExpanded(isOpen()); });
 
   function isOpen() { return menu.classList.contains('open'); }
   function setExpanded(v) {
-    if (menuBtn) { menuBtn.setAttribute('aria-expanded', v); menuBtn.textContent = v ? 'CLOSE' : 'MENU'; }
-    burgers.forEach(function (b) { b.setAttribute('aria-expanded', v); b.setAttribute('aria-label', v ? 'Close menu' : 'Open menu'); });
+    if (menuBtn) { menuBtn.setAttribute('aria-expanded', v); menuBtn.textContent = v ? L.t('CLOSE', 'CERRAR') : L.t('MENU', 'MENÚ'); }
+    burgers.forEach(function (b) { b.setAttribute('aria-expanded', v); b.setAttribute('aria-label', v ? L.t('Close menu', 'Cerrar menú') : L.t('Open menu', 'Abrir menú')); });
   }
   function open() {
     menu.classList.add('open');
@@ -74,21 +83,6 @@
     });
   });
 
-  // Language buttons on the pages from pablovaliente.de (their i18n uses applyLang + localStorage 'pv_lang')
-  var langBtns = menu.querySelectorAll('[data-kmenu-lang]');
-  function markLang() {
-    var cur = 'de';
-    try { cur = localStorage.getItem('pv_lang') || (typeof currentLang !== 'undefined' ? currentLang : 'de'); } catch (err) {}
-    langBtns.forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-kmenu-lang') === cur); });
-  }
-  langBtns.forEach(function (b) {
-    b.addEventListener('click', function () {
-      if (typeof window.applyLang === 'function') window.applyLang(b.getAttribute('data-kmenu-lang'));
-      markLang();
-    });
-  });
-  if (langBtns.length) markLang();
-
   // While the menu is open, keep page-level wheel / key / swipe handlers (sliders, section scrolling) from reacting
   function guard(e) {
     if (!isOpen()) return;
@@ -121,11 +115,12 @@
   function bookLink(cls) {
     var a = document.createElement('a');
     a.href = CAL_URL; a.target = '_blank'; a.rel = 'noopener noreferrer';
-    a.className = cls; a.setAttribute('data-book', ''); a.textContent = 'Book a call';
+    a.className = cls; a.setAttribute('data-book', ''); a.setAttribute('data-es', 'Reservar una llamada'); a.textContent = 'Book a call';
     return a;
   }
   var foot = menu.querySelector('.kmenu-foot');
-  if (foot && !foot.querySelector('[data-book]')) foot.insertBefore(bookLink('kmenu-book'), foot.firstChild);
+  if (foot && !foot.querySelector('[data-book]')) { foot.insertBefore(bookLink('kmenu-book'), foot.firstChild); L.apply(); }
+  setExpanded(false);
   // keep the marquee just above the foot links, however many lines they wrap to
   var mqTrack = menu.querySelector('.kmenu-marquee-track');
   function placeMarquee() {
