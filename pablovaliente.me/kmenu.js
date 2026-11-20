@@ -7,8 +7,8 @@
   var menuBtn = document.getElementById('menu-btn');
   var burgers = [document.getElementById('burger-btn'), document.getElementById('burgerBtn')].filter(Boolean);
 
-  // split each word into letters for the kinetic animation
-  menu.querySelectorAll('.kmenu-word').forEach(function (word, wi) {
+  // split words into letters for the kinetic animation
+  function splitWord(word, base, step) {
     var text = word.textContent;
     word.setAttribute('aria-label', text);
     word.textContent = '';
@@ -18,9 +18,14 @@
       s.setAttribute('aria-hidden', 'true');
       s.textContent = ch;
       s.style.setProperty('--i', i);
-      s.style.setProperty('--d', 120 + wi * 70 + i * 28);
+      s.style.setProperty('--d', base + i * step);
       word.appendChild(s);
     });
+  }
+  menu.querySelectorAll('.kmenu-word').forEach(function (word, wi) { splitWord(word, 120 + wi * 70, 28); });
+  document.querySelectorAll('.klist').forEach(function (list) {
+    list.querySelectorAll('.kword').forEach(function (word, wi) { splitWord(word, 250 + wi * 110, 30); });
+    requestAnimationFrame(function () { requestAnimationFrame(function () { list.classList.add('is-in'); }); });
   });
 
   function isOpen() { return menu.classList.contains('open'); }
