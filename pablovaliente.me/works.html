@@ -81,10 +81,10 @@
   .slider-col::-webkit-scrollbar { display: none; }
   .slider-track {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     padding: 0 2.5rem;
-    width: 200vw;
+    width: calc(133.333vw + 20px);
     opacity: 0;
     animation: fadeInUp .9s var(--ease) .3s forwards;
   }
@@ -130,7 +130,7 @@
   @media (max-width: 1023px) {
     /* Keep fixed stage + horizontal scroll — just resize cards */
     .slider-track {
-      grid-template-columns: repeat(6, 75vw);
+      grid-template-columns: repeat(4, 75vw);
       gap: 12px;
       padding: 0 1.25rem;
       width: auto;
@@ -424,19 +424,7 @@
         <span class="ctl-line"><span class="ctl-cat" data-i18n="card_3_category">Hospitality Brand Production</span><span class="ctl-cat">&nbsp;&nbsp;/&nbsp;&nbsp;</span><span class="ctl-name" data-i18n="card_label_3">Bellamar Hotel</span></span>
       </div>
 
-      <div class="card-wrap" data-href="hospitality/marvell/" data-bg="assets/projects/marvell-club-hotel-ibiza/frames/frame-fondo.webp">
-        <div class="card" style="background:#0a0f14">
-          <img class="card__img" src="assets/projects/marvell-club-hotel-ibiza/frames/frame-portada.webp" alt="Marvell Club Ibiza" loading="lazy"/>
-        </div>
-        <span class="ctl-line"><span class="ctl-cat" data-i18n="card_4_category">Hospitality Brand Production</span><span class="ctl-cat">&nbsp;&nbsp;/&nbsp;&nbsp;</span><span class="ctl-name" data-i18n="card_label_4">Marvell Club</span></span>
-      </div>
 
-      <div class="card-wrap" data-href="real-estate/" data-bg="assets/projects/urban-living-berlin/frame-fondo.webp">
-        <div class="card" style="background:#1a1510">
-          <img class="card__img" src="assets/projects/urban-living-berlin/frame-portada.webp" alt="Urban Living Berlin" loading="lazy"/>
-        </div>
-        <span class="ctl-line"><span class="ctl-cat" data-i18n="card_5_category">Real Estate Film &amp; Photo</span><span class="ctl-cat">&nbsp;&nbsp;/&nbsp;&nbsp;</span><span class="ctl-name" data-i18n="card_label_5">Urban Living</span></span>
-      </div>
 
     </div>
   </div>
