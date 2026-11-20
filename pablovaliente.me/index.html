@@ -535,7 +535,7 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
 <footer id="site-footer" aria-label="Site footer">
   <span class="footer-col">&copy; <span class="footer-year"></span> Pablo Valiente. All rights reserved.</span>
   <span class="footer-col"><a href="mailto:contact@pablovaliente.me"><span class="mail-full">contact@pablovaliente.me</span><span class="mail-short">Mail</span></a></span>
-  <span class="footer-col"><a href="impressum.html">Impressum</a></span>
+  <span class="footer-col"><a href="https://calendly.com/pablovaliente/discovery-call" target="_blank" rel="noopener noreferrer" data-book>Book a call</a></span>
   <span class="footer-col"><a href="https://instagram.com/pvaliente_" target="_blank" rel="noopener noreferrer">Instagram</a></span>
 </footer>
 
@@ -822,6 +822,20 @@ document.addEventListener('DOMContentLoaded', function() {
     if (mq.matches && !frame.getAttribute('src')) frame.setAttribute('src', frame.getAttribute('data-src'));
   }
   frame.addEventListener('load', attachWheel);
+  // "Book a call" links inside the embedded page open the same Calendly popup over the whole site
+  frame.addEventListener('load', function () {
+    try {
+      var d = frame.contentDocument;
+      d.addEventListener('mouseover', function (e) { if (e.target.closest && e.target.closest('[data-book]') && window.pvBook) window.pvBook.load(); });
+      d.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('[data-book]');
+        if (!a || !window.pvBook) return;
+        if (!window.pvBook.ready()) { window.pvBook.load(); return; }
+        e.preventDefault();
+        window.pvBook.open();
+      });
+    } catch (err) {}
+  });
   load();
   if (mq.addEventListener) mq.addEventListener('change', load); else if (mq.addListener) mq.addListener(load);
 })();
