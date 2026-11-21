@@ -14,10 +14,6 @@
 <meta name="description" content="Photography, video and color by Pablo Valiente: architecture, hospitality and commercial work. Based in Spain, available worldwide." data-es-content="Fotografía, vídeo y color de Pablo Valiente: arquitectura, hostelería y trabajos comerciales. Con sede en España, disponible en todo el mundo."/>
 <link rel="canonical" href="https://pablovaliente.me/"/>
     <link rel="stylesheet" href="css/global.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Manrope:wght@300;400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Manrope:wght@300;400;500;600&display=swap"></noscript>
 <link rel="stylesheet" href="https://use.typekit.net/hgb1zjr.css"/>
 
 <style>
@@ -32,7 +28,7 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :focus-visible { outline: 2px solid #A8895A; outline-offset: 3px; }
   html, body { width: 100%; height: 100%; }
-  body { font-family: 'Syne', sans-serif; background: var(--bg); color: #0C0C0B; -webkit-font-smoothing: antialiased; overflow: hidden; }
+  body { font-family: "neue-haas-grotesk-display", sans-serif; background: var(--bg); color: #0C0C0B; -webkit-font-smoothing: antialiased; overflow: hidden; }
 
   /* ── Grain ── */
   .grain {
@@ -130,8 +126,6 @@
     .works-label { left: 1.25rem; font-size: 24px; }
     .ctl-cat { font-size: 8px; }
     .ctl-name { font-size: 8px; }
-    .mobile-menu-open { overflow: hidden; }
-    #mobile-overlay { position: fixed !important; inset: 0 !important; width: 100vw !important; height: 100dvh !important; overflow: hidden !important; }
   }
 
   @media (hover: none) and (pointer: coarse) {
@@ -211,7 +205,6 @@
     <meta name="twitter:title" content="Photography — Pablo Valiente"/>
     <meta name="twitter:description" content="Photography, video and color by Pablo Valiente: architecture, hospitality and commercial work. Based in Spain, available worldwide."/>
     <meta name="twitter:image" content="https://pablovaliente.me/assets/projects/project-1/Frames/frame-01.webp"/>
-<style id="pv-embed">#unified-header{display:none !important}</style>
 <link rel="stylesheet" href="/css/pv-foot.css"/>
 <link rel="stylesheet" href="/css/tailwind.css"/>
 </head>
@@ -219,35 +212,6 @@
 
 <div class="grain" aria-hidden="true"></div>
 
-
-<header class="fixed top-0 w-full z-[600]" id="unified-header" style="background:transparent;">
-    <nav class="w-full flex items-center py-4 justify-between px-4 md:px-6 lg:px-10" style="position:relative;">
-        <a href="/" class="hover:opacity-70 transition-opacity" style="font-family:'neue-haas-grotesk-display',sans-serif; font-size:13px; font-weight:500; color:#0C0C0B;">Pablo Valiente</a>
-        <button id="langToggleMobile" class="lg:hidden" style="position:absolute; left:50%; transform:translateX(-50%); font-family:'neue-haas-grotesk-display',sans-serif; font-size:11px; font-weight:500; color:rgba(0,0,0,0.45); text-transform:uppercase; letter-spacing:0.1em;">EN</button>
-        <div class="flex items-center gap-4">
-            <button id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false" style="font-family:'neue-haas-grotesk-display',sans-serif; font-size:11px; font-weight:500; letter-spacing:0.1em; color:#0C0C0B;">MENU</button>
-            <button id="langToggle" class="hidden lg:block" style="font-family:'neue-haas-grotesk-display',sans-serif; font-size:11px; font-weight:500; color:rgba(0,0,0,0.45); text-transform:uppercase; letter-spacing:0.1em;">EN</button>
-        </div>
-    </nav>
-    <div id="menu-bg"></div>
-    <div id="menu-backdrop"></div>
-    <div class="fixed inset-0 bg-[#0c0c0b] z-[700] hidden flex-col" id="mobile-overlay">
-        <div style="position:absolute; top:0; left:0; right:0; display:flex; align-items:center; justify-content:flex-end; gap:16px; padding:16px 40px;">
-                <button id="close-menu-btn-text" style="font-family:'neue-haas-grotesk-display',sans-serif; font-size:11px; font-weight:500; letter-spacing:0.1em; color:#fff; background:none; border:none; padding:0; cursor:pointer; text-transform:uppercase;">CLOSE</button>
-                <button id="close-menu-btn" style="font-family:'neue-haas-grotesk-display',sans-serif; font-size:22px; font-weight:300; color:#fff; background:none; border:none; padding:0; cursor:pointer; line-height:1;">×</button>
-            </div>
-        <div class="flex flex-col items-start space-y-1 w-full px-10">
-            <a href="hospitality/" class="overlay-link" style="font-family:'neue-haas-grotesk-display',sans-serif; font-size:25px; font-weight:500; color:#fff; letter-spacing:0.02em; text-decoration:none;">Bellamar Hotel</a>
-            <a href="architecture/" class="overlay-link" style="font-family:'neue-haas-grotesk-display',sans-serif; font-size:25px; font-weight:500; color:#fff; letter-spacing:0.02em; text-decoration:none; white-space:nowrap;">Monasterio de San Miguel</a>
-            <a href="architecture/japanese/" class="overlay-link" style="font-family:'neue-haas-grotesk-display',sans-serif; font-size:25px; font-weight:500; color:#fff; letter-spacing:0.02em; text-decoration:none;">Japanese Sanctuary</a>
-            <a href="architecture/iglesia-yaguaron/" class="overlay-link" style="font-family:'neue-haas-grotesk-display',sans-serif; font-size:25px; font-weight:500; color:#fff; letter-spacing:0.02em; text-decoration:none;">Iglesia de Yaguarón</a>
-            <a href="contact/" data-i18n="menu_contact" class="overlay-link" style="font-family:'neue-haas-grotesk-display',sans-serif; font-size:25px; font-weight:500; color:#fff; letter-spacing:0.02em; text-decoration:none;">Contact</a>
-            <a href="about/" data-i18n="menu_about" class="overlay-link" style="font-family:'neue-haas-grotesk-display',sans-serif; font-size:25px; font-weight:500; color:#fff; letter-spacing:0.02em; text-decoration:none;">About</a>
-            <button id="langToggleOverlay" style="font-family:'neue-haas-grotesk-display',sans-serif; font-size:11px; font-weight:500; color:#fff; letter-spacing:0.1em; text-decoration:none; text-transform:uppercase; margin-top:20px; background:none; border:none; padding:0; cursor:pointer;">EN</button>
-            <p class="overlay-year" style="font-family:'neue-haas-grotesk-display',sans-serif; font-size:11px; font-weight:400; color:rgba(255,255,255,0.8); margin-top:8px;">&copy; <span class="footer-year"></span> Pablo Valiente. All rights reserved.</p>
-        </div>
-    </div>
-</header>
 
 <main>
 <div class="stage">
@@ -315,9 +279,6 @@ const i18n = {
     card_1_category: 'Architectural Photography',
     card_2_category: 'Architectural Photography',
     card_3_category: 'Hospitality Brand Production',
-    menu_contact:    'Contact',
-    menu_about:      'About',
-    menu_impressum:  'Impressum',
     label_work:        'Project',
     label_description: 'Description',
     label_camera:      'Camera',
@@ -336,9 +297,6 @@ const i18n = {
     card_1_category: 'Fotografía de arquitectura',
     card_2_category: 'Fotografía de arquitectura',
     card_3_category: 'Producción para hostelería',
-    menu_contact:    'Contacto',
-    menu_about:      'Sobre mí',
-    menu_impressum:  'Aviso legal',
     label_work:        'Proyecto',
     label_description: 'Descripción',
     label_camera:      'Cámara',
@@ -360,26 +318,6 @@ function applyLang(lang) {
 }
 pvLang.on(applyLang);
 
-function updateHeaderOffset() {
-  const header = document.getElementById('unified-header');
-  if (header) {
-    document.documentElement.style.setProperty('--header-h', header.getBoundingClientRect().height + 'px');
-  }
-}
-updateHeaderOffset();
-window.addEventListener('resize', updateHeaderOffset);
-
-
-const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-const closeMenuBtn  = document.getElementById('close-menu-btn');
-const mobileOverlay = document.getElementById('mobile-overlay');
-var menuOpenCount=0;
-        function openMenu()  { mobileOverlay.classList.remove('hidden'); mobileOverlay.classList.add('flex'); mobileMenuBtn.setAttribute('aria-expanded','true');  document.body.classList.add('mobile-menu-open'); var sf=document.getElementById('site-footer');if(sf&&window.innerWidth>=1024)sf.style.display='none'; if(window.innerWidth>=1024){var bd=document.getElementById('menu-backdrop');if(bd)bd.classList.add('visible');var mbg=document.getElementById('menu-bg');if(mbg){var p='assets/projects/';var MENU_IMGS=[p+'japanisches-heiligtum/frames/frame-fondo.webp',p+'bellamar-hotel-ibiza/frames/frame-fondo.webp',p+'iglesia-yaguaron/frames/frame-fondo.webp',p+'monasterio-san-miguel/frames/frame-portada.webp',p+'bellamar-hotel-ibiza/frames/frame-portada.webp',p+'japanisches-heiligtum/frames/frame-portada.webp'];var img=MENU_IMGS[menuOpenCount%MENU_IMGS.length];mbg.style.backgroundImage="url('"+img+"')";mbg.classList.add('visible');}mobileMenuBtn.textContent='CLOSE ×';menuOpenCount++;} }
-function closeMenu() { mobileOverlay.classList.add('hidden');    mobileOverlay.classList.remove('flex'); mobileMenuBtn.setAttribute('aria-expanded','false'); document.body.classList.remove('mobile-menu-open'); var sf=document.getElementById('site-footer');if(sf)sf.style.display=''; if(window.innerWidth>=1024){var bd=document.getElementById('menu-backdrop');if(bd)bd.classList.remove('visible');var mbg=document.getElementById('menu-bg');if(mbg)mbg.classList.remove('visible');} if(window.innerWidth>=1024)mobileMenuBtn.textContent='MENU'; }
-mobileMenuBtn.addEventListener('click', openMenu);
-closeMenuBtn.addEventListener('click',  closeMenu);
-mobileOverlay.querySelectorAll('a:not(#langToggleOverlay), button:not(#langToggleOverlay):not(#close-menu-btn)').forEach(a => a.addEventListener('click', closeMenu));
-
 const track = document.getElementById('track');
 const col   = document.getElementById('sliderCol');
 const cards = Array.from(track.querySelectorAll('.card-wrap'));
@@ -397,7 +335,7 @@ cards.forEach(c => {
     img.className = 'card__img-hover';
     img.alt = '';
     img.loading = 'lazy';
-    c.querySelector('.card').insertBefore(img, c.querySelector('.card__overlay'));
+    c.querySelector('.card').appendChild(img);
   }
 });
 
@@ -433,29 +371,8 @@ document.addEventListener('keydown', e => {
   });
 applyLang(pvLang.get());
 
-function positionMobileLangToggle() {
-  var t = document.getElementById('langToggleMobile');
-  var logo = document.querySelector('nav > a');
-  var menu = document.getElementById('mobile-menu-btn');
-  if (!t || !logo || !menu) return;
-  var nav = t.closest('nav');
-  if (!nav) return;
-  nav.style.position = 'relative';
-  t.style.position = 'absolute';
-  var navRect = nav.getBoundingClientRect();
-  var logoRect = logo.getBoundingClientRect();
-  var menuRect = menu.getBoundingClientRect();
-  var logoPadRight = parseFloat(getComputedStyle(logo).paddingRight) || 0;
-  var menuPadLeft  = parseFloat(getComputedStyle(menu).paddingLeft)  || 0;
-  var mid = ((logoRect.right - logoPadRight) + (menuRect.left + menuPadLeft)) / 2;
-  t.style.left = (mid - navRect.left) + 'px';
-  t.style.transform = 'translateX(-50%)';
-}
-window.addEventListener('resize', positionMobileLangToggle);
-
 window.addEventListener('load', () => {
   applyLang(pvLang.get());
-  positionMobileLangToggle();
   const fy = document.getElementById('footerYear');
   if (fy) fy.textContent = new Date().getFullYear();
   if (col) {

@@ -10,7 +10,6 @@ module.exports = {
     path.join(site, 'hospitality/index.html'),
     path.join(site, 'works.html'),
   ],
-  // Classes toggled from JS at runtime
-  safelist: ['hidden', 'flex', 'block'],
-  theme: { extend: { colors: { primary: '#A8895A' } } },
+  // If a class is only toggled from JS at runtime, add it here: safelist: ['hidden', ...]
+  theme: { extend: {} },
 };

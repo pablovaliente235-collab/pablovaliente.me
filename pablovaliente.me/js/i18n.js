@@ -6,11 +6,6 @@
 
 const i18n = {
   en: {
-    /* ── Menu (legacy overlay) ── */
-    menu_contact:   'Contact',
-    menu_about:     'About',
-    menu_impressum: 'Impressum',
-
     /* ── Spec labels (shared) ── */
     label_work:        'Project',
     label_description: 'Description',
@@ -29,11 +24,6 @@ const i18n = {
     bellamar_desc:   'Comprehensive audiovisual production for brand identity and booking platforms. It features a cinematic hero film with Es Vedrá aerials, alongside exterior drone photography of the facade and detailed interior shots of the suites and en-suite bathrooms.',
   },
   es: {
-    /* ── Menu (legacy overlay) ── */
-    menu_contact:   'Contacto',
-    menu_about:     'Sobre mí',
-    menu_impressum: 'Aviso legal',
-
     /* ── Spec labels (shared) ── */
     label_work:        'Proyecto',
     label_description: 'Descripción',
@@ -67,30 +57,6 @@ function applyLang(lang) {
   });
 }
 
-/* ── Center mobile lang toggle between logo and MENU ── */
-function positionMobileLangToggle() {
-  var t = document.getElementById('langToggleMobile');
-  var logo = document.querySelector('nav > a');
-  var menu = document.getElementById('mobile-menu-btn');
-  if (!t || !logo || !menu) return;
-  var nav = t.closest('nav');
-  if (!nav) return;
-  nav.style.position = 'relative';
-  t.style.position = 'absolute';
-  t.style.left = '';
-  t.style.transform = '';
-  var navRect = nav.getBoundingClientRect();
-  var logoRect = logo.getBoundingClientRect();
-  var menuRect = menu.getBoundingClientRect();
-  var logoPadRight = parseFloat(getComputedStyle(logo).paddingRight) || 0;
-  var menuPadLeft  = parseFloat(getComputedStyle(menu).paddingLeft)  || 0;
-  var logoTextRight = logoRect.right  - logoPadRight;
-  var menuTextLeft  = menuRect.left   + menuPadLeft;
-  var mid = (logoTextRight + menuTextLeft) / 2;
-  t.style.left = (mid - navRect.left) + 'px';
-  t.style.transform = 'translateX(-50%)';
-}
-
 /* ── Init (call once DOM is ready): apply now, follow every later change ── */
 let _i18nBound = false;
 function initLang() {
@@ -100,8 +66,6 @@ function initLang() {
     _i18nBound = true;
     if (window.pvLang) window.pvLang.on(applyLang);
     document.addEventListener('DOMContentLoaded', () => applyLang(window.pvLang ? window.pvLang.get() : 'en'));
-    window.addEventListener('resize', positionMobileLangToggle);
   }
-  positionMobileLangToggle();
 }
 initLang();
