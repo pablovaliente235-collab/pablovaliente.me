@@ -140,7 +140,7 @@ textarea.pf-input { resize: vertical; line-height: 1.5; font-size: 17px; }
 .pf-est-from { font-size: 0.38em; font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.5; margin-right: 0.15em; vertical-align: 0.35em; }
 .pf-est-notes { margin-top: 28px; max-width: 560px; }
 .pf-est-notes p { font-size: 13px; font-weight: 300; line-height: 1.7; opacity: 0.65; margin-bottom: 8px; }
-.pf-est-notes .pf-est-vat { opacity: 0.8; margin-top: 14px; }
+.pf-est-notes .pf-est-vat { font-size: 13px; letter-spacing: normal; text-transform: none; opacity: 0.68; margin-top: 14px; }
 .pf-amt-hint { min-height: 1.6em; margin-top: 8px; font-size: 13px; font-weight: 300; opacity: 0.6; }
 .pf-amt-hint.is-bad { opacity: 1; color: #a33a2a; }
 .pf-amt-alt { margin-top: 14px; }

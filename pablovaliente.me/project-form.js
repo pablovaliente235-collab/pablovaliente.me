@@ -225,11 +225,11 @@
     { id: 'time', title: L('When?', '¿Cuándo?'),
       fields: [{ id: 'when', type: 'single', req: true, opts: [o('asap', 'As soon as possible', 'Lo antes posible'), o('month', 'Within a month', 'En el próximo mes'), o('1-3', 'In 1–3 months', 'En 1–3 meses'), o('3+', 'In 3+ months', 'En más de 3 meses'), o('flexible', 'Flexible')] },
                { id: 'date', type: 'date', label: L('Exact date, if you have one (optional)', 'Fecha exacta, si la tienes (opcional)') }] },
-    { id: 'budget', title: L("What's the budget?", '¿Qué presupuesto tienes?'), help: L('A range is enough. It helps me propose the right approach.', 'Basta con un rango. Me ayuda a proponerte el enfoque adecuado.'),
-      fields: [{ id: 'budget', type: 'single', req: true, opts: function (s) { return BUDGETS[s.type] || BUDGETS.production; } }] },
     { id: 'estimate', estimate: true, when: function (s) { return s.type === 'production' && !!pvEstimate(s, 'EUR'); },
       title: L('Your instant estimate', 'Tu presupuesto estimado'), nextLabel: L('Continue to get the final quote', 'Continuar para recibir el presupuesto final'),
       fields: [{ id: 'cur', type: 'currency', label: L('Currency', 'Moneda') }] },
+    { id: 'budget', title: L("What's the budget?", '¿Qué presupuesto tienes?'), help: L('A range is enough. It helps me propose the right approach.', 'Basta con un rango. Me ayuda a proponerte el enfoque adecuado.'),
+      fields: [{ id: 'budget', type: 'single', req: true, opts: function (s) { return BUDGETS[s.type] || BUDGETS.production; } }] },
     { id: 'about', title: L('Last step: who are you?', 'Último paso: ¿quién eres?'),
       fields: [{ id: 'name', type: 'text', req: true, label: L('Name', 'Nombre'), auto: 'name' },
                { id: 'email', type: 'email', req: true, label: L('Email', 'Email'), auto: 'email' },
@@ -264,19 +264,23 @@
   function steps() { return STEPS.filter(function (s) { return !s.when || s.when(state); }); }
   function optsOf(f) { return typeof f.opts === 'function' ? f.opts(state) : (f.opts || []); }
   function fieldsOf(st) { return st.fields; }
-  function valid(st) {
-    return fieldsOf(st).every(function (f) {
-      var v = state[f.id];
-      if (f.type === 'currency') return true;
-      if (f.type === 'amount') return f.req ? !!parseAmount(v) : (v == null || v === '' || v === 'unsure' || !!parseAmount(v));
-      if (!f.req) return true;
-      if (f.type === 'multi') return Array.isArray(v) && v.length > 0;
-      if (f.type === 'check') return v === true;
-      if (f.type === 'email') return typeof v === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
-      if (f.type === 'single' || f.type === 'cards') return v != null && optsOf(f).some(function (x) { return x.v === v; });
-      return typeof v === 'string' && v.trim().length > 0;
-    });
+  function validField(f) {
+    var v = state[f.id];
+    if (f.type === 'currency') return true;
+    if (f.type === 'amount') return f.req ? !!parseAmount(v) : (v == null || v === '' || v === 'unsure' || !!parseAmount(v));
+    if (!f.req) return true;
+    if (f.type === 'multi') return Array.isArray(v) && v.length > 0;
+    if (f.type === 'check') return v === true;
+    if (f.type === 'email') return typeof v === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+    if (f.type === 'single' || f.type === 'cards') return v != null && optsOf(f).some(function (x) { return x.v === v; });
+    return typeof v === 'string' && v.trim().length > 0;
   }
+  function valid(st) { return fieldsOf(st).every(validField); }
+  // optional amount fields holding junk ("0", "abc"): the step can still be skipped (the junk is cleared on skip)
+  function badOptional(st) {
+    return fieldsOf(st).filter(function (f) { var v = state[f.id]; return f.type === 'amount' && !f.req && v && v !== 'unsure' && !parseAmount(v); });
+  }
+  function canProceed(st) { return valid(st) || (badOptional(st).length > 0 && fieldsOf(st).every(function (f) { return f.type === 'amount' && !f.req ? true : validField(f); })); }
   function autoAdvance(st) { var fs = fieldsOf(st); return fs.length === 1 && (fs[0].type === 'single' || fs[0].type === 'cards'); }
 
   // ── helpers ──
@@ -345,9 +349,9 @@
     var right = el('div', 'pf-right');
     if (!st.review && !autoAdvance(st)) right.appendChild(el('span', 'pf-hint', t('hint')));
     var next = el('button', 'pf-next'); next.type = 'button';
-    var optionalOnly = fieldsOf(st).length && fieldsOf(st).every(function (f) { return !f.req; }) && fieldsOf(st).every(function (f) { var v = state[f.id]; return f.type === 'currency' || v == null || v === '' || (Array.isArray(v) && !v.length); });
+    var optionalOnly = fieldsOf(st).length && fieldsOf(st).every(function (f) { return !f.req; }) && fieldsOf(st).every(function (f) { var v = state[f.id]; return f.type === 'currency' || v == null || v === '' || (Array.isArray(v) && !v.length) || (f.type === 'amount' && v !== 'unsure' && !parseAmount(v)); });
     next.textContent = st.review ? t('send') + ' →' : (st.nextLabel ? tr(st.nextLabel) + ' →' : (optionalOnly ? t('skip') + ' →' : t('next') + ' →'));
-    next.disabled = !valid(st) || busy;
+    next.disabled = !canProceed(st) || busy;
     next.addEventListener('click', function () { if (st.review) submit(); else go(1); });
     right.appendChild(next);
     nav.appendChild(right);
@@ -360,15 +364,15 @@
   function refresh() {
     var st = steps()[idx], next = root.querySelector('.pf-next');
     if (!next || !st) return;
-    next.disabled = !valid(st) || busy;
-    var optionalOnly = !st.review && fieldsOf(st).length && fieldsOf(st).every(function (f) { return !f.req; }) && fieldsOf(st).every(function (f) { var v = state[f.id]; return f.type === 'currency' || v == null || v === '' || (Array.isArray(v) && !v.length); });
+    next.disabled = !canProceed(st) || busy;
+    var optionalOnly = !st.review && fieldsOf(st).length && fieldsOf(st).every(function (f) { return !f.req; }) && fieldsOf(st).every(function (f) { var v = state[f.id]; return f.type === 'currency' || v == null || v === '' || (Array.isArray(v) && !v.length) || (f.type === 'amount' && v !== 'unsure' && !parseAmount(v)); });
     if (!st.review && !st.nextLabel) next.textContent = (optionalOnly ? t('skip') : t('next')) + ' →';
     save();
   }
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   function go(d) {
     var list = steps();
-    if (d > 0 && !valid(list[idx])) return;
+    if (d > 0) { if (!canProceed(list[idx])) return; badOptional(list[idx]).forEach(function (f) { state[f.id] = ''; }); }
     idx = Math.max(0, Math.min(list.length - 1, idx + d));
     render(d);
     root.scrollIntoView({ block: 'start', behavior: 'smooth' });
@@ -437,7 +441,7 @@
         var raw = state[f.id], n = parseAmount(raw), c = state.icur || 'EUR';
         var bad = raw && raw !== 'unsure' && !n;
         ah.classList.toggle('is-bad', !!bad);
-        ah.textContent = n ? '= ' + fmtMoney(n, c, lang()) : (bad ? t('amtBad') : '');
+        ah.textContent = n ? fmtMoney(n, c, lang()) + (c !== 'EUR' ? ' ≈ ' + fmtMoney(Math.round(n / PRICING.rates[c]), 'EUR', lang()) : '') : (bad ? t('amtBad') : '');
       };
       ai.addEventListener('input', function () {
         state[f.id] = ai.value; if (uns) { uns.classList.remove('is-on'); uns.setAttribute('aria-pressed', false); }
@@ -618,7 +622,7 @@
     var tag = (e.target.tagName || '').toLowerCase();
     var st = steps()[idx];
     if (e.key === 'Enter' && tag !== 'textarea' && tag !== 'button' && tag !== 'a') {
-      if (st.review) { e.preventDefault(); submit(); } else if (valid(st)) { e.preventDefault(); go(1); }
+      if (st.review) { e.preventDefault(); submit(); } else if (canProceed(st)) { e.preventDefault(); go(1); }
       return;
     }
     if (tag === 'input' || tag === 'textarea') return;
