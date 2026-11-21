@@ -10,18 +10,14 @@
   /* ── Shared UI strings (exact text of a text node, trimmed) — applied inside header / menu / footers with no markup changes ── */
   var COMMON = {
     'Pablo Valiente. All rights reserved.': 'Pablo Valiente. Todos los derechos reservados.',
-    'All rights reserved.': 'Todos los derechos reservados.',
     'Start a project': 'Empezar un proyecto',
     'Book a call': 'Reservar una llamada',
     'Services': 'Servicios',
     'All services': 'Todos los servicios',
     'Mail': 'Email',
-    'Impressum': 'Aviso legal',
-    'Get in touch': 'Contacto',
     'Contact': 'Contacto',
     'About': 'Sobre mí',
     'Next Work': 'Siguiente proyecto',
-    'CLOSE': 'CERRAR',
     'MENU': 'MENÚ'
   };
   /* aria-label / title values anywhere in the page (exact match) */
@@ -64,7 +60,7 @@
     'Play color grading reel': 'Reproducir muestra de etalonaje'
   };
   /* where COMMON text is looked up (menu words are handled by kmenu.js) */
-  var REGIONS = '#site-header, #unified-header, #kmenu, #site-footer, footer, .pv-foot, .last-section, .end-label';
+  var REGIONS = '#site-header, #kmenu, #site-footer, footer, .pv-foot, .last-section, .end-label';
   var SKIP = '.kmenu-word, .kword, .kmenu-marquee-track, [data-es], [data-es-html], script, style, noscript';
 
   /* ── state ── */
@@ -200,9 +196,6 @@
       if (b.classList) b.classList.toggle('is-on', on);
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
     }
-    // legacy single toggles name the OTHER language
-    list = doc.querySelectorAll('#langToggle, #langToggleMobile, #langToggleOverlay');
-    for (i = 0; i < list.length; i++) list[i].textContent = lang === 'es' ? 'EN' : 'ES';
   }
 
   function apply(root) {
@@ -253,10 +246,9 @@
 
   /* ── wiring ── */
   doc.addEventListener('click', function (e) {
-    var t = e.target && e.target.closest ? e.target.closest('[data-set-lang], #langToggle, #langToggleMobile, #langToggleOverlay') : null;
+    var t = e.target && e.target.closest ? e.target.closest('[data-set-lang]') : null;
     if (!t) return;
-    var target = t.hasAttribute('data-set-lang') ? norm(t.getAttribute('data-set-lang')) : (lang === 'es' ? 'en' : 'es');
-    if (!t.hasAttribute('data-set-lang')) e.preventDefault();
+    var target = norm(t.getAttribute('data-set-lang'));
     var alt = target !== lang || ES_PATH ? altUrl(target) : null;
     if (alt && target !== lang) {            // counterpart URL exists -> store the choice and go there
       try { localStorage.setItem(KEY, target); } catch (e2) {}

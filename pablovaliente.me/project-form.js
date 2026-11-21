@@ -1,5 +1,5 @@
 /* ═══ Start a project — step-by-step brief (EN / ES) ═══
-   Steps depend on the project type. Answers are sent with EmailJS (same account as the old .de contact form). */
+   Steps depend on the project type. Answers are sent with EmailJS. */
 (function () {
   'use strict';
   var root = document.getElementById('wizard');

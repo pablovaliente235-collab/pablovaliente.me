@@ -17,8 +17,7 @@ body.kmenu-open #burger-btn rect:nth-child(1), body.kmenu-open .burger-btn rect:
 body.kmenu-open #burger-btn rect:nth-child(2), body.kmenu-open .burger-btn rect:nth-child(2) { opacity: 0; }
 body.kmenu-open #burger-btn rect:nth-child(3), body.kmenu-open .burger-btn rect:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
 
-/* ── Header on the pages that came from pablovaliente.de (same design as the rest) ── */
-#unified-header { display: none !important; }
+/* ── Header on the photography pages (.pv-de; same design as the rest) ── */
 #site-header.pv-de { position: fixed; top: 0; left: 0; right: 0; padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; background: transparent; color: #0C0C0B; font-family: "neue-haas-grotesk-display", sans-serif; -webkit-font-smoothing: antialiased; transition: color 0.5s ease; }
 body.is-dark-section #site-header.pv-de { color: #F2F0EF; }
 #site-header.pv-de .header-logo { font-size: 18px; font-weight: 500; letter-spacing: 0; line-height: normal; text-decoration: none; color: inherit; }
@@ -71,7 +70,6 @@ html[lang="en"] .es, html[lang="es"] .en { display: none !important; }
 html.kmenu-lock, html.kmenu-lock body { overflow: hidden !important; }
 @media (max-width: 767px) {
   .kmenu { --kfs: clamp(28px, min(13.5vw, calc((100svh - 270px) / 6.3)), 96px); padding: 88px 24px 120px; justify-content: flex-start; }
-  .kmenu-only-desktop { display: none; }
   .kmenu-foot { left: 24px; right: 24px; flex-wrap: wrap; gap: 12px 24px; }
   .kmenu-lang { margin-left: -2px; }
   .kmenu-marquee { bottom: calc(24px + var(--kfoot-h, 32px) + 18px); }
