@@ -10,49 +10,77 @@
 
 
   // ═══ PRICING — instant estimate (edit the numbers here; nothing else in this file holds prices) ═══
-  // All amounts are in EUR, excluding VAT. Only used for the "Full production" flow.
+  // All amounts are in EUR, excluding VAT. Used for "Full production" (all kinds) and "Editing & color".
   var PRICING = {
     // Currencies offered to the client. rates = units of that currency per 1 EUR (static, approximate).
     currencies: ['EUR', 'USD', 'GBP'],
     rates: { EUR: 1, USD: 1.08, GBP: 0.85 },
     symbols: { EUR: '€', USD: '$', GBP: '£' },
     roundTo: 50,            // every displayed figure is rounded to the nearest 50 (in the shown currency)
-    rangeUp: 1.25,          // "from X – up to X × 1.25"
+    rangeUp: 1.2,           // "from X – up to X × 1.2"
 
     // REAL ESTATE (kind = realestate): the client only gives the property value.
     //   estimate = propertyValue × agentCommission × share, never below min
-    realestate: { agentCommission: 0.03, share: 0.05, min: 450 },
+    realestate: { agentCommission: 0.03, share: 0.05, min: 350 },
 
     // BRAND & COMMERCIAL (kind = brand) when the client states what the video/campaign should generate:
-    //   estimate = max(expectedRevenue × share, min). If "not sure yet": day-based model below.
-    brand: { share: 0.05, min: 1200 },
+    //   estimate = 5 % of expected revenue, but kept between minFactor × and maxFactor × the day-model estimate
+    //   for the SAME answers (shoot days, videos, length, formats, extras, usage, travel), and never below min.
+    //   So a huge revenue figure can't produce a price out of proportion with the actual work.
+    //   No revenue ("not sure yet") → plain day model.
+    brand: { share: 0.05, minFactor: 0.8, maxFactor: 1.5, min: 600 },
 
-    // DAY-BASED MODEL: hotels & hospitality, brand without a revenue figure, social / event / short film / other.
-    // European average market rates for a self-shooting DoP with own cinema kit.
+    // DAY-BASED MODEL: production of every kind (real estate excepted), and brand without a revenue figure.
+    // Rates of a self-shooting DoP/editor with own cinema kit.
     day: {
-      shootDay: 950,        // per shooting day
+      shootDay: 600,        // per shooting day
+      halfDay: 350,         // "half a day" shoot
       editDay: 550,         // per edit/grade day (≈ $600)
-      min: 1200,            // minimum production
+      min: 600,             // minimum production
       // edit days for ONE video, by the "length of the main video" answer
-      editDaysByLength: { '<30s': 1, '30-60s': 1.5, '1-3min': 2.5, '3min+': 4 },
-      extraVideoFactor: 0.6,   // every video beyond the first costs 60 % of the main video's edit days (same length assumed)
-      extraFormatDays: 0.15,   // edit days added per video for each aspect-ratio format beyond the first
-      // shooting-days answer → days charged ("not sure" assumes 1)
+      editDaysByLength: { '<30s': 0.5, '30-60s': 1, '1-3min': 1.5, '3min+': 2.5 },
+      extraVideoFactor: 0.4,   // every video beyond the first costs +40 % of the main video's edit days (same length assumed)
+      extraFormatFactor: 0.08, // each aspect-ratio format beyond the first adds 8 % of the edit cost of the videos
+      extraRevisionDays: 0.25, // edit days per extra revision round (2 rounds are included in the price)
+      // shooting-days answer → days (the "half" answer is charged halfDay, not 0.5 × shootDay; "not sure" assumes 1)
       shootDays: { half: 0.5, '1': 1, '2': 2, '3+': 3, unsure: 1 },
       // flat add-ons (EUR) for the "Anything extra?" answers
       extras: {
-        drone: 350,         // drone pilot + licensed operation
-        photos: 450,        // photo package (selected, edited stills)
-        voice: 300,         // interviews / voice-over: recording + coordination
-        talent: 400,        // models / talent: coordination, direction, release forms (talent fees not included)
-        music: 150,         // licensed music (standard commercial licence)
-        subs: 120           // subtitles (one language)
+        drone: 200,         // drone pilot + licensed operation
+        photos: 300,        // photo package (selected, edited stills)
+        voice: 200,         // interviews / voice-over: recording + coordination
+        talent: 250,        // models / talent: coordination, direction, release forms (talent fees not included)
+        music: 80,          // licensed music (standard commercial licence)
+        subs: 60            // subtitles (one language)
       },
-      // usage / licence multiplier on production + post + extras. If several are selected the HIGHEST applies.
-      usage: { web: 1.0, social: 1.0, internal: 1.0, ads: 1.3, tv: 1.8 },
+      // usage / licence multiplier on the production subtotal (excl. travel). If several are selected the HIGHEST applies.
+      usage: { web: 1.0, social: 1.0, internal: 1.0, ads: 1.15, tv: 1.4 },
       // travel by "Where is the shoot?" answer (added after the multiplier). null = quoted separately, no number added.
-      travel: { same: 0, spain: 200, islands: 500, europe: 500, outside: null },
-      nightFee: 150         // per night away from home base (shoot days − 1) when the shoot is not in the same city
+      travel: { same: 0, spain: 150, islands: 350, europe: 400, outside: null },
+      nightFee: 100         // per night away from home base (shoot days − 1) when the shoot is not in the same city
+    },
+
+    // EDITING & COLOR GRADING (type = post): the client already has the footage.
+    //   days = Σ pieces by length (same table & extra-piece factor as the day model) × service factor
+    //          + footage-hours days + Log/RAW days + look development + extra revision rounds + extras (sound mix, titles)
+    //   format surcharge = +8 % of the piece cost per extra format; HDR = flat mastering & certification fee.
+    post: {
+      editDay: 550,         // per day (≈ $600)
+      usdPerDay: 600,       // shown in the copy only
+      min: 300,             // minimum job
+      // service factor on the piece days: editing only 1.0 · grading only 0.5 · editing + grading 1.3 ·
+      // custom look / DCTL = grading (0.5) plus lookDays of look development
+      service: { edit: 1.0, grade: 0.5, both: 1.3, look: 0.5 },
+      lookDays: 1,
+      // raw footage → extra days of ingest, sync and selects ("under 1 h" and "1–3 h" cost nothing extra)
+      hoursDays: { '<1': 0, '1-3': 0, '3-10': 0.5, '10+': 1.5 },
+      logDaysPerPiece: 0.15,   // Log / RAW source, per piece, only when grading is involved (grade, both, look)
+      extraFormatFactor: 0.08, // each aspect-ratio format beyond the first: +8 % of the piece cost
+      extraVideoFactor: 0.4,   // every piece beyond the first: +40 % of its edit days
+      extraRevisionDays: 0.25, // per extra revision round (2 are included)
+      extraDays: { sound: 0.25, titles: 0.5 },   // sound mix · titles / motion graphics
+      extras: { music: 80, subs: 60 },           // flat (EUR): licensed music · subtitles
+      hdr: 3000             // flat: HDR / Dolby Vision mastering & certification (delivery colour space = HDR)
     }
   };
 
@@ -94,34 +122,63 @@
 
   // ── the estimate: returns null when it can't be computed ──
   // s = answers (state), cur = currency to display in. Amounts typed by the client are in s.icur (default EUR).
+  // Only the answers of the chosen flow are read (type → kind → fields), nothing typed in another flow leaks in.
+  function dayModel(s) {
+    var D = PRICING.day, where = s.where || 'same', outside = false;
+    var vids = Math.max(1, Math.round(+s.videos || 1)), fmts = Math.max(1, (s.formats || []).length || 1);
+    var hero = D.editDaysByLength[s.length] || D.editDaysByLength['1-3min'];
+    var editCost = hero * (1 + D.extraVideoFactor * (vids - 1)) * D.editDay;            // all videos, first format
+    editCost *= 1 + D.extraFormatFactor * (fmts - 1);                                   // extra aspect-ratio formats
+    editCost += Math.max(0, Math.min(3, Math.round(+s.revisions || 0))) * D.extraRevisionDays * D.editDay;
+    var shootDays = D.shootDays[s.days] != null ? D.shootDays[s.days] : 1;
+    var shootCost = s.days === 'half' ? D.halfDay : shootDays * D.shootDay;
+    var sum = shootCost + editCost;
+    (s.extras || []).forEach(function (x) { sum += D.extras[x] || 0; });
+    var mult = 1; (s.usage || []).forEach(function (u) { if (D.usage[u] > mult) mult = D.usage[u]; });
+    var total = sum * mult;
+    if (D.travel[where] === null) outside = true;
+    else {
+      total += D.travel[where] || 0;
+      if (where !== 'same') total += D.nightFee * Math.max(0, Math.ceil(shootDays) - 1);
+    }
+    return { eur: Math.max(total, D.min), outside: outside };
+  }
+  function postModel(s) {
+    var Q = PRICING.post, svc = Q.service[s.service] != null ? s.service : 'edit';
+    var n = Math.max(1, Math.round(+s.pieces || 1)), fmts = Math.max(1, (s.formats || []).length || 1);
+    var hero = PRICING.day.editDaysByLength[s.length] || PRICING.day.editDaysByLength['1-3min'];
+    var grading = svc !== 'edit';
+    var pieceDays = hero * (1 + Q.extraVideoFactor * (n - 1)) * Q.service[svc];
+    pieceDays *= 1 + Q.extraFormatFactor * (fmts - 1);
+    var days = pieceDays + (Q.hoursDays[s.hours] || 0) + (svc === 'look' ? Q.lookDays : 0);
+    if (grading && s.log === 'log') days += Q.logDaysPerPiece * n;
+    days += Math.max(0, Math.min(3, Math.round(+s.revisions || 0))) * Q.extraRevisionDays;
+    var total = 0;
+    (s.extras || []).forEach(function (x) { days += Q.extraDays[x] || 0; total += Q.extras[x] || 0; });
+    total += days * Q.editDay;
+    if (s.colorspace === 'hdr') total += Q.hdr;
+    return { eur: Math.max(total, Q.min), outside: false };
+  }
   function pvEstimate(s, cur) {
-    if (!s || (s.type && s.type !== 'production')) return null;
-    var P = PRICING, D = P.day;
+    if (!s || (s.type !== 'production' && s.type !== 'post')) return null;
+    var P = PRICING;
     cur = P.rates[cur] ? cur : 'EUR';
-    var icur = P.rates[s.icur] ? s.icur : 'EUR', eur, basis, outside = false;
+    var icur = P.rates[s.icur] ? s.icur : 'EUR', eur, basis, outside = false, m;
     function amountEur(v) { var n = parseAmount(v); return n ? n / P.rates[icur] : null; }
-    var val = s.kind === 'realestate' ? amountEur(s.pvalue) : null, rev = s.kind === 'brand' ? amountEur(s.revenue) : null;
-    if (s.kind === 'realestate') {
-      if (!val) return null;
-      eur = Math.max(val * P.realestate.agentCommission * P.realestate.share, P.realestate.min); basis = 'value';
-    } else if (rev) {
-      eur = Math.max(rev * P.brand.share, P.brand.min); basis = 'revenue';
+    if (s.type === 'post') {
+      m = postModel(s); eur = m.eur; basis = 'post';
     } else {
-      basis = 'days';
-      var vids = Math.max(1, +s.videos || 1), fmts = Math.max(1, (s.formats || []).length || 1);
-      var hero = D.editDaysByLength[s.length] || D.editDaysByLength['1-3min'];
-      var editDays = hero * (1 + D.extraVideoFactor * (vids - 1)) + D.extraFormatDays * (fmts - 1) * vids;
-      var shootDays = D.shootDays[s.days] != null ? D.shootDays[s.days] : 1;
-      var sum = shootDays * D.shootDay + editDays * D.editDay;
-      (s.extras || []).forEach(function (x) { sum += D.extras[x] || 0; });
-      var mult = 1; (s.usage || []).forEach(function (u) { if (D.usage[u] > mult) mult = D.usage[u]; });
-      var total = sum * mult, where = s.where || 'same';
-      if (D.travel[where] === null) outside = true;
-      else {
-        total += D.travel[where] || 0;
-        if (where !== 'same') total += D.nightFee * Math.max(0, Math.ceil(shootDays) - 1);
+      var val = s.kind === 'realestate' ? amountEur(s.pvalue) : null, rev = s.kind === 'brand' ? amountEur(s.revenue) : null;
+      if (s.kind === 'realestate') {
+        if (!val) return null;
+        eur = Math.max(val * P.realestate.agentCommission * P.realestate.share, P.realestate.min); basis = 'value';
+      } else {
+        m = dayModel(s); eur = m.eur; outside = m.outside; basis = 'days';
+        if (rev) {
+          var B = P.brand;
+          eur = Math.max(Math.min(Math.max(rev * B.share, m.eur * B.minFactor), m.eur * B.maxFactor), B.min); basis = 'revenue';
+        }
       }
-      eur = Math.max(total, D.min);
     }
     var fromEur = round(eur, P.roundTo), toEur = round(fromEur * P.rangeUp, P.roundTo);
     var from = round(fromEur * P.rates[cur], P.roundTo), to = round(fromEur * P.rangeUp * P.rates[cur], P.roundTo);
@@ -138,6 +195,8 @@
   // ── option lists ──
   var LENGTHS = [o('<30s', 'Under 30 s', 'Menos de 30 s'), o('30-60s', '30–60 s'), o('1-3min', '1–3 min'), o('3min+', '3 min +')];
   var FORMATS = [o('16:9', '16:9 Horizontal', '16:9 horizontal'), o('9:16', '9:16 Vertical', '9:16 vertical'), o('1:1', '1:1 Square', '1:1 Cuadrado'), o('4:5', '4:5 Feed', '4:5 feed')];
+  var REVISIONS = [o('0', '2 included (standard)', '2 incluidas (estándar)'), o('1', '+1 round', '+1 ronda'), o('2', '+2 rounds', '+2 rondas'), o('3', '+3 rounds', '+3 rondas')];
+  var REVISION_FIELD = { id: 'revisions', type: 'single', def: '0', label: L('Extra revision rounds', 'Rondas de revisión extra'), opts: REVISIONS };
   var SIZES = [o('<100', 'Under 100 m²', 'Menos de 100 m²'), o('100-250', '100–250 m²'), o('250-500', '250–500 m²'), o('500+', '500 m² +')];
   var BUDGETS = {
     production: [o('<2000', 'Under €2,000', 'Menos de 2.000 €'), o('2000-4000', '€2,000 – 4,000', '2.000 – 4.000 €'), o('4000-8000', '€4,000 – 8,000', '4.000 – 8.000 €'), o('8000-15000', '€8,000 – 15,000', '8.000 – 15.000 €'), o('15000+', '€15,000 +', '15.000 € +'), o('unsure', 'Not sure yet', 'Aún no lo sé')],
@@ -176,7 +235,7 @@
       fields: [{ id: 'days', type: 'single', req: true, label: L('Shooting days', 'Días de rodaje'), opts: [o('half', 'Half a day', 'Media jornada'), o('1', '1 day', '1 día'), o('2', '2 days', '2 días'), o('3+', '3 days +', '3 días +'), o('unsure', 'Not sure', 'No lo sé')] },
                { id: 'locations', type: 'counter', label: L('Locations', 'Localizaciones'), min: 1, max: 10, def: 1 },
                { id: 'place', type: 'text', label: L('Where? (optional)', '¿Dónde? (opcional)'), ph: L('City, country', 'Ciudad, país') }] },
-    { id: 'p-where', when: function (s) { return s.type === 'production' && s.kind !== 'realestate' && !(s.kind === 'brand' && parseAmount(s.revenue)); },
+    { id: 'p-where', when: function (s) { return s.type === 'production' && s.kind !== 'realestate'; },
       title: L('Where is the shoot?', '¿Dónde es el rodaje?'),
       fields: [{ id: 'where', type: 'single', req: true, opts: [o('same', 'Same city', 'En la misma ciudad'), o('spain', 'Elsewhere in Spain (mainland)', 'Otro lugar de España (península)'), o('islands', 'Balearic or Canary Islands', 'Islas Baleares o Canarias'), o('europe', 'Elsewhere in Europe', 'Otro lugar de Europa'), o('outside', 'Outside Europe', 'Fuera de Europa')] }] },
     { id: 'p-property', when: function (s) { return s.type === 'production' && (s.kind === 'realestate' || s.kind === 'hotel'); },
@@ -184,7 +243,7 @@
       fields: [{ id: 'property', type: 'single', req: true, label: L('Type', 'Tipo'), opts: [o('apartment', 'Apartment', 'Piso'), o('villa', 'House / villa', 'Casa / villa'), o('hotel', 'Hotel', 'Hotel'), o('commercial', 'Commercial space', 'Local comercial'), o('other', 'Other', 'Otro')] },
                { id: 'size', type: 'single', req: true, label: L('Approximate size', 'Tamaño aproximado'), opts: SIZES }] },
     { id: 'p-extras', when: is('production'), title: L('Anything extra?', '¿Algo más?'), help: L('Optional, pick as many as you like.', 'Opcional, elige todas las que quieras.'),
-      fields: [{ id: 'extras', type: 'multi', opts: [o('drone', 'Drone', 'Dron'), o('voice', 'Interviews / voice-over', 'Entrevistas / voz en off'), o('talent', 'Models / talent', 'Modelos / talento'), o('music', 'Licensed music', 'Música con licencia'), o('photos', 'Photos too', 'También fotos'), o('subs', 'Subtitles', 'Subtítulos')] }] },
+      fields: [{ id: 'extras', type: 'multi', opts: [o('drone', 'Drone', 'Dron'), o('voice', 'Interviews / voice-over', 'Entrevistas / voz en off'), o('talent', 'Models / talent', 'Modelos / talento'), o('music', 'Licensed music', 'Música con licencia'), o('photos', 'Photos too', 'También fotos'), o('subs', 'Subtitles', 'Subtítulos')] }, REVISION_FIELD] },
     { id: 'p-usage', when: is('production'), title: L('Where will it be published?', '¿Dónde se publicará?'),
       fields: [{ id: 'usage', type: 'multi', req: true, opts: [o('web', 'Website', 'Web'), o('social', 'Social media', 'Redes sociales'), o('ads', 'Paid ads', 'Publicidad pagada'), o('tv', 'TV / cinema', 'TV / cine'), o('internal', 'Internal', 'Uso interno')] }] },
 
@@ -212,10 +271,10 @@
       fields: [{ id: 'pieces', type: 'counter', label: L('Number of pieces', 'Número de piezas'), min: 1, max: 30, def: 1 },
                { id: 'length', type: 'single', req: true, label: L('Final length', 'Duración final'), opts: LENGTHS },
                { id: 'formats', type: 'multi', req: true, label: L('Formats', 'Formatos'), opts: FORMATS },
-               { id: 'colorspace', type: 'single', req: true, label: L('Delivery color space', 'Espacio de color de entrega'), opts: [o('709', 'Rec.709'), o('p3', 'P3'), o('hdr', 'HDR'), o('unsure', 'Not sure', 'No lo sé')] }] },
+               { id: 'colorspace', type: 'single', req: true, label: L('Delivery color space', 'Espacio de color de entrega'), opts: [o('709', 'Rec.709'), o('p3', 'P3'), o('hdr', 'HDR / Dolby Vision (mastering & certification)', 'HDR / Dolby Vision (masterización y certificación)'), o('unsure', 'Not sure', 'No lo sé')] }] },
     { id: 'e-extras', when: is('post'), title: L('Almost there.', 'Ya casi.'),
       fields: [{ id: 'status', type: 'single', req: true, label: L('Is it shot?', '¿Está grabado?'), opts: [o('shot', 'Already shot', 'Ya está grabado'), o('soon', 'Shooting soon', 'Se graba pronto'), o('notyet', 'Not shot yet', 'Aún no')] },
-               { id: 'extras', type: 'multi', label: L('Extras (optional)', 'Extras (opcional)'), opts: [o('sound', 'Sound mix', 'Mezcla de sonido'), o('music', 'Music', 'Música'), o('subs', 'Subtitles', 'Subtítulos'), o('titles', 'Titles / motion graphics', 'Rótulos / motion graphics')] }] },
+               { id: 'extras', type: 'multi', label: L('Extras (optional)', 'Extras (opcional)'), opts: [o('sound', 'Sound mix', 'Mezcla de sonido'), o('music', 'Music', 'Música'), o('subs', 'Subtitles', 'Subtítulos'), o('titles', 'Titles / motion graphics', 'Rótulos / motion graphics')] }, REVISION_FIELD] },
 
     // Something else
     { id: 'o-desc', when: is('other'), title: L('Tell me in a few words.', 'Cuéntamelo en pocas palabras.'),
@@ -225,7 +284,7 @@
     { id: 'time', title: L('When?', '¿Cuándo?'),
       fields: [{ id: 'when', type: 'single', req: true, opts: [o('asap', 'As soon as possible', 'Lo antes posible'), o('month', 'Within a month', 'En el próximo mes'), o('1-3', 'In 1–3 months', 'En 1–3 meses'), o('3+', 'In 3+ months', 'En más de 3 meses'), o('flexible', 'Flexible')] },
                { id: 'date', type: 'date', label: L('Exact date, if you have one (optional)', 'Fecha exacta, si la tienes (opcional)') }] },
-    { id: 'estimate', estimate: true, when: function (s) { return s.type === 'production' && !!pvEstimate(s, 'EUR'); },
+    { id: 'estimate', estimate: true, when: function (s) { return (s.type === 'production' || s.type === 'post') && !!pvEstimate(s, 'EUR'); },
       title: L('Your instant estimate', 'Tu presupuesto estimado'), nextLabel: L('Continue to get the final quote', 'Continuar para recibir el presupuesto final'),
       fields: [{ id: 'cur', type: 'currency', label: L('Currency', 'Moneda') }] },
     { id: 'budget', title: L("What's the budget?", '¿Qué presupuesto tienes?'), help: L('A range is enough. It helps me propose the right approach.', 'Basta con un rango. Me ayuda a proponerte el enfoque adecuado.'),
@@ -309,8 +368,9 @@
       vat: L('Prices exclude VAT. VAT (21%) applies only to clients based in Spain. This is an indicative estimate — the final quote is confirmed after the brief.', 'Precios sin IVA. El IVA (21 %) solo se aplica a clientes en España. Estimación orientativa: el presupuesto final se confirma tras el brief.'),
       fx: L('Approx. exchange rate', 'Tipo de cambio aproximado'), travel: L('Travel outside Europe is quoted separately and not included.', 'El viaje fuera de Europa se presupuesta aparte y no está incluido.'),
       basisValue: L('Based on the property value you entered.', 'Calculado a partir del valor de la propiedad que indicas.'),
-      basisRevenue: L("Based on the return you expect from the video.", 'Calculado a partir del retorno que esperas del vídeo.'),
-      basisDays: L('Based on shooting days, videos, formats, extras and usage.', 'Calculado a partir de jornadas de rodaje, vídeos, formatos, extras y uso.'),
+      basisRevenue: L('Based on the return you expect from the video, kept in line with the scope of the shoot (days, duration, formats).', 'Calculado a partir del retorno que esperas del vídeo, ajustado al alcance del rodaje (jornadas, duración, formatos).'),
+      basisDays: L('Based on shooting days, duration, formats and deliverables, extras, revisions and usage.', 'Calculado a partir de jornadas de rodaje, duración, formatos y entregables, extras, revisiones y uso.'),
+      basisPost: L('Based on service, footage, number of pieces, duration, formats, revisions, extras and delivery color space.', 'Calculado a partir del servicio, el material, el número de piezas, la duración, los formatos, las revisiones, los extras y el espacio de color de entrega.'),
       unsureTxt: L('Not sure yet', 'Aún no lo sé'), amtBad: L('Enter an amount greater than 0, e.g. 800,000 or 1.2M.', 'Introduce un importe mayor que 0, p. ej. 800.000 o 1,2M.'),
       mailIt: L('Send by email', 'Enviar por email'), none: L('—', '—')
     };
@@ -378,10 +438,19 @@
     root.scrollIntoView({ block: 'start', behavior: 'smooth' });
   }
 
+  // Changing the project type or kind starts that flow clean: answers typed in another flow (property value, expected
+  // revenue, deliverables…) must never feed the estimate of the new one. Currency choice and contact data stay.
+  function dropStale(fid) {
+    var keep = fid === 'type' ? ['cur', 'icur', 'name', 'email', 'company', 'phone', 'notes', 'privacy'] : [];
+    if (fid === 'kind') { delete state.pvalue; delete state.revenue; return; }
+    if (fid !== 'type') return;
+    Object.keys(state).forEach(function (k) { if (k !== 'type' && keep.indexOf(k) < 0) delete state[k]; });
+  }
   function renderField(st, f) {
     var wrap = el('div', 'pf-field pf-f-' + f.type);
     if (f.label) wrap.appendChild(el('span', 'pf-label', tr(f.label)));
     if (f.type === 'cards' || f.type === 'single' || f.type === 'multi') {
+      if (f.def != null && state[f.id] == null) state[f.id] = f.def;
       var group = el('div', f.type === 'cards' ? 'pf-cards' : 'pf-chips');
       group.setAttribute('role', f.type === 'multi' ? 'group' : 'radiogroup');
       optsOf(f).forEach(function (op, i) {
@@ -403,6 +472,7 @@
             b.classList.toggle('is-on', k === -1); b.setAttribute('aria-pressed', k === -1);
             refresh();
           } else {
+            if (state[f.id] != null && state[f.id] !== op.v) dropStale(f.id);
             state[f.id] = op.v;
             group.querySelectorAll('button').forEach(function (x) { x.classList.toggle('is-on', x === b); x.setAttribute('aria-checked', x === b); });
             refresh();
@@ -539,7 +609,7 @@
     if (fig) { fig.textContent = ''; fig.appendChild(el('span', 'pf-est-from', t('estFrom'))); fig.appendChild(document.createTextNode(' ' + tr(e.range))); }
     if (!notes) return;
     notes.textContent = '';
-    notes.appendChild(el('p', 'pf-est-basis', t(e.basis === 'value' ? 'basisValue' : e.basis === 'revenue' ? 'basisRevenue' : 'basisDays')));
+    notes.appendChild(el('p', 'pf-est-basis', t(e.basis === 'value' ? 'basisValue' : e.basis === 'revenue' ? 'basisRevenue' : e.basis === 'post' ? 'basisPost' : 'basisDays')));
     if (e.cur !== 'EUR') notes.appendChild(el('p', 'pf-est-fx', t('fx') + ': 1\u00a0€ ≈ ' + fmtMoney(PRICING.rates[e.cur], e.cur, lang(), 2)));
     if (e.outsideEurope) notes.appendChild(el('p', 'pf-est-trav', t('travel')));
     notes.appendChild(el('p', 'pf-est-vat', t('vat')));
@@ -554,7 +624,7 @@
     if (est) {
       lines.push('', 'Presupuesto estimado: ' + est.text.es + (cur !== 'EUR' ? ' (≈ ' + est.rangeEur.es + ')' : '') + (est.outsideEurope ? ' + viaje aparte' : ''),
         'Moneda elegida por el cliente: ' + cur,
-        'Base del cálculo: ' + (est.basis === 'value' ? 'valor de la propiedad' : est.basis === 'revenue' ? 'retorno esperado' : 'jornadas, vídeos, formatos, extras y uso'));
+        'Base del cálculo: ' + (est.basis === 'value' ? 'valor de la propiedad' : est.basis === 'revenue' ? 'retorno esperado (ajustado al alcance del rodaje)' : est.basis === 'post' ? 'servicio, material, piezas, duración, formatos, revisiones, extras y espacio de color' : 'jornadas de rodaje, duración, formatos, extras, revisiones y uso'));
     }
     return lines.join('\n');
   }
