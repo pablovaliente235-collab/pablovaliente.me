@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8"/>
 <script>(function(){var l;try{l=localStorage.getItem('pv-lang')}catch(e){}document.documentElement.lang=(l==='es')?'es':'en';})();</script>
+<script>try{var t=sessionStorage.getItem('pv-tx');if(t&&Date.now()-parseInt(t,10)<8000){document.documentElement.classList.add('pv-entering');setTimeout(function(){document.documentElement.classList.remove('pv-entering')},1800)}}catch(e){}</script><style>html.pv-entering::before{content:"";position:fixed;inset:0;z-index:2147483000;background:#0C0C0B}</style><script src="/js/transition.js" defer></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title data-es="Contacto — Pablo Valiente | Director de fotografía, editor de vídeo y colorista, España">Contact — Pablo Valiente | DoP, Video Editor &amp; Colorist, Spain</title>
   <meta name="description" content="Contact Pablo Valiente — DoP, Video Editor &amp; Colorist based in Spain, with bases in Germany and the USA. Available worldwide." data-es-content="Contacta con Pablo Valiente: director de fotografía, editor de vídeo y colorista afincado en España, con bases en Alemania y EE. UU. Disponible en todo el mundo."/>
@@ -278,11 +279,8 @@
   (function() {
     if (window.innerWidth > 767) return;
     function navigateTo(url, forward) {
-      sessionStorage.setItem('slideFrom', forward ? 'below' : 'above');
-      document.body.style.transition = 'transform 0.45s cubic-bezier(0.4,0,0.2,1),opacity 0.45s ease';
-      document.body.style.transform = 'translateY(' + (forward ? '-60px' : '60px') + ')';
-      document.body.style.opacity = '0';
-      setTimeout(function() { window.location.href = url; }, 450);
+      if (window.pvTransition) { window.pvTransition(url); return; }
+      window.location.href = url;
     }
     var startX, startY;
     var SWIPE = 45;

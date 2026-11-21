@@ -260,7 +260,8 @@
     var alt = target !== lang || ES_PATH ? altUrl(target) : null;
     if (alt && target !== lang) {            // counterpart URL exists -> store the choice and go there
       try { localStorage.setItem(KEY, target); } catch (e2) {}
-      location.href = alt;
+      if (window.pvTransition) window.pvTransition(alt, null, { lang: target });
+      else location.href = alt;
       return;
     }
     set(target);
