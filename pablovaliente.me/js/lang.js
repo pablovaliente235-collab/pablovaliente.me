@@ -13,6 +13,8 @@
     'All rights reserved.': 'Todos los derechos reservados.',
     'Start a project': 'Empezar un proyecto',
     'Book a call': 'Reservar una llamada',
+    'Services': 'Servicios',
+    'All services': 'Todos los servicios',
     'Mail': 'Email',
     'Impressum': 'Aviso legal',
     'Get in touch': 'Contacto',
@@ -24,6 +26,8 @@
   };
   /* aria-label / title values anywhere in the page (exact match) */
   var COMMON_ATTR = {
+    'Breadcrumb': 'Ruta de navegación',
+    'Related services': 'Servicios relacionados',
     'Open menu': 'Abrir menú',
     'Close menu': 'Cerrar menú',
     'Site footer': 'Pie de página',
@@ -38,6 +42,7 @@
     'Scroll': 'Desliza',
     'Section': 'Sección',
     'Photography': 'Fotografía',
+    'Services': 'Servicios',
     'Browse projects': 'Explorar proyectos',
     'Next Projects': 'Siguientes proyectos',
     'Contact options': 'Opciones de contacto',

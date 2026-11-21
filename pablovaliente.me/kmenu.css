@@ -35,7 +35,7 @@ body.is-dark-section #site-header.pv-de { color: #F2F0EF; }
 }
 
 /* ── Kinetic menu ── */
-.kmenu { --kfs: clamp(32px, min(8.4vw, calc((100vh - 250px) / 5.1)), 320px); position: fixed; inset: 0; z-index: 9000; background: #0a0a0a; color: #F2F0EF; display: flex; flex-direction: column; justify-content: center; padding: 96px 40px 120px; margin: 0; overflow: hidden; visibility: hidden; clip-path: inset(0 0 100% 0); font-family: "neue-haas-grotesk-display", sans-serif; -webkit-font-smoothing: antialiased; transition: clip-path 0.75s cubic-bezier(0.77,0,0.18,1), visibility 0s linear 0.75s; }
+.kmenu { --kfs: clamp(32px, min(8.4vw, calc((100vh - 250px) / 6.2)), 320px); position: fixed; inset: 0; z-index: 9000; background: #0a0a0a; color: #F2F0EF; display: flex; flex-direction: column; justify-content: center; padding: 96px 40px 120px; margin: 0; overflow: hidden; visibility: hidden; clip-path: inset(0 0 100% 0); font-family: "neue-haas-grotesk-display", sans-serif; -webkit-font-smoothing: antialiased; transition: clip-path 0.75s cubic-bezier(0.77,0,0.18,1), visibility 0s linear 0.75s; }
 .kmenu.open { visibility: visible; clip-path: inset(0 0 0 0); transition: clip-path 0.75s cubic-bezier(0.77,0,0.18,1); }
 .kmenu *, .kmenu *::before, .kmenu *::after { box-sizing: border-box; }
 .kmenu-marquee { position: absolute; left: 0; right: 0; bottom: 64px; overflow: hidden; white-space: nowrap; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; line-height: 1.4; color: rgba(242,240,239,0.28); pointer-events: none; }
@@ -70,7 +70,7 @@ html[lang="en"] .es, html[lang="es"] .en { display: none !important; }
 .kmenu-lang button:hover, .kmenu-lang button.is-on { opacity: 1; text-decoration: underline; }
 html.kmenu-lock, html.kmenu-lock body { overflow: hidden !important; }
 @media (max-width: 767px) {
-  .kmenu { --kfs: clamp(28px, min(13.5vw, calc((100svh - 290px) / 5.3)), 96px); padding: 88px 24px 120px; justify-content: flex-start; }
+  .kmenu { --kfs: clamp(28px, min(13.5vw, calc((100svh - 270px) / 6.3)), 96px); padding: 88px 24px 120px; justify-content: flex-start; }
   .kmenu-only-desktop { display: none; }
   .kmenu-foot { left: 24px; right: 24px; flex-wrap: wrap; gap: 12px 24px; }
   .kmenu-lang { margin-left: -2px; }
