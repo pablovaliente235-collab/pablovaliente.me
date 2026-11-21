@@ -8,10 +8,132 @@
   var EMAILJS = { publicKey: 'YggEpE1djhQMkvTjR', service: 'service_2tx7dek', template: 'template_q9akzca' };
   var STORE = 'pv-project';
 
+
+  // ═══ PRICING — instant estimate (edit the numbers here; nothing else in this file holds prices) ═══
+  // All amounts are in EUR, excluding VAT. Only used for the "Full production" flow.
+  var PRICING = {
+    // Currencies offered to the client. rates = units of that currency per 1 EUR (static, approximate).
+    currencies: ['EUR', 'USD', 'GBP'],
+    rates: { EUR: 1, USD: 1.08, GBP: 0.85 },
+    symbols: { EUR: '€', USD: '$', GBP: '£' },
+    roundTo: 50,            // every displayed figure is rounded to the nearest 50 (in the shown currency)
+    rangeUp: 1.25,          // "from X – up to X × 1.25"
+
+    // REAL ESTATE (kind = realestate): the client only gives the property value.
+    //   estimate = propertyValue × agentCommission × share, never below min
+    realestate: { agentCommission: 0.03, share: 0.05, min: 450 },
+
+    // BRAND & COMMERCIAL (kind = brand) when the client states what the video/campaign should generate:
+    //   estimate = max(expectedRevenue × share, min). If "not sure yet": day-based model below.
+    brand: { share: 0.05, min: 1200 },
+
+    // DAY-BASED MODEL: hotels & hospitality, brand without a revenue figure, social / event / short film / other.
+    // European average market rates for a self-shooting DoP with own cinema kit.
+    day: {
+      shootDay: 950,        // per shooting day
+      editDay: 550,         // per edit/grade day (≈ $600)
+      min: 1200,            // minimum production
+      // edit days for ONE video, by the "length of the main video" answer
+      editDaysByLength: { '<30s': 1, '30-60s': 1.5, '1-3min': 2.5, '3min+': 4 },
+      extraVideoFactor: 0.6,   // every video beyond the first costs 60 % of the main video's edit days (same length assumed)
+      extraFormatDays: 0.15,   // edit days added per video for each aspect-ratio format beyond the first
+      // shooting-days answer → days charged ("not sure" assumes 1)
+      shootDays: { half: 0.5, '1': 1, '2': 2, '3+': 3, unsure: 1 },
+      // flat add-ons (EUR) for the "Anything extra?" answers
+      extras: {
+        drone: 350,         // drone pilot + licensed operation
+        photos: 450,        // photo package (selected, edited stills)
+        voice: 300,         // interviews / voice-over: recording + coordination
+        talent: 400,        // models / talent: coordination, direction, release forms (talent fees not included)
+        music: 150,         // licensed music (standard commercial licence)
+        subs: 120           // subtitles (one language)
+      },
+      // usage / licence multiplier on production + post + extras. If several are selected the HIGHEST applies.
+      usage: { web: 1.0, social: 1.0, internal: 1.0, ads: 1.3, tv: 1.8 },
+      // travel by "Where is the shoot?" answer (added after the multiplier). null = quoted separately, no number added.
+      travel: { same: 0, spain: 200, islands: 500, europe: 500, outside: null },
+      nightFee: 150         // per night away from home base (shoot days − 1) when the shoot is not in the same city
+    }
+  };
+
   function L(en, es) { return { en: en, es: es }; }
   function lang() { return document.documentElement.lang === 'es' ? 'es' : 'en'; }
   function tr(x) { return typeof x === 'string' ? x : (x[lang()] || x.en); }
   function o(v, en, es, d) { return { v: v, l: L(en, es || en), d: d || null }; }
+
+
+  // ── number helpers: parse "800.000", "800,000", "800000", "1.2M", "1,5 k"… and format with locale separators ──
+  function parseAmount(v) {
+    if (v == null) return null;
+    var x = String(v).toLowerCase().replace(/[\s€$£]|eur|usd|gbp| /g, '');
+    if (!x || x === 'unsure') return null;
+    var mult = 1, m = x.match(/^(.*?)(mm|m|k)$/);
+    if (m) { mult = m[2] === 'k' ? 1e3 : 1e6; x = m[1]; }
+    if (!/^\d[\d.,]*$/.test(x) && !/^[.,]\d+$/.test(x)) return null;
+    var hasDot = x.indexOf('.') > -1, hasCom = x.indexOf(',') > -1, n;
+    if (hasDot && hasCom) {
+      var dec = x.lastIndexOf('.') > x.lastIndexOf(',') ? '.' : ',', grp = dec === '.' ? ',' : '.';
+      n = parseFloat(x.split(grp).join('').replace(dec, '.'));
+    } else if (hasDot || hasCom) {
+      var sep = hasDot ? '.' : ',', parts = x.split(sep);
+      if (parts.length > 2) n = parseFloat(parts.join(''));                                   // 1.200.000
+      else if (!m && parts[1].length === 3 && parts[0].length >= 1 && parts[0] !== '0') n = parseFloat(parts.join(''));  // 800.000
+      else n = parseFloat(parts[0] + '.' + parts[1]);                                          // 1.2 · 1,5
+    } else n = parseFloat(x);
+    n = n * mult;
+    return isFinite(n) && n > 0 ? n : null;
+  }
+  function fmtNum(n, lg, dec) {
+    var neg = n < 0; n = Math.abs(n);
+    var s = dec ? n.toFixed(dec) : String(Math.round(n)), p = s.split('.'), g = lg === 'es' ? '.' : ',';
+    p[0] = p[0].replace(/\B(?=(\d{3})+(?!\d))/g, g);
+    return (neg ? '-' : '') + p.join(lg === 'es' ? ',' : '.');
+  }
+  function fmtMoney(n, cur, lg, dec) { return lg === 'es' ? fmtNum(n, lg, dec) + '\u00a0' + PRICING.symbols[cur] : PRICING.symbols[cur] + fmtNum(n, lg, dec); }
+  function round(n, step) { return Math.round(n / step) * step; }
+
+  // ── the estimate: returns null when it can't be computed ──
+  // s = answers (state), cur = currency to display in. Amounts typed by the client are in s.icur (default EUR).
+  function pvEstimate(s, cur) {
+    if (!s || (s.type && s.type !== 'production')) return null;
+    var P = PRICING, D = P.day;
+    cur = P.rates[cur] ? cur : 'EUR';
+    var icur = P.rates[s.icur] ? s.icur : 'EUR', eur, basis, outside = false;
+    function amountEur(v) { var n = parseAmount(v); return n ? n / P.rates[icur] : null; }
+    var val = s.kind === 'realestate' ? amountEur(s.pvalue) : null, rev = s.kind === 'brand' ? amountEur(s.revenue) : null;
+    if (s.kind === 'realestate') {
+      if (!val) return null;
+      eur = Math.max(val * P.realestate.agentCommission * P.realestate.share, P.realestate.min); basis = 'value';
+    } else if (rev) {
+      eur = Math.max(rev * P.brand.share, P.brand.min); basis = 'revenue';
+    } else {
+      basis = 'days';
+      var vids = Math.max(1, +s.videos || 1), fmts = Math.max(1, (s.formats || []).length || 1);
+      var hero = D.editDaysByLength[s.length] || D.editDaysByLength['1-3min'];
+      var editDays = hero * (1 + D.extraVideoFactor * (vids - 1)) + D.extraFormatDays * (fmts - 1) * vids;
+      var shootDays = D.shootDays[s.days] != null ? D.shootDays[s.days] : 1;
+      var sum = shootDays * D.shootDay + editDays * D.editDay;
+      (s.extras || []).forEach(function (x) { sum += D.extras[x] || 0; });
+      var mult = 1; (s.usage || []).forEach(function (u) { if (D.usage[u] > mult) mult = D.usage[u]; });
+      var total = sum * mult, where = s.where || 'same';
+      if (D.travel[where] === null) outside = true;
+      else {
+        total += D.travel[where] || 0;
+        if (where !== 'same') total += D.nightFee * Math.max(0, Math.ceil(shootDays) - 1);
+      }
+      eur = Math.max(total, D.min);
+    }
+    var fromEur = round(eur, P.roundTo), toEur = round(fromEur * P.rangeUp, P.roundTo);
+    var from = round(fromEur * P.rates[cur], P.roundTo), to = round(fromEur * P.rangeUp * P.rates[cur], P.roundTo);
+    function rng(c, a, b, lg) { return fmtMoney(a, c, lg) + ' – ' + fmtMoney(b, c, lg); }
+    return {
+      basis: basis, cur: cur, outsideEurope: outside, from: from, to: to, fromEur: fromEur, toEur: toEur,
+      range: { en: rng(cur, from, to, 'en'), es: rng(cur, from, to, 'es') },
+      rangeEur: { en: rng('EUR', fromEur, toEur, 'en'), es: rng('EUR', fromEur, toEur, 'es') },
+      text: { en: 'from ' + rng(cur, from, to, 'en'), es: 'desde ' + rng(cur, from, to, 'es') }
+    };
+  }
+  window.pvEstimate = pvEstimate; window.pvParseAmount = parseAmount; window.pvPRICING = PRICING;
 
   // ── option lists ──
   var LENGTHS = [o('<30s', 'Under 30 s', 'Menos de 30 s'), o('30-60s', '30–60 s'), o('1-3min', '1–3 min'), o('3min+', '3 min +')];
@@ -36,6 +158,14 @@
     // Full production
     { id: 'p-kind', when: is('production'), title: L('What kind of video?', '¿Qué tipo de vídeo?'),
       fields: [{ id: 'kind', type: 'single', req: true, opts: [o('realestate', 'Real estate & interiors', 'Inmobiliaria e interiores'), o('hotel', 'Hotel & hospitality', 'Hotel y hostelería'), o('brand', 'Brand film', 'Película de marca'), o('social', 'Social media campaign', 'Campaña para redes'), o('event', 'Event', 'Evento'), o('short', 'Short film', 'Cortometraje'), o('other', 'Other', 'Otro')] }] },
+    { id: 'p-value', when: function (s) { return s.type === 'production' && s.kind === 'realestate'; },
+      title: L("What's the property worth?", '¿Cuánto vale la propiedad?'), help: L('An approximate value is enough. I use it to give you an instant estimate.', 'Basta con un valor aproximado. Lo uso para darte un presupuesto al instante.'),
+      fields: [{ id: 'cur', type: 'currency', input: true, label: L('Currency', 'Moneda') },
+               { id: 'pvalue', type: 'amount', req: true, label: L('Property value', 'Valor de la propiedad'), ph: L('e.g. 800,000', 'p. ej. 800.000') }] },
+    { id: 'p-revenue', when: function (s) { return s.type === 'production' && s.kind === 'brand'; },
+      title: L('How much should it generate?', '¿Cuánto esperas que genere?'), help: L('Optional. What you expect this video or campaign to generate. It helps me size the production.', 'Opcional. Lo que esperas que genere este vídeo o campaña. Me ayuda a dimensionar la producción.'),
+      fields: [{ id: 'cur', type: 'currency', input: true, label: L('Currency', 'Moneda') },
+               { id: 'revenue', type: 'amount', unsure: true, label: L('Expected revenue of the video / campaign', 'Ingresos esperados del vídeo / campaña'), ph: L('e.g. 50,000', 'p. ej. 50.000') }] },
     { id: 'p-concept', when: is('production'), title: L('How far along is the idea?', '¿En qué punto está la idea?'),
       fields: [{ id: 'concept', type: 'single', req: true, opts: [o('ready', 'Script or clear idea ready', 'Tengo guion o una idea clara'), o('help', 'I need help with the concept', 'Necesito ayuda con la idea'), o('unsure', 'Not sure yet', 'Aún no lo sé')] }] },
     { id: 'p-deliv', when: is('production'), title: L('What do you need delivered?', '¿Qué necesitas que te entregue?'),
@@ -46,6 +176,9 @@
       fields: [{ id: 'days', type: 'single', req: true, label: L('Shooting days', 'Días de rodaje'), opts: [o('half', 'Half a day', 'Media jornada'), o('1', '1 day', '1 día'), o('2', '2 days', '2 días'), o('3+', '3 days +', '3 días +'), o('unsure', 'Not sure', 'No lo sé')] },
                { id: 'locations', type: 'counter', label: L('Locations', 'Localizaciones'), min: 1, max: 10, def: 1 },
                { id: 'place', type: 'text', label: L('Where? (optional)', '¿Dónde? (opcional)'), ph: L('City, country', 'Ciudad, país') }] },
+    { id: 'p-where', when: function (s) { return s.type === 'production' && s.kind !== 'realestate' && !(s.kind === 'brand' && parseAmount(s.revenue)); },
+      title: L('Where is the shoot?', '¿Dónde es el rodaje?'),
+      fields: [{ id: 'where', type: 'single', req: true, opts: [o('same', 'Same city', 'En la misma ciudad'), o('spain', 'Elsewhere in Spain (mainland)', 'Otro lugar de España (península)'), o('islands', 'Balearic or Canary Islands', 'Islas Baleares o Canarias'), o('europe', 'Elsewhere in Europe', 'Otro lugar de Europa'), o('outside', 'Outside Europe', 'Fuera de Europa')] }] },
     { id: 'p-property', when: function (s) { return s.type === 'production' && (s.kind === 'realestate' || s.kind === 'hotel'); },
       title: L('About the property.', 'Sobre la propiedad.'),
       fields: [{ id: 'property', type: 'single', req: true, label: L('Type', 'Tipo'), opts: [o('apartment', 'Apartment', 'Piso'), o('villa', 'House / villa', 'Casa / villa'), o('hotel', 'Hotel', 'Hotel'), o('commercial', 'Commercial space', 'Local comercial'), o('other', 'Other', 'Otro')] },
@@ -94,6 +227,9 @@
                { id: 'date', type: 'date', label: L('Exact date, if you have one (optional)', 'Fecha exacta, si la tienes (opcional)') }] },
     { id: 'budget', title: L("What's the budget?", '¿Qué presupuesto tienes?'), help: L('A range is enough. It helps me propose the right approach.', 'Basta con un rango. Me ayuda a proponerte el enfoque adecuado.'),
       fields: [{ id: 'budget', type: 'single', req: true, opts: function (s) { return BUDGETS[s.type] || BUDGETS.production; } }] },
+    { id: 'estimate', estimate: true, when: function (s) { return s.type === 'production' && !!pvEstimate(s, 'EUR'); },
+      title: L('Your instant estimate', 'Tu presupuesto estimado'), nextLabel: L('Continue to get the final quote', 'Continuar para recibir el presupuesto final'),
+      fields: [{ id: 'cur', type: 'currency', label: L('Currency', 'Moneda') }] },
     { id: 'about', title: L('Last step: who are you?', 'Último paso: ¿quién eres?'),
       fields: [{ id: 'name', type: 'text', req: true, label: L('Name', 'Nombre'), auto: 'name' },
                { id: 'email', type: 'email', req: true, label: L('Email', 'Email'), auto: 'email' },
@@ -130,8 +266,10 @@
   function fieldsOf(st) { return st.fields; }
   function valid(st) {
     return fieldsOf(st).every(function (f) {
-      if (!f.req) return true;
       var v = state[f.id];
+      if (f.type === 'currency') return true;
+      if (f.type === 'amount') return f.req ? !!parseAmount(v) : (v == null || v === '' || v === 'unsure' || !!parseAmount(v));
+      if (!f.req) return true;
       if (f.type === 'multi') return Array.isArray(v) && v.length > 0;
       if (f.type === 'check') return v === true;
       if (f.type === 'email') return typeof v === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
@@ -163,6 +301,13 @@
       sooner: L('Want to talk sooner?', '¿Quieres hablar antes?'), book: L('Book a call', 'Reserva una llamada'), whatsapp: L('WhatsApp', 'WhatsApp'),
       again: L('Start another project', 'Empezar otro proyecto'),
       fail: L("The form couldn't be sent. Please email it instead — your answers are already written:", 'No se ha podido enviar. Envíalo por email; tus respuestas ya están escritas:'),
+      estLabel: L('Estimated budget', 'Presupuesto estimado'), estFrom: L('from', 'desde'),
+      vat: L('Prices exclude VAT. VAT (21%) applies only to clients based in Spain. This is an indicative estimate — the final quote is confirmed after the brief.', 'Precios sin IVA. El IVA (21 %) solo se aplica a clientes en España. Estimación orientativa: el presupuesto final se confirma tras el brief.'),
+      fx: L('Approx. exchange rate', 'Tipo de cambio aproximado'), travel: L('Travel outside Europe is quoted separately and not included.', 'El viaje fuera de Europa se presupuesta aparte y no está incluido.'),
+      basisValue: L('Based on the property value you entered.', 'Calculado a partir del valor de la propiedad que indicas.'),
+      basisRevenue: L("Based on the return you expect from the video.", 'Calculado a partir del retorno que esperas del vídeo.'),
+      basisDays: L('Based on shooting days, videos, formats, extras and usage.', 'Calculado a partir de jornadas de rodaje, vídeos, formatos, extras y uso.'),
+      unsureTxt: L('Not sure yet', 'Aún no lo sé'), amtBad: L('Enter an amount greater than 0, e.g. 800,000 or 1.2M.', 'Introduce un importe mayor que 0, p. ej. 800.000 o 1,2M.'),
       mailIt: L('Send by email', 'Enviar por email'), none: L('—', '—')
     };
     return tr(T[k]);
@@ -188,7 +333,9 @@
     if (st.help) body.appendChild(el('p', 'pf-help', tr(st.help)));
 
     if (st.review) body.appendChild(renderReview(list));
+    if (st.estimate) { var eb = el('div', 'pf-est'); eb.appendChild(el('span', 'pf-label', t('estLabel'))); eb.appendChild(el('p', 'pf-est-fig')); body.appendChild(eb); }
     fieldsOf(st).forEach(function (f) { body.appendChild(renderField(st, f)); });
+    if (st.estimate) { body.appendChild(el('div', 'pf-est-notes')); paintEstimate(body); }
     root.appendChild(body);
 
     var nav = el('div', 'pf-nav');
@@ -198,8 +345,8 @@
     var right = el('div', 'pf-right');
     if (!st.review && !autoAdvance(st)) right.appendChild(el('span', 'pf-hint', t('hint')));
     var next = el('button', 'pf-next'); next.type = 'button';
-    var optionalOnly = fieldsOf(st).length && fieldsOf(st).every(function (f) { return !f.req; }) && fieldsOf(st).every(function (f) { var v = state[f.id]; return v == null || v === '' || (Array.isArray(v) && !v.length); });
-    next.textContent = st.review ? t('send') + ' →' : (optionalOnly ? t('skip') + ' →' : t('next') + ' →');
+    var optionalOnly = fieldsOf(st).length && fieldsOf(st).every(function (f) { return !f.req; }) && fieldsOf(st).every(function (f) { var v = state[f.id]; return f.type === 'currency' || v == null || v === '' || (Array.isArray(v) && !v.length); });
+    next.textContent = st.review ? t('send') + ' →' : (st.nextLabel ? tr(st.nextLabel) + ' →' : (optionalOnly ? t('skip') + ' →' : t('next') + ' →'));
     next.disabled = !valid(st) || busy;
     next.addEventListener('click', function () { if (st.review) submit(); else go(1); });
     right.appendChild(next);
@@ -214,8 +361,8 @@
     var st = steps()[idx], next = root.querySelector('.pf-next');
     if (!next || !st) return;
     next.disabled = !valid(st) || busy;
-    var optionalOnly = !st.review && fieldsOf(st).length && fieldsOf(st).every(function (f) { return !f.req; }) && fieldsOf(st).every(function (f) { var v = state[f.id]; return v == null || v === '' || (Array.isArray(v) && !v.length); });
-    if (!st.review) next.textContent = (optionalOnly ? t('skip') : t('next')) + ' →';
+    var optionalOnly = !st.review && fieldsOf(st).length && fieldsOf(st).every(function (f) { return !f.req; }) && fieldsOf(st).every(function (f) { var v = state[f.id]; return f.type === 'currency' || v == null || v === '' || (Array.isArray(v) && !v.length); });
+    if (!st.review && !st.nextLabel) next.textContent = (optionalOnly ? t('skip') : t('next')) + ' →';
     save();
   }
   function pad(n) { return (n < 10 ? '0' : '') + n; }
@@ -261,6 +408,57 @@
         group.appendChild(b);
       });
       wrap.appendChild(group);
+    } else if (f.type === 'currency') {
+      if (!state.cur) state.cur = state.icur || 'EUR';
+      if (f.input && !state.icur) state.icur = state.cur;
+      function shown() { return f.input ? state.icur : state.cur; }   // input steps show the currency the amount is typed in
+      var cg = el('div', 'pf-chips'); cg.setAttribute('role', 'radiogroup');
+      PRICING.currencies.forEach(function (c) {
+        var cb2 = el('button', 'pf-chip', PRICING.symbols[c] + ' ' + c); cb2.type = 'button'; cb2.setAttribute('role', 'radio');
+        cb2.classList.toggle('is-on', shown() === c); cb2.setAttribute('aria-checked', shown() === c);
+        cb2.addEventListener('click', function () {
+          state.cur = c; if (f.input) state.icur = c;
+          cg.querySelectorAll('button').forEach(function (x) { var on = x === cb2; x.classList.toggle('is-on', on); x.setAttribute('aria-checked', on); });
+          root.querySelectorAll('.pf-amt-hint').forEach(function (h) { if (h._upd) h._upd(); });
+          if (st.estimate) paintEstimate(root);
+          refresh();
+        });
+        cg.appendChild(cb2);
+      });
+      wrap.appendChild(cg);
+    } else if (f.type === 'amount') {
+      var ai = el('input', 'pf-input pf-amt'); ai.type = 'text'; ai.inputMode = 'decimal'; ai.autocomplete = 'off';
+      if (f.ph) ai.placeholder = tr(f.ph);
+      if (f.label) ai.setAttribute('aria-label', tr(f.label));
+      ai.value = state[f.id] === 'unsure' ? '' : (state[f.id] || '');
+      var ah = el('p', 'pf-amt-hint'); ah.setAttribute('aria-live', 'polite');
+      var uns = null;
+      ah._upd = function () {
+        var raw = state[f.id], n = parseAmount(raw), c = state.icur || 'EUR';
+        var bad = raw && raw !== 'unsure' && !n;
+        ah.classList.toggle('is-bad', !!bad);
+        ah.textContent = n ? '= ' + fmtMoney(n, c, lang()) : (bad ? t('amtBad') : '');
+      };
+      ai.addEventListener('input', function () {
+        state[f.id] = ai.value; if (uns) { uns.classList.remove('is-on'); uns.setAttribute('aria-pressed', false); }
+        ah._upd(); refresh();
+      });
+      ai.addEventListener('blur', function () {
+        var n = parseAmount(ai.value);
+        if (n && !/[a-z]/i.test(ai.value)) { ai.value = fmtNum(n, lang(), n % 1 ? 2 : 0); state[f.id] = ai.value; ah._upd(); refresh(); }
+      });
+      wrap.appendChild(ai); wrap.appendChild(ah);
+      if (f.unsure) {
+        uns = el('button', 'pf-chip pf-amt-unsure', t('unsureTxt')); uns.type = 'button';
+        var uon = state[f.id] === 'unsure'; uns.classList.toggle('is-on', uon); uns.setAttribute('aria-pressed', uon);
+        uns.addEventListener('click', function () {
+          var on = state[f.id] !== 'unsure';
+          state[f.id] = on ? 'unsure' : ''; if (on) ai.value = '';
+          uns.classList.toggle('is-on', on); uns.setAttribute('aria-pressed', on); ah._upd(); refresh();
+        });
+        var ur = el('div', 'pf-chips pf-amt-alt'); ur.appendChild(uns); wrap.appendChild(ur);
+      }
+      ah._upd();
     } else if (f.type === 'counter') {
       if (state[f.id] == null) state[f.id] = f.def || f.min;
       var c = el('div', 'pf-counter');
@@ -295,11 +493,12 @@
     steps().forEach(function (st) {
       if (st.review) return;
       st.fields.forEach(function (f) {
-        if (f.id === 'privacy') return;
+        if (f.id === 'privacy' || f.type === 'currency') return;
         var v = state[f.id];
         if (v == null || v === '' || (Array.isArray(v) && !v.length)) return;
         var shown;
         if (f.type === 'single' || f.type === 'cards') { var op = optsOf(f).filter(function (x) { return x.v === v; })[0]; shown = op ? op.l : null; }
+        else if (f.type === 'amount') { var an = parseAmount(v), ac = state.icur || 'EUR'; shown = an ? { en: fmtMoney(an, ac, 'en'), es: fmtMoney(an, ac, 'es') } : (v === 'unsure' ? L('Not sure yet', 'Aún no lo sé') : null); }
         else if (f.type === 'multi') shown = { en: v.map(function (x) { var op = optsOf(f).filter(function (y) { return y.v === x; })[0]; return op ? op.l.en : x; }).join(', '), es: v.map(function (x) { var op = optsOf(f).filter(function (y) { return y.v === x; })[0]; return op ? op.l.es : x; }).join(', ') };
         else shown = { en: String(v), es: String(v) };
         if (!shown) return;
@@ -318,7 +517,28 @@
       e.addEventListener('click', function () { idx = list.indexOf(a.step); render(-1); });
       dd.appendChild(e); row.appendChild(dd); box.appendChild(row);
     });
+    var est = pvEstimate(state, state.cur || 'EUR');
+    if (est && steps().some(function (x) { return x.estimate; })) {
+      var er = el('div', 'pf-row pf-row-est');
+      er.appendChild(el('dt', null, t('estLabel')));
+      var ed = el('dd', null, tr(est.text));
+      var ee = el('button', 'pf-edit', t('edit')); ee.type = 'button';
+      ee.addEventListener('click', function () { idx = list.filter(function (x) { return !x.review; }).map(function (x) { return x.estimate; }).indexOf(true); render(-1); });
+      ed.appendChild(ee); er.appendChild(ed); box.appendChild(er);
+    }
     return box;
+  }
+  // estimate step: fill the figure + notes (called on render and on every currency change)
+  function paintEstimate(scope) {
+    var e = pvEstimate(state, state.cur || 'EUR'); if (!e) return;
+    var fig = scope.querySelector('.pf-est-fig'), notes = scope.querySelector('.pf-est-notes');
+    if (fig) { fig.textContent = ''; fig.appendChild(el('span', 'pf-est-from', t('estFrom'))); fig.appendChild(document.createTextNode(' ' + tr(e.range))); }
+    if (!notes) return;
+    notes.textContent = '';
+    notes.appendChild(el('p', 'pf-est-basis', t(e.basis === 'value' ? 'basisValue' : e.basis === 'revenue' ? 'basisRevenue' : 'basisDays')));
+    if (e.cur !== 'EUR') notes.appendChild(el('p', 'pf-est-fx', t('fx') + ': 1\u00a0€ ≈ ' + fmtMoney(PRICING.rates[e.cur], e.cur, lang(), 2)));
+    if (e.outsideEurope) notes.appendChild(el('p', 'pf-est-trav', t('travel')));
+    notes.appendChild(el('p', 'pf-est-vat', t('vat')));
   }
 
   // ── submit ──
@@ -326,6 +546,12 @@
     var typeOp = STEPS[0].fields[0].opts.filter(function (x) { return x.v === state.type; })[0];
     var lines = ['NUEVO PROYECTO — ' + (typeOp ? typeOp.l.es.toUpperCase() : ''), 'Idioma del cliente: ' + lang().toUpperCase(), ''];
     answers().forEach(function (a) { lines.push(a.label.es.replace(/\s*\(opcional\)\s*$/i, '') + ': ' + a.value.es); });
+    var cur = state.cur || 'EUR', est = steps().some(function (x) { return x.estimate; }) ? pvEstimate(state, cur) : null;
+    if (est) {
+      lines.push('', 'Presupuesto estimado: ' + est.text.es + (cur !== 'EUR' ? ' (≈ ' + est.rangeEur.es + ')' : '') + (est.outsideEurope ? ' + viaje aparte' : ''),
+        'Moneda elegida por el cliente: ' + cur,
+        'Base del cálculo: ' + (est.basis === 'value' ? 'valor de la propiedad' : est.basis === 'revenue' ? 'retorno esperado' : 'jornadas, vídeos, formatos, extras y uso'));
+    }
     return lines.join('\n');
   }
   function loadEmailJS(cb, err) {

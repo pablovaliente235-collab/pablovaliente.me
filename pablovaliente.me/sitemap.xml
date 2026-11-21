@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
     <loc>https://pablovaliente.me/</loc>
@@ -152,6 +153,19 @@
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pablovaliente.me/services/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pablovaliente.me/es/servicios/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pablovaliente.me/services/"/>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/es/servicios/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pablovaliente.me/services/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pablovaliente.me/es/servicios/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pablovaliente.me/services/"/>
   </url>
 
   <url>
@@ -159,6 +173,19 @@
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pablovaliente.me/services/remote-video-editing-color-grading/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pablovaliente.me/es/servicios/edicion-video-etalonaje-remoto/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pablovaliente.me/services/remote-video-editing-color-grading/"/>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/es/servicios/edicion-video-etalonaje-remoto/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pablovaliente.me/services/remote-video-editing-color-grading/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pablovaliente.me/es/servicios/edicion-video-etalonaje-remoto/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pablovaliente.me/services/remote-video-editing-color-grading/"/>
   </url>
 
   <url>
@@ -166,6 +193,19 @@
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pablovaliente.me/services/real-estate-video-photography/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pablovaliente.me/es/servicios/video-fotografia-inmobiliaria/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pablovaliente.me/services/real-estate-video-photography/"/>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/es/servicios/video-fotografia-inmobiliaria/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pablovaliente.me/services/real-estate-video-photography/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pablovaliente.me/es/servicios/video-fotografia-inmobiliaria/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pablovaliente.me/services/real-estate-video-photography/"/>
   </url>
 
   <url>
@@ -173,6 +213,19 @@
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pablovaliente.me/services/hotel-hospitality-video-production/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pablovaliente.me/es/servicios/video-hoteles-hosteleria/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pablovaliente.me/services/hotel-hospitality-video-production/"/>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/es/servicios/video-hoteles-hosteleria/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pablovaliente.me/services/hotel-hospitality-video-production/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pablovaliente.me/es/servicios/video-hoteles-hosteleria/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pablovaliente.me/services/hotel-hospitality-video-production/"/>
   </url>
 
   <url>
@@ -180,6 +233,19 @@
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pablovaliente.me/services/brand-commercial-video-production/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pablovaliente.me/es/servicios/video-publicitario-marca/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pablovaliente.me/services/brand-commercial-video-production/"/>
+  </url>
+
+  <url>
+    <loc>https://pablovaliente.me/es/servicios/video-publicitario-marca/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pablovaliente.me/services/brand-commercial-video-production/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pablovaliente.me/es/servicios/video-publicitario-marca/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pablovaliente.me/services/brand-commercial-video-production/"/>
   </url>
 
 </urlset>

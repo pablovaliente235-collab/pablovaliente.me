@@ -582,6 +582,7 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
   .svc-name a::after { content: ""; position: absolute; inset: 0; }
   .svc-who { font-weight: 300; line-height: 1.5; opacity: 0.65; }
   .svc-price { margin-top: auto; padding-top: 0.6em; font-weight: 500; line-height: 1.35; }
+  .svc-price a { position: relative; z-index: 2; color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
   .svc-start { position: relative; z-index: 2; align-self: flex-start; color: inherit; font-size: 0.85em; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; opacity: 0.8; }
   .svc-start:hover { opacity: 1; }
   .svc-proof { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 5vw; align-items: start; }
@@ -690,7 +691,7 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
   <nav class="kmenu-nav" aria-label="Main menu">
     <a href="/" class="kmenu-link" data-go="top" aria-current="page"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Film</span></a>
     <a href="/#works" class="kmenu-link" data-go="works"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Photography</span></a>
-    <a href="/services/" class="kmenu-link" data-go="services"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Services</span></a>
+    <a href="/services/" class="kmenu-link" data-go="services" data-es-href="/es/servicios/"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Services</span></a>
     <a href="/dctl.html" class="kmenu-link"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">DCTLs</span></a>
     <a href="/about.html" class="kmenu-link"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">About</span></a>
     <a href="/contact.html" class="kmenu-link"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Contact</span></a>
@@ -957,7 +958,7 @@ document.addEventListener('DOMContentLoaded', function() {
     goTo(firstOf(sec) + Math.round(rel * (secList(sec).length - 1)));
   });
   var svcTab = document.querySelector('.mtk-tab-link');
-  if (svcTab) svcTab.addEventListener('click', function (e) { e.preventDefault(); navigateTo('/services/'); });
+  if (svcTab) svcTab.addEventListener('click', function (e) { e.preventDefault(); navigateTo(pvLang.get() === 'es' ? '/es/servicios/' : '/services/'); });
   tabs.forEach(function (t) {
     t.addEventListener('click', function () { goTo(firstOf(t.getAttribute('data-sec'))); if (hintEl) hintEl.style.opacity = '0'; });
   });
@@ -1029,7 +1030,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (ady > SWIPE && ady > adx) {
       if (dy < 0 && idx === projects.length - 1) {
-        navigateTo('/services/');
+        navigateTo(pvLang.get() === 'es' ? '/es/servicios/' : '/services/');
       } else {
         goTo(dy < 0 ? idx + 1 : idx - 1);
       }
@@ -1045,7 +1046,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="mtk-tabs" aria-label="Section">
     <button type="button" class="mtk-tab is-on" data-sec="film">Film</button>
     <button type="button" class="mtk-tab" data-sec="photo" data-es="Fotografía">Photography</button>
-    <a class="mtk-tab mtk-tab-link" href="/services/" data-go-services data-es="Servicios">Services</a>
+    <a class="mtk-tab mtk-tab-link" href="/services/" data-es-href="/es/servicios/" data-go-services data-es="Servicios">Services</a>
   </div>
   <div class="mtk-row">
     <div class="mtk-info" id="mtkInfo">
@@ -1121,7 +1122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <p data-es="Producción de vídeo, edición y etalonaje en toda España y Europa, y posproducción en remoto para todo el mundo. Con sede en España y bases en Alemania y EE. UU.">Video production, editing and color grading across Spain and Europe, plus remote post-production worldwide. Based in Spain, with bases in Germany and the USA.</p>
         <div class="svc-cta">
           <a class="svc-btn" href="/start-a-project.html" data-es="Empezar un proyecto">Start a project</a>
-          <a class="svc-link" href="/services/" data-es="Todos los servicios →">All services →</a>
+          <a class="svc-link" href="/services/" data-es-href="/es/servicios/" data-es="Todos los servicios →">All services →</a>
           <a class="svc-link" href="https://calendly.com/pablovaliente/discovery-call" target="_blank" rel="noopener noreferrer" data-book data-es="Reservar una llamada">Book a call</a>
         </div>
       </div>
@@ -1129,30 +1130,30 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="svc-grid" role="list">
       <li><article class="svc-card" style="--n:0">
         <span class="svc-idx" aria-hidden="true">01</span>
-        <h3 class="svc-name"><a href="/services/remote-video-editing-color-grading/" data-es="Edición de vídeo y etalonaje en remoto">Remote video editing &amp; color grading</a></h3>
+        <h3 class="svc-name"><a href="/services/remote-video-editing-color-grading/" data-es-href="/es/servicios/edicion-video-etalonaje-remoto/" data-es="Edición de vídeo y etalonaje en remoto">Remote video editing &amp; color grading</a></h3>
         <p class="svc-who" data-es="Para cineastas, agencias y estudios cuyo material necesita un acabado profesional.">For filmmakers, agencies and studios whose footage needs a professional finish.</p>
         <p class="svc-price" data-es="600 $ / día de trabajo + IVA">$600 / working day + VAT</p>
         <a class="svc-start" href="/start-a-project.html?type=post" data-es="Empezar un proyecto">Start a project</a>
       </article></li>
       <li><article class="svc-card" style="--n:1">
         <span class="svc-idx" aria-hidden="true">02</span>
-        <h3 class="svc-name"><a href="/services/real-estate-video-photography/" data-es="Inmobiliaria e interiores">Real estate &amp; interiors</a></h3>
+        <h3 class="svc-name"><a href="/services/real-estate-video-photography/" data-es-href="/es/servicios/video-fotografia-inmobiliaria/" data-es="Inmobiliaria e interiores">Real estate &amp; interiors</a></h3>
         <p class="svc-who" data-es="Vídeo, foto y dron para anuncios que quieren destacar.">Video, photo and drone for listings that need to stand out.</p>
-        <p class="svc-price" data-es="Alrededor del 5 % de la comisión del agente + IVA">Around 5% of the listing agent’s commission + VAT</p>
+        <p class="svc-price"><a href="/start-a-project.html?type=production&amp;kind=realestate" data-es="Presupuesto al instante →">Instant estimate →</a></p>
         <a class="svc-start" href="/start-a-project.html?type=production&amp;kind=realestate" data-es="Empezar un proyecto">Start a project</a>
       </article></li>
       <li><article class="svc-card" style="--n:2">
         <span class="svc-idx" aria-hidden="true">03</span>
-        <h3 class="svc-name"><a href="/services/hotel-hospitality-video-production/" data-es="Hoteles y hostelería">Hotels &amp; hospitality</a></h3>
+        <h3 class="svc-name"><a href="/services/hotel-hospitality-video-production/" data-es-href="/es/servicios/video-hoteles-hosteleria/" data-es="Hoteles y hostelería">Hotels &amp; hospitality</a></h3>
         <p class="svc-who" data-es="Películas de marca y contenido para hoteles, resorts y restaurantes.">Brand films and content for hotels, resorts and restaurants.</p>
-        <p class="svc-price" data-es="A medida: días de rodaje y edición, entregables y licencia + IVA">Custom: shooting days, editing days, deliverables &amp; licence + VAT</p>
+        <p class="svc-price"><a href="/start-a-project.html?type=production&amp;kind=hotel" data-es="Presupuesto al instante →">Instant estimate →</a></p>
         <a class="svc-start" href="/start-a-project.html?type=production&amp;kind=hotel" data-es="Empezar un proyecto">Start a project</a>
       </article></li>
       <li><article class="svc-card" style="--n:3">
         <span class="svc-idx" aria-hidden="true">04</span>
-        <h3 class="svc-name"><a href="/services/brand-commercial-video-production/" data-es="Producción de marca y comercial">Brand &amp; commercial production</a></h3>
+        <h3 class="svc-name"><a href="/services/brand-commercial-video-production/" data-es-href="/es/servicios/video-publicitario-marca/" data-es="Producción de marca y comercial">Brand &amp; commercial production</a></h3>
         <p class="svc-who" data-es="Películas de campaña y producto pensadas para vender.">Campaign and product films built to sell.</p>
-        <p class="svc-price" data-es="Alrededor del 5 % de lo que el vídeo puede generar + IVA">Around 5% of what the video can generate + VAT</p>
+        <p class="svc-price"><a href="/start-a-project.html?type=production&amp;kind=brand" data-es="Presupuesto al instante →">Instant estimate →</a></p>
         <a class="svc-start" href="/start-a-project.html?type=production&amp;kind=brand" data-es="Empezar un proyecto">Start a project</a>
       </article></li>
     </ul>
