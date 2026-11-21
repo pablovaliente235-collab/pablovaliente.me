@@ -78,11 +78,21 @@
     } catch (e) {}
     return norm(v);
   }
-  var lang = read();
+  /* Pages under /es/ are real Spanish URLs: they always run in Spanish and make Spanish the stored preference. */
+  var ES_PATH = /^\/es(\/|$)/.test(location.pathname);
+  /* A page can declare its counterpart in the other language: <meta name="pv-alt-en|pv-alt-es" content="/path/">.
+     Switching language then navigates there instead of swapping text. */
+  function altUrl(l) {
+    var m = doc.querySelector('meta[name="pv-alt-' + l + '"]');
+    var u = m && m.getAttribute('content');
+    return u && u !== location.pathname ? u : null;
+  }
+  var lang = ES_PATH ? 'es' : read();
+  if (ES_PATH) { try { localStorage.setItem(KEY, 'es'); } catch (e) {} }
   doc.documentElement.lang = lang;
 
   /* ── generic attribute translation ── */
-  var ATTRS = [['data-es-aria', 'aria-label'], ['data-es-alt', 'alt'], ['data-es-title', 'title'], ['data-es-placeholder', 'placeholder'], ['data-es-content', 'content']];
+  var ATTRS = [['data-es-aria', 'aria-label'], ['data-es-alt', 'alt'], ['data-es-title', 'title'], ['data-es-placeholder', 'placeholder'], ['data-es-content', 'content'], ['data-es-href', 'href']];
 
   function memo(el) { return el.__pvl || (el.__pvl = {}); }
 
@@ -245,12 +255,23 @@
   doc.addEventListener('click', function (e) {
     var t = e.target && e.target.closest ? e.target.closest('[data-set-lang], #langToggle, #langToggleMobile, #langToggleOverlay') : null;
     if (!t) return;
-    if (t.hasAttribute('data-set-lang')) { set(t.getAttribute('data-set-lang')); return; }
-    e.preventDefault();
-    set(lang === 'es' ? 'en' : 'es');
+    var target = t.hasAttribute('data-set-lang') ? norm(t.getAttribute('data-set-lang')) : (lang === 'es' ? 'en' : 'es');
+    if (!t.hasAttribute('data-set-lang')) e.preventDefault();
+    var alt = target !== lang || ES_PATH ? altUrl(target) : null;
+    if (alt && target !== lang) {            // counterpart URL exists -> store the choice and go there
+      try { localStorage.setItem(KEY, target); } catch (e2) {}
+      if (window.pvTransition) window.pvTransition(alt, null, { lang: target });
+      else location.href = alt;
+      return;
+    }
+    set(target);
   });
   window.addEventListener('storage', function (e) {
-    if (e.key === KEY && norm(e.newValue) !== lang) set(e.newValue, { nostore: true });
+    if (e.key !== KEY || norm(e.newValue) === lang) return;
+    if (ES_PATH) return;                      // /es/ pages stay Spanish
+    var alt = altUrl(norm(e.newValue));
+    if (alt) { location.replace(alt); return; }
+    set(e.newValue, { nostore: true });
   });
 
   function init() { apply(doc); }

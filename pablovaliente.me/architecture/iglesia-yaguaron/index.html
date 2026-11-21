@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8"/>
 <script>(function(){var l;try{l=localStorage.getItem('pv-lang')}catch(e){}document.documentElement.lang=(l==='es')?'es':'en';})();</script>
+<script>try{var t=sessionStorage.getItem('pv-tx');if(t&&Date.now()-parseInt(t,10)<8000){document.documentElement.classList.add('pv-entering');setTimeout(function(){document.documentElement.classList.remove('pv-entering')},1800)}}catch(e){}</script><style>html.pv-entering::before{content:"";position:fixed;inset:0;z-index:2147483000;background:#0C0C0B}</style><script src="/js/transition.js" defer></script>
     <link rel="icon" href="../../favicon.ico" sizes="any"/>
     <link rel="icon" href="../../favicon-192.png" type="image/png" sizes="192x192"/>
     <link rel="icon" href="../../favicon-512.png" type="image/png" sizes="512x512"/>
@@ -421,7 +422,7 @@
   <nav class="kmenu-nav" aria-label="Main menu">
     <a href="/" class="kmenu-link" data-go="top"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Film</span></a>
     <a href="/#works" class="kmenu-link" data-go="works"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Photography</span></a>
-    <a href="/services/" class="kmenu-link" data-go="services"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Services</span></a>
+    <a href="/services/" class="kmenu-link" data-go="services" data-es-href="/es/servicios/"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Services</span></a>
     <a href="/dctl.html" class="kmenu-link"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">DCTLs</span></a>
     <a href="/about.html" class="kmenu-link"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">About</span></a>
     <a href="/contact.html" class="kmenu-link"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Contact</span></a>

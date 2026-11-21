@@ -385,7 +385,11 @@ const col   = document.getElementById('sliderCol');
 const cards = Array.from(track.querySelectorAll('.card-wrap'));
 
 cards.forEach(c => {
-  c.addEventListener('click', () => { window.top.location.href = new URL(c.dataset.href, location.href).href; });
+  c.addEventListener('click', () => {
+    const url = new URL(c.dataset.href, location.href).href;
+    try { if (window.top !== window && window.top.pvTransition) { window.top.pvTransition(url); return; } } catch (e) {}
+    window.top.location.href = url;
+  });
   const bg = c.dataset.bg;
   if (bg) {
     const img = document.createElement('img');
