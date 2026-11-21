@@ -9,7 +9,7 @@
 
   var L = window.pvLang || { get: function () { return 'en'; }, t: function (en) { return en; }, on: function () {}, apply: function () {} };
   // menu words (EN text is the markup; ES from data-es or this map). "Film" and "DCTLs" stay as they are in both languages.
-  var WORDS_ES = { 'Photography': 'Fotografía', 'About': 'Sobre mí', 'Contact': 'Contacto' };
+  var WORDS_ES = { 'Photography': 'Fotografía', 'About': 'Sobre mí', 'Contact': 'Contacto', 'Services': 'Servicios' };
 
   // split words into letters for the kinetic animation
   function splitWord(word, base, step) {
@@ -67,16 +67,17 @@
       var go = a.getAttribute('data-go');
       var home = document.getElementById('de-home');
       // mobile home: Film / Photography are sections of the vertical slider
-      if (go && window.pvMobileHome && window.innerWidth <= 767) {
+      if (go && go !== 'services' && window.pvMobileHome && window.innerWidth <= 767) {
         e.preventDefault();
         close();
         window.pvMobileHome.go(go === 'works' ? 'photo' : 'film');
         return;
       }
-      if (go && home) {
+      var svc = document.getElementById('services');
+      if (go && home && !(go === 'services' && (!svc || window.innerWidth <= 767))) {
         e.preventDefault();
         close();
-        window.scrollTo({ top: go === 'works' ? home.offsetTop : 0, behavior: 'smooth' });
+        window.scrollTo({ top: go === 'services' ? svc.offsetTop : go === 'works' ? home.offsetTop : 0, behavior: 'smooth' });
         return;
       }
       close();

@@ -476,11 +476,12 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
     padding: 0 28px 60px;
   }
   .mtk-row { display: flex; align-items: center; gap: 24px; }
-  .mtk-tabs { display: flex; gap: 22px; margin-bottom: 22px; }
+  .mtk-tabs { display: flex; gap: clamp(14px, 5vw, 22px); margin-bottom: 22px; }
+  .mtk-tab-link { text-decoration: none; display: inline-block; }
   .mtk-tab {
     position: relative; background: none; border: 0; padding: 8px 0; cursor: pointer;
     font-family: "neue-haas-grotesk-display", sans-serif; font-size: 11px; font-weight: 500;
-    letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+    letter-spacing: 0.1em; white-space: nowrap; text-transform: uppercase; color: rgba(255,255,255,0.4);
     transition: color 0.3s; -webkit-tap-highlight-color: transparent;
   }
   .mtk-tab::after {
@@ -549,6 +550,60 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
 }
 @media (max-width: 767px) {
   .snap-page { display: none; }
+}
+
+/* ── Desktop zone 3: Services (native HTML, light) ── */
+#services { display: none; }
+@media (min-width: 768px) {
+  #services { --sfs: clamp(13px, min(1vw, 1.9vh), 22px); display: flex; flex-direction: column; position: relative; z-index: 150; height: auto; min-height: 100vh; background: #F2F0EF; color: #282828; font-size: var(--sfs); }
+  .svc-main { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: clamp(14px, 3.4vh, 52px); padding: clamp(78px, 11vh, 150px) 40px clamp(12px, 2.4vh, 36px); }
+  .svc-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.45; }
+  .svc-head { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 5vw; align-items: end; }
+  .svc-h { font-size: clamp(40px, min(5.2vw, 9.5vh), 150px); font-weight: 500; letter-spacing: -0.04em; line-height: 1; }
+  .svc-w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.08em; }
+  .svc-w .ch { display: inline-block; white-space: pre; transform: translateY(105%); transition: transform 0.8s cubic-bezier(0.22,1,0.36,1); transition-delay: calc(var(--d, 0) * 1ms); }
+  #services.is-in .svc-w .ch { transform: none; }
+  .svc-side p { font-size: 1.1em; font-weight: 300; line-height: 1.55; opacity: 0.75; max-width: 34em; }
+  .svc-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 1.1em; margin-top: 1.4em; }
+  @media (min-width: 1000px) { .svc-head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+  .svc-cta .svc-btn { white-space: nowrap; padding: 1.2em 1.4em; letter-spacing: 0.06em; }
+  .svc-cta .svc-link { white-space: nowrap; letter-spacing: 0.04em; }
+  .svc-btn { display: inline-block; background: #282828; color: #F2F0EF; padding: 1.2em 1.8em; font-size: 0.92em; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
+  .svc-btn:hover { opacity: 0.85; }
+  .svc-link { color: inherit; font-size: 0.92em; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; opacity: 0.6; transition: opacity 0.2s; }
+  .svc-link:hover { opacity: 1; text-decoration: underline; }
+  .svc-grid { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .svc-card { position: relative; display: flex; flex-direction: column; gap: 0.7em; height: 100%; padding: 1.6em 1.6em 1.5em; border: 1px solid rgba(40,40,40,0.16); background: transparent; color: #282828; opacity: 0; transform: translateY(24px); transition-property: background, color, border-color, opacity, transform; transition-duration: 0.25s, 0.25s, 0.25s, 0.7s, 0.7s; transition-delay: 0s, 0s, 0s, calc(var(--n) * 90ms + 350ms), calc(var(--n) * 90ms + 350ms); }
+  #services.is-in .svc-card { opacity: 1; transform: none; }
+  .svc-card:hover, .svc-card:focus-within { background: #282828; color: #F2F0EF; border-color: #282828; }
+  .svc-idx { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; opacity: 0.45; }
+  .svc-name { font-size: clamp(17px, min(1.6vw, 2.8vh), 36px); font-weight: 500; letter-spacing: -0.025em; line-height: 1.08; margin-top: 0.5em; }
+  .svc-name a { color: inherit; text-decoration: none; }
+  .svc-name a::after { content: ""; position: absolute; inset: 0; }
+  .svc-who { font-weight: 300; line-height: 1.5; opacity: 0.65; }
+  .svc-price { margin-top: auto; padding-top: 0.6em; font-weight: 500; line-height: 1.35; }
+  .svc-start { position: relative; z-index: 2; align-self: flex-start; color: inherit; font-size: 0.85em; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; opacity: 0.8; }
+  .svc-start:hover { opacity: 1; }
+  .svc-proof { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 5vw; align-items: start; }
+  .svc-trust { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5em 2em; /* no textual separators: wrapping can never start a line with a bullet */ font-size: 0.92em; font-weight: 500; }
+  .svc-trust li { position: relative; }
+  .svc-quote { font-size: 0.95em; font-weight: 300; line-height: 1.55; }
+  .svc-quote p { opacity: 0.8; }
+  .svc-quote footer { margin-top: 0.5em; font-size: 0.75em; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; }
+  .svc-quote .svc-stars { letter-spacing: 0.15em; margin-right: 0.6em; }
+  .svc-foot { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; color: rgba(40,40,40,0.4); }
+  .svc-foot a { color: inherit; text-decoration: none; transition: opacity 0.2s; }
+  .svc-foot a:hover { opacity: 0.8; }
+  .svc-foot .footer-col { font-size: 11px; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; }
+  .svc-foot a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
+  .svc-foot .footer-col:nth-child(2) { font-size: 15px; }
+}
+@media (min-width: 768px) and (max-width: 999px) {
+  .svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .svc-head, .svc-proof { grid-template-columns: 1fr; gap: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .svc-w .ch, .svc-card { transition: none !important; transform: none !important; opacity: 1 !important; }
 }
 </style>
 <link rel="stylesheet" href="/kmenu.css"/>
@@ -635,6 +690,7 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
   <nav class="kmenu-nav" aria-label="Main menu">
     <a href="/" class="kmenu-link" data-go="top" aria-current="page"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Film</span></a>
     <a href="/#works" class="kmenu-link" data-go="works"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Photography</span></a>
+    <a href="/services/" class="kmenu-link" data-go="services"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Services</span></a>
     <a href="/dctl.html" class="kmenu-link"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">DCTLs</span></a>
     <a href="/about.html" class="kmenu-link"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">About</span></a>
     <a href="/contact.html" class="kmenu-link"><span class="kmenu-idx" aria-hidden="true"></span><span class="kmenu-word">Contact</span></a>
@@ -871,7 +927,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var img = document.querySelector('#' + p.bg + ' img[data-src]');
     if (img) { img.src = img.getAttribute('data-src'); img.removeAttribute('data-src'); }
   }
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('.mtk-tab'));
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.mtk-tab[data-sec]'));
   var totEl = document.getElementById('mtkIndTot');
 
   var idx     = 0;
@@ -900,6 +956,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var sec = projects[idx].sec;
     goTo(firstOf(sec) + Math.round(rel * (secList(sec).length - 1)));
   });
+  var svcTab = document.querySelector('.mtk-tab-link');
+  if (svcTab) svcTab.addEventListener('click', function (e) { e.preventDefault(); navigateTo('/services/'); });
   tabs.forEach(function (t) {
     t.addEventListener('click', function () { goTo(firstOf(t.getAttribute('data-sec'))); if (hintEl) hintEl.style.opacity = '0'; });
   });
@@ -971,7 +1029,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (ady > SWIPE && ady > adx) {
       if (dy < 0 && idx === projects.length - 1) {
-        navigateTo('about.html');
+        navigateTo('/services/');
       } else {
         goTo(dy < 0 ? idx + 1 : idx - 1);
       }
@@ -987,6 +1045,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="mtk-tabs" aria-label="Section">
     <button type="button" class="mtk-tab is-on" data-sec="film">Film</button>
     <button type="button" class="mtk-tab" data-sec="photo" data-es="Fotografía">Photography</button>
+    <a class="mtk-tab mtk-tab-link" href="/services/" data-go-services data-es="Servicios">Services</a>
   </div>
   <div class="mtk-row">
     <div class="mtk-info" id="mtkInfo">
@@ -1049,6 +1108,97 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   load();
   if (mq.addEventListener) mq.addEventListener('change', load); else if (mq.addListener) mq.addListener(load);
+})();
+</script>
+
+<!-- Desktop zone 3: Services (native HTML so search engines read it; hidden on mobile, where the Services tab goes to /services/) -->
+<section id="services" class="snap-page" aria-labelledby="svc-h">
+  <div class="svc-main">
+    <p class="svc-label" data-es="Servicios">Services</p>
+    <div class="svc-head">
+      <h2 class="svc-h" id="svc-h" data-h-en="Let’s make it sell." data-h-es="Hagamos que venda.">Let’s make it sell.</h2>
+      <div class="svc-side">
+        <p data-es="Producción de vídeo, edición y etalonaje en toda España y Europa, y posproducción en remoto para todo el mundo. Con sede en España y bases en Alemania y EE. UU.">Video production, editing and color grading across Spain and Europe, plus remote post-production worldwide. Based in Spain, with bases in Germany and the USA.</p>
+        <div class="svc-cta">
+          <a class="svc-btn" href="/start-a-project.html" data-es="Empezar un proyecto">Start a project</a>
+          <a class="svc-link" href="/services/" data-es="Todos los servicios →">All services →</a>
+          <a class="svc-link" href="https://calendly.com/pablovaliente/discovery-call" target="_blank" rel="noopener noreferrer" data-book data-es="Reservar una llamada">Book a call</a>
+        </div>
+      </div>
+    </div>
+    <ul class="svc-grid" role="list">
+      <li><article class="svc-card" style="--n:0">
+        <span class="svc-idx" aria-hidden="true">01</span>
+        <h3 class="svc-name"><a href="/services/remote-video-editing-color-grading/" data-es="Edición de vídeo y etalonaje en remoto">Remote video editing &amp; color grading</a></h3>
+        <p class="svc-who" data-es="Para cineastas, agencias y estudios cuyo material necesita un acabado profesional.">For filmmakers, agencies and studios whose footage needs a professional finish.</p>
+        <p class="svc-price" data-es="600 $ / día de trabajo + IVA">$600 / working day + VAT</p>
+        <a class="svc-start" href="/start-a-project.html?type=post" data-es="Empezar un proyecto">Start a project</a>
+      </article></li>
+      <li><article class="svc-card" style="--n:1">
+        <span class="svc-idx" aria-hidden="true">02</span>
+        <h3 class="svc-name"><a href="/services/real-estate-video-photography/" data-es="Inmobiliaria e interiores">Real estate &amp; interiors</a></h3>
+        <p class="svc-who" data-es="Vídeo, foto y dron para anuncios que quieren destacar.">Video, photo and drone for listings that need to stand out.</p>
+        <p class="svc-price" data-es="Alrededor del 5 % de la comisión del agente + IVA">Around 5% of the listing agent’s commission + VAT</p>
+        <a class="svc-start" href="/start-a-project.html?type=production&amp;kind=realestate" data-es="Empezar un proyecto">Start a project</a>
+      </article></li>
+      <li><article class="svc-card" style="--n:2">
+        <span class="svc-idx" aria-hidden="true">03</span>
+        <h3 class="svc-name"><a href="/services/hotel-hospitality-video-production/" data-es="Hoteles y hostelería">Hotels &amp; hospitality</a></h3>
+        <p class="svc-who" data-es="Películas de marca y contenido para hoteles, resorts y restaurantes.">Brand films and content for hotels, resorts and restaurants.</p>
+        <p class="svc-price" data-es="A medida: días de rodaje y edición, entregables y licencia + IVA">Custom: shooting days, editing days, deliverables &amp; licence + VAT</p>
+        <a class="svc-start" href="/start-a-project.html?type=production&amp;kind=hotel" data-es="Empezar un proyecto">Start a project</a>
+      </article></li>
+      <li><article class="svc-card" style="--n:3">
+        <span class="svc-idx" aria-hidden="true">04</span>
+        <h3 class="svc-name"><a href="/services/brand-commercial-video-production/" data-es="Producción de marca y comercial">Brand &amp; commercial production</a></h3>
+        <p class="svc-who" data-es="Películas de campaña y producto pensadas para vender.">Campaign and product films built to sell.</p>
+        <p class="svc-price" data-es="Alrededor del 5 % de lo que el vídeo puede generar + IVA">Around 5% of what the video can generate + VAT</p>
+        <a class="svc-start" href="/start-a-project.html?type=production&amp;kind=brand" data-es="Empezar un proyecto">Start a project</a>
+      </article></li>
+    </ul>
+    <div class="svc-proof">
+      <ul class="svc-trust" role="list">
+        <li data-es="Certificado en DaVinci Resolve">DaVinci Resolve Certified</li>
+        <li data-es="Licencia de dron EASA">EASA drone licence</li>
+        <li data-es="Entrega rápida">Fast turnaround</li>
+        <li data-es="2 rondas de revisiones incluidas">2 revision rounds included</li>
+        <li><span class="svc-stat-num">90+</span> <span data-es="proyectos entregados">projects delivered</span></li>
+      </ul>
+      <blockquote class="svc-quote">
+        <p><span class="svc-stars" aria-label="5 out of 5 stars">★★★★★</span>“Every once in a while, I come across an editor who exceeds my expectations and delivers the finest quality work… I can’t recommend Pablo enough.”</p>
+        <footer>— Jim Nevill Productions</footer>
+      </blockquote>
+    </div>
+  </div>
+  <footer class="svc-foot" aria-label="Site footer">
+    <span class="footer-col">&copy; <span class="footer-year"></span> Pablo Valiente. All rights reserved.</span>
+    <span class="footer-col"><a href="mailto:contact@pablovaliente.me">contact@pablovaliente.me</a></span>
+    <span class="footer-col"><a href="/start-a-project.html">Start a project</a></span>
+    <span class="footer-col footer-social"><a href="https://instagram.com/pvaliente_" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.linkedin.com/in/valiente-pablo" target="_blank" rel="noopener noreferrer">LinkedIn</a></span>
+  </footer>
+</section>
+<script>
+(function () {
+  var sec = document.getElementById('services'), h = document.getElementById('svc-h');
+  if (!sec || !h) return;
+  function render() {
+    var es = window.pvLang && pvLang.get() === 'es';
+    var text = h.getAttribute(es ? 'data-h-es' : 'data-h-en');
+    h.setAttribute('aria-label', text); h.textContent = '';
+    var n = 0;
+    text.split(' ').forEach(function (word, wi, arr) {
+      var w = document.createElement('span'); w.className = 'svc-w'; w.setAttribute('aria-hidden', 'true');
+      Array.from(word + (wi < arr.length - 1 ? ' ' : '')).forEach(function (ch) {
+        var c = document.createElement('span'); c.className = 'ch'; c.textContent = ch; c.style.setProperty('--d', 120 + n * 28); n++; w.appendChild(c);
+      });
+      h.appendChild(w);
+    });
+  }
+  render();
+  if (window.pvLang) pvLang.on(render);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) { en.forEach(function (e) { sec.classList.toggle('is-in', e.isIntersecting); }); }, { threshold: 0.35 }).observe(sec);
+  } else sec.classList.add('is-in');
 })();
 </script>
 <script src="/kmenu.js"></script>

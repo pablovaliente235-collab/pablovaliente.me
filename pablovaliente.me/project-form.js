@@ -108,6 +108,22 @@
   // ── state ──
   var state = {}, idx = 0, sent = false, busy = false;
   try { var saved = JSON.parse(sessionStorage.getItem(STORE) || 'null'); if (saved) { state = saved.state || {}; idx = saved.idx || 0; } } catch (e) {}
+  // URL preselect: ?type=post|production|photo|other and &kind=realestate|hotel|brand (production). Takes precedence over saved progress only when present.
+  (function preselect() {
+    var q; try { q = new URLSearchParams(location.search); } catch (e) { return; }
+    var TYPE_ALIAS = { editing: 'post', color: 'post', colour: 'post', post: 'post', production: 'production', video: 'production', photo: 'photo', photography: 'photo', other: 'other' };
+    var KIND_ALIAS = { realestate: 'realestate', 'real-estate': 'realestate', property: 'realestate', hotel: 'hotel', hospitality: 'hotel', brand: 'brand', commercial: 'brand', 'brand-commercial': 'brand' };
+    var type = TYPE_ALIAS[(q.get('type') || '').toLowerCase()];
+    var kind = KIND_ALIAS[(q.get('kind') || '').toLowerCase()];
+    if (!type) return;
+    if (type !== 'production') kind = null;
+    var target = kind ? 2 : 1;
+    var same = state.type === type && (!kind || state.kind === kind);
+    if (!same) state = {};
+    state.type = type;
+    if (kind) state.kind = kind;
+    idx = same ? Math.max(idx, target) : target;
+  })();
   function save() { try { sessionStorage.setItem(STORE, JSON.stringify({ state: state, idx: idx })); } catch (e) {} }
   function steps() { return STEPS.filter(function (s) { return !s.when || s.when(state); }); }
   function optsOf(f) { return typeof f.opts === 'function' ? f.opts(state) : (f.opts || []); }
