@@ -9,7 +9,7 @@
   var STORE = 'pv-project';
 
 
-  // ═══ PRICING — instant estimate (edit the numbers here; nothing else in this file holds prices) ═══
+  // ═══ PRICING — estimate shown after the brief is sent (edit the numbers here; nothing else in this file holds prices) ═══
   // All amounts are in EUR, excluding VAT. Used for "Full production" (all kinds) and "Editing & color".
   var PRICING = {
     // Currencies offered to the client. rates = units of that currency per 1 EUR (static, approximate).
@@ -30,12 +30,12 @@
     //   No revenue ("not sure yet") → plain day model.
     brand: { share: 0.05, minFactor: 0.8, maxFactor: 1.5, min: 600 },
 
-    // DAY-BASED MODEL: production of every kind (real estate excepted), and brand without a revenue figure.
+    // SCOPE-BASED MODEL: production of every kind (real estate excepted), and brand without a revenue figure.
     // Rates of a self-shooting DoP/editor with own cinema kit.
     day: {
       shootDay: 600,        // per shooting day
       halfDay: 350,         // "half a day" shoot
-      editDay: 550,         // per edit/grade day (≈ $600)
+      editDay: 550,         // per edit/grade day
       min: 600,             // minimum production
       // edit days for ONE video, by the "length of the main video" answer
       editDaysByLength: { '<30s': 0.5, '30-60s': 1, '1-3min': 1.5, '3min+': 2.5 },
@@ -63,10 +63,9 @@
     // EDITING & COLOR GRADING (type = post): the client already has the footage.
     //   days = Σ pieces by length (same table & extra-piece factor as the day model) × service factor
     //          + footage-hours days + Log/RAW days + look development + extra revision rounds + extras (sound mix, titles)
-    //   format surcharge = +8 % of the piece cost per extra format; HDR = flat mastering & certification fee.
+    //   format surcharge = +8 % of the piece cost per extra format; HDR = flat mastering & certification fee (internal; never shown to clients).
     post: {
-      editDay: 550,         // per day (≈ $600)
-      usdPerDay: 600,       // shown in the copy only
+      editDay: 550,         // internal; never shown to clients
       min: 300,             // minimum job
       // service factor on the piece days: editing only 1.0 · grading only 0.5 · editing + grading 1.3 ·
       // custom look / DCTL = grading (0.5) plus lookDays of look development
@@ -218,7 +217,7 @@
     { id: 'p-kind', when: is('production'), title: L('What kind of video?', '¿Qué tipo de vídeo?'),
       fields: [{ id: 'kind', type: 'single', req: true, opts: [o('realestate', 'Real estate & interiors', 'Inmobiliaria e interiores'), o('hotel', 'Hotel & hospitality', 'Hotel y hostelería'), o('brand', 'Brand film', 'Película de marca'), o('social', 'Social media campaign', 'Campaña para redes'), o('event', 'Event', 'Evento'), o('short', 'Short film', 'Cortometraje'), o('other', 'Other', 'Otro')] }] },
     { id: 'p-value', when: function (s) { return s.type === 'production' && s.kind === 'realestate'; },
-      title: L("What's the property worth?", '¿Cuánto vale la propiedad?'), help: L('An approximate value is enough. I use it to give you an instant estimate.', 'Basta con un valor aproximado. Lo uso para darte un presupuesto al instante.'),
+      title: L("What's the property worth?", '¿Cuánto vale la propiedad?'), help: L('An approximate value is enough. I use it to prepare your estimate.', 'Basta con un valor aproximado. Lo uso para preparar tu presupuesto.'),
       fields: [{ id: 'cur', type: 'currency', input: true, label: L('Currency', 'Moneda') },
                { id: 'pvalue', type: 'amount', req: true, label: L('Property value', 'Valor de la propiedad'), ph: L('e.g. 800,000', 'p. ej. 800.000') }] },
     { id: 'p-revenue', when: function (s) { return s.type === 'production' && s.kind === 'brand'; },
@@ -284,9 +283,6 @@
     { id: 'time', title: L('When?', '¿Cuándo?'),
       fields: [{ id: 'when', type: 'single', req: true, opts: [o('asap', 'As soon as possible', 'Lo antes posible'), o('month', 'Within a month', 'En el próximo mes'), o('1-3', 'In 1–3 months', 'En 1–3 meses'), o('3+', 'In 3+ months', 'En más de 3 meses'), o('flexible', 'Flexible')] },
                { id: 'date', type: 'date', label: L('Exact date, if you have one (optional)', 'Fecha exacta, si la tienes (opcional)') }] },
-    { id: 'estimate', estimate: true, when: function (s) { return (s.type === 'production' || s.type === 'post') && !!pvEstimate(s, 'EUR'); },
-      title: L('Your instant estimate', 'Tu presupuesto estimado'), nextLabel: L('Continue to get the final quote', 'Continuar para recibir el presupuesto final'),
-      fields: [{ id: 'cur', type: 'currency', label: L('Currency', 'Moneda') }] },
     { id: 'budget', title: L("What's the budget?", '¿Qué presupuesto tienes?'), help: L('A range is enough. It helps me propose the right approach.', 'Basta con un rango. Me ayuda a proponerte el enfoque adecuado.'),
       fields: [{ id: 'budget', type: 'single', req: true, opts: function (s) { return BUDGETS[s.type] || BUDGETS.production; } }] },
     { id: 'about', title: L('Last step: who are you?', 'Último paso: ¿quién eres?'),
@@ -295,13 +291,15 @@
                { id: 'company', type: 'text', label: L('Company (optional)', 'Empresa (opcional)'), auto: 'organization' },
                { id: 'phone', type: 'tel', label: L('WhatsApp / phone (optional)', 'WhatsApp / teléfono (opcional)'), auto: 'tel' },
                { id: 'notes', type: 'textarea', label: L('Anything else? Links, references… (optional)', '¿Algo más? Enlaces, referencias… (opcional)') },
+               { id: 'cur', type: 'currency', when: function (s) { return s.kind !== 'realestate' && hasEstimate(s); }, label: L('Currency for your estimate', 'Moneda de tu presupuesto') },
                { id: 'privacy', type: 'check', req: true, label: L('I agree that my details are used only to answer this request.', 'Acepto que mis datos se usen solo para responder a esta solicitud.') }] },
     { id: 'review', review: true, title: L('All good?', '¿Todo bien?'), help: L('Check your answers and send.', 'Revisa tus respuestas y envía.'), fields: [] }
   ];
   function is(t) { return function (s) { return s.type === t; }; }
+  function hasEstimate(s) { return (s.type === 'production' || s.type === 'post') && !!pvEstimate(s, 'EUR'); }
 
   // ── state ──
-  var state = {}, idx = 0, sent = false, busy = false;
+  var state = {}, idx = 0, sent = false, busy = false, failed = null, sentRes = null;
   try { var saved = JSON.parse(sessionStorage.getItem(STORE) || 'null'); if (saved) { state = saved.state || {}; idx = saved.idx || 0; } } catch (e) {}
   // URL preselect: ?type=post|production|photo|other and &kind=realestate|hotel|brand (production). Takes precedence over saved progress only when present.
   (function preselect() {
@@ -322,7 +320,7 @@
   function save() { try { sessionStorage.setItem(STORE, JSON.stringify({ state: state, idx: idx })); } catch (e) {} }
   function steps() { return STEPS.filter(function (s) { return !s.when || s.when(state); }); }
   function optsOf(f) { return typeof f.opts === 'function' ? f.opts(state) : (f.opts || []); }
-  function fieldsOf(st) { return st.fields; }
+  function fieldsOf(st) { return st.fields.filter(function (f) { return !f.when || f.when(state); }); }
   function validField(f) {
     var v = state[f.id];
     if (f.type === 'currency') return true;
@@ -344,8 +342,8 @@
 
   // ── helpers ──
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
-  function kinetic(text, cls) {
-    var h = el('h1', cls); h.setAttribute('aria-label', text);
+  function kinetic(text, cls, tag) {
+    var h = el(tag || 'h1', cls); h.setAttribute('aria-label', text);
     var n = 0;
     text.split(' ').forEach(function (word, wi, arr) {
       var w = el('span', 'pf-w'); w.setAttribute('aria-hidden', 'true');
@@ -364,13 +362,10 @@
       sooner: L('Want to talk sooner?', '¿Quieres hablar antes?'), book: L('Book a call', 'Reserva una llamada'), whatsapp: L('WhatsApp', 'WhatsApp'),
       again: L('Start another project', 'Empezar otro proyecto'),
       fail: L("The form couldn't be sent. Please email it instead — your answers are already written:", 'No se ha podido enviar. Envíalo por email; tus respuestas ya están escritas:'),
-      estLabel: L('Estimated budget', 'Presupuesto estimado'), estFrom: L('from', 'desde'),
-      vat: L('Prices exclude VAT. VAT (21%) applies only to clients based in Spain. This is an indicative estimate — the final quote is confirmed after the brief.', 'Precios sin IVA. El IVA (21 %) solo se aplica a clientes en España. Estimación orientativa: el presupuesto final se confirma tras el brief.'),
+      estLabel: L('Estimated budget', 'Presupuesto estimado'),
+      vat: L('Prices exclude VAT. VAT (21%) applies only to clients based in Spain.', 'Precios sin IVA. El IVA (21 %) solo se aplica a clientes en España.'),
+      estMsg: L("Thanks, {name}. This is an indicative estimate — I'll send you a more precise quote very soon.", 'Gracias, {name}. Es una estimación orientativa: muy pronto te enviaré un presupuesto más ajustado.'),
       fx: L('Approx. exchange rate', 'Tipo de cambio aproximado'), travel: L('Travel outside Europe is quoted separately and not included.', 'El viaje fuera de Europa se presupuesta aparte y no está incluido.'),
-      basisValue: L('Based on the property value you entered.', 'Calculado a partir del valor de la propiedad que indicas.'),
-      basisRevenue: L('Based on the return you expect from the video, kept in line with the scope of the shoot (days, duration, formats).', 'Calculado a partir del retorno que esperas del vídeo, ajustado al alcance del rodaje (jornadas, duración, formatos).'),
-      basisDays: L('Based on shooting days, duration, formats and deliverables, extras, revisions and usage.', 'Calculado a partir de jornadas de rodaje, duración, formatos y entregables, extras, revisiones y uso.'),
-      basisPost: L('Based on service, footage, number of pieces, duration, formats, revisions, extras and delivery color space.', 'Calculado a partir del servicio, el material, el número de piezas, la duración, los formatos, las revisiones, los extras y el espacio de color de entrega.'),
       unsureTxt: L('Not sure yet', 'Aún no lo sé'), amtBad: L('Enter an amount greater than 0, e.g. 800,000 or 1.2M.', 'Introduce un importe mayor que 0, p. ej. 800.000 o 1,2M.'),
       mailIt: L('Send by email', 'Enviar por email'), none: L('—', '—')
     };
@@ -397,9 +392,7 @@
     if (st.help) body.appendChild(el('p', 'pf-help', tr(st.help)));
 
     if (st.review) body.appendChild(renderReview(list));
-    if (st.estimate) { var eb = el('div', 'pf-est'); eb.appendChild(el('span', 'pf-label', t('estLabel'))); eb.appendChild(el('p', 'pf-est-fig')); body.appendChild(eb); }
     fieldsOf(st).forEach(function (f) { body.appendChild(renderField(st, f)); });
-    if (st.estimate) { body.appendChild(el('div', 'pf-est-notes')); paintEstimate(body); }
     root.appendChild(body);
 
     var nav = el('div', 'pf-nav');
@@ -410,13 +403,14 @@
     if (!st.review && !autoAdvance(st)) right.appendChild(el('span', 'pf-hint', t('hint')));
     var next = el('button', 'pf-next'); next.type = 'button';
     var optionalOnly = fieldsOf(st).length && fieldsOf(st).every(function (f) { return !f.req; }) && fieldsOf(st).every(function (f) { var v = state[f.id]; return f.type === 'currency' || v == null || v === '' || (Array.isArray(v) && !v.length) || (f.type === 'amount' && v !== 'unsure' && !parseAmount(v)); });
-    next.textContent = st.review ? t('send') + ' →' : (st.nextLabel ? tr(st.nextLabel) + ' →' : (optionalOnly ? t('skip') + ' →' : t('next') + ' →'));
+    next.textContent = st.review ? t('send') + ' →' : (optionalOnly ? t('skip') + ' →' : t('next') + ' →');
     next.disabled = !canProceed(st) || busy;
     next.addEventListener('click', function () { if (st.review) submit(); else go(1); });
     right.appendChild(next);
     nav.appendChild(right);
     root.appendChild(nav);
     save();
+    if (failed) showFail(failed.params, failed.res);
 
     var first = body.querySelector('input:not([type=checkbox]), textarea');
     if (first && !('ontouchstart' in window)) setTimeout(function () { try { first.focus({ preventScroll: true }); } catch (e) {} }, 350);
@@ -426,12 +420,12 @@
     if (!next || !st) return;
     next.disabled = !canProceed(st) || busy;
     var optionalOnly = !st.review && fieldsOf(st).length && fieldsOf(st).every(function (f) { return !f.req; }) && fieldsOf(st).every(function (f) { var v = state[f.id]; return f.type === 'currency' || v == null || v === '' || (Array.isArray(v) && !v.length) || (f.type === 'amount' && v !== 'unsure' && !parseAmount(v)); });
-    if (!st.review && !st.nextLabel) next.textContent = (optionalOnly ? t('skip') : t('next')) + ' →';
+    if (!st.review) next.textContent = (optionalOnly ? t('skip') : t('next')) + ' →';
     save();
   }
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   function go(d) {
-    var list = steps();
+    var list = steps(); failed = null;
     if (d > 0) { if (!canProceed(list[idx])) return; badOptional(list[idx]).forEach(function (f) { state[f.id] = ''; }); }
     idx = Math.max(0, Math.min(list.length - 1, idx + d));
     render(d);
@@ -494,7 +488,6 @@
           state.cur = c; if (f.input) state.icur = c;
           cg.querySelectorAll('button').forEach(function (x) { var on = x === cb2; x.classList.toggle('is-on', on); x.setAttribute('aria-checked', on); });
           root.querySelectorAll('.pf-amt-hint').forEach(function (h) { if (h._upd) h._upd(); });
-          if (st.estimate) paintEstimate(root);
           refresh();
         });
         cg.appendChild(cb2);
@@ -566,7 +559,7 @@
     var out = [];
     steps().forEach(function (st) {
       if (st.review) return;
-      st.fields.forEach(function (f) {
+      fieldsOf(st).forEach(function (f) {
         if (f.id === 'privacy' || f.type === 'currency') return;
         var v = state[f.id];
         if (v == null || v === '' || (Array.isArray(v) && !v.length)) return;
@@ -591,28 +584,21 @@
       e.addEventListener('click', function () { idx = list.indexOf(a.step); render(-1); });
       dd.appendChild(e); row.appendChild(dd); box.appendChild(row);
     });
-    var est = pvEstimate(state, state.cur || 'EUR');
-    if (est && steps().some(function (x) { return x.estimate; })) {
-      var er = el('div', 'pf-row pf-row-est');
-      er.appendChild(el('dt', null, t('estLabel')));
-      var ed = el('dd', null, tr(est.text));
-      var ee = el('button', 'pf-edit', t('edit')); ee.type = 'button';
-      ee.addEventListener('click', function () { idx = list.filter(function (x) { return !x.review; }).map(function (x) { return x.estimate; }).indexOf(true); render(-1); });
-      ed.appendChild(ee); er.appendChild(ed); box.appendChild(er);
-    }
     return box;
   }
-  // estimate step: fill the figure + notes (called on render and on every currency change)
-  function paintEstimate(scope) {
-    var e = pvEstimate(state, state.cur || 'EUR'); if (!e) return;
-    var fig = scope.querySelector('.pf-est-fig'), notes = scope.querySelector('.pf-est-notes');
-    if (fig) { fig.textContent = ''; fig.appendChild(el('span', 'pf-est-from', t('estFrom'))); fig.appendChild(document.createTextNode(' ' + tr(e.range))); }
-    if (!notes) return;
-    notes.textContent = '';
-    notes.appendChild(el('p', 'pf-est-basis', t(e.basis === 'value' ? 'basisValue' : e.basis === 'revenue' ? 'basisRevenue' : e.basis === 'post' ? 'basisPost' : 'basisDays')));
+  // ── estimate: shown only after the brief has been sent (thank-you screen, or the send-failure fallback) ──
+  function firstName(n) { return String(n || '').trim().split(/\s+/)[0] || ''; }
+  function estBlock(res) {
+    var e = res.est, box = el('div', 'pf-est');
+    box.appendChild(el('span', 'pf-label', t('estLabel')));
+    box.appendChild(kinetic(tr(e.range), 'pf-title pf-est-title', 'h2'));
+    var notes = el('div', 'pf-est-notes');
     if (e.cur !== 'EUR') notes.appendChild(el('p', 'pf-est-fx', t('fx') + ': 1\u00a0€ ≈ ' + fmtMoney(PRICING.rates[e.cur], e.cur, lang(), 2)));
     if (e.outsideEurope) notes.appendChild(el('p', 'pf-est-trav', t('travel')));
     notes.appendChild(el('p', 'pf-est-vat', t('vat')));
+    notes.appendChild(el('p', 'pf-est-msg', t('estMsg').replace('{name}', firstName(res.name))));
+    box.appendChild(notes);
+    return box;
   }
 
   // ── submit ──
@@ -620,7 +606,7 @@
     var typeOp = STEPS[0].fields[0].opts.filter(function (x) { return x.v === state.type; })[0];
     var lines = ['NUEVO PROYECTO — ' + (typeOp ? typeOp.l.es.toUpperCase() : ''), 'Idioma del cliente: ' + lang().toUpperCase(), ''];
     answers().forEach(function (a) { lines.push(a.label.es.replace(/\s*\(opcional\)\s*$/i, '') + ': ' + a.value.es); });
-    var cur = state.cur || 'EUR', est = steps().some(function (x) { return x.estimate; }) ? pvEstimate(state, cur) : null;
+    var cur = state.cur || 'EUR', est = hasEstimate(state) ? pvEstimate(state, cur) : null;
     if (est) {
       lines.push('', 'Presupuesto estimado: ' + est.text.es + (cur !== 'EUR' ? ' (≈ ' + est.rangeEur.es + ')' : '') + (est.outsideEurope ? ' + viaje aparte' : ''),
         'Moneda elegida por el cliente: ' + cur,
@@ -639,7 +625,8 @@
     if (busy) return;
     var list = steps();
     for (var i = 0; i < list.length - 1; i++) if (!valid(list[i])) { idx = i; return render(-1); }
-    busy = true;
+    busy = true; failed = null;
+    var result = { name: (state.name || '').trim(), est: hasEstimate(state) ? pvEstimate(state, state.cur || 'EUR') : null };
     var btn = root.querySelector('.pf-next'); if (btn) { btn.disabled = true; btn.textContent = t('sending'); }
     var typeOp = STEPS[0].fields[0].opts.filter(function (x) { return x.v === state.type; })[0];
     var kindTxt = '';
@@ -649,8 +636,8 @@
       subject: 'Nuevo proyecto web — ' + (typeOp ? typeOp.l.es : '') + (kindTxt ? ' · ' + kindTxt : ''),
       message: summary()
     };
-    function done() { busy = false; sent = true; try { sessionStorage.removeItem(STORE); } catch (e) {} render(1); }
-    function fail() { busy = false; render(0); showFail(params); }
+    function done() { busy = false; sent = true; sentRes = result; try { sessionStorage.removeItem(STORE); } catch (e) {} render(1); }
+    function fail() { busy = false; failed = { params: params, res: result }; render(0); }
     function viaEmailJS() {
       loadEmailJS(function () {
         window.emailjs.send(EMAILJS.service, EMAILJS.template, params).then(done, fail);
@@ -663,25 +650,26 @@
     }).then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) { if (j && j.ok) done(); else viaEmailJS(); }, viaEmailJS);
   }
-  function showFail(p) {
+  function showFail(p, res) {
     var box = el('div', 'pf-fail');
     box.appendChild(el('p', null, t('fail')));
     var a = el('a', 'pf-next pf-link', t('mailIt') + ' →');
     a.href = 'mailto:contact@pablovaliente.me?subject=' + encodeURIComponent(p.subject) + '&body=' + encodeURIComponent(p.message + '\n\n' + p.first_name + ' — ' + p.email);
     box.appendChild(a);
+    if (res && res.est) box.appendChild(estBlock(res));
     root.appendChild(box);
   }
   function renderThanks() {
     var body = el('div', 'pf-step pf-done');
     body.appendChild(kinetic(t('thanks'), 'pf-title'));
-    body.appendChild(el('p', 'pf-help', t('thanksText')));
+    if (sentRes && sentRes.est) body.appendChild(estBlock(sentRes)); else body.appendChild(el('p', 'pf-help', t('thanksText')));
     var row = el('div', 'pf-after');
     row.appendChild(el('span', 'pf-label', t('sooner')));
     var b = el('a', 'pf-chip is-on', t('book')); b.href = 'https://calendly.com/pablovaliente/discovery-call'; b.target = '_blank'; b.rel = 'noopener noreferrer'; b.setAttribute('data-book', '');
     var w = el('a', 'pf-chip', t('whatsapp')); w.href = 'https://wa.me/491633461889'; w.target = '_blank'; w.rel = 'noopener noreferrer';
     row.appendChild(b); row.appendChild(w); body.appendChild(row);
     var again = el('button', 'pf-back', t('again') + ' →'); again.type = 'button';
-    again.addEventListener('click', function () { state = {}; idx = 0; sent = false; render(1); });
+    again.addEventListener('click', function () { state = {}; idx = 0; sent = false; sentRes = null; failed = null; render(1); });
     body.appendChild(again);
     root.appendChild(body);
   }
