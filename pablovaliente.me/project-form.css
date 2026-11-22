@@ -136,10 +136,11 @@ textarea.pf-input { resize: vertical; line-height: 1.5; font-size: 17px; }
 
 /* instant estimate + amount inputs */
 .pf-est { margin-top: 30px; }
-.pf-est-fig { font-size: clamp(30px, 5.2vw, 72px); font-weight: 500; letter-spacing: -0.035em; line-height: 1.05; overflow-wrap: anywhere; }
-.pf-est-from { font-size: 0.38em; font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.5; margin-right: 0.15em; vertical-align: 0.35em; }
+.pf-fail .pf-est { margin-top: 40px; }
+.pf-est .pf-est-title { margin: 0; }
 .pf-est-notes { margin-top: 28px; max-width: 560px; }
 .pf-est-notes p { font-size: 13px; font-weight: 300; line-height: 1.7; opacity: 0.65; margin-bottom: 8px; }
+.pf-est-notes .pf-est-msg { font-size: 15px; font-weight: 400; opacity: 0.9; margin-top: 18px; line-height: 1.6; }
 .pf-est-notes .pf-est-vat { font-size: 13px; letter-spacing: normal; text-transform: none; opacity: 0.68; margin-top: 14px; }
 .pf-amt-hint { min-height: 1.6em; margin-top: 8px; font-size: 13px; font-weight: 300; opacity: 0.6; }
 .pf-amt-hint.is-bad { opacity: 1; color: #a33a2a; }
@@ -147,4 +148,3 @@ textarea.pf-input { resize: vertical; line-height: 1.5; font-size: 17px; }
 .pf-f-amount .pf-label { margin-bottom: 4px; }
 .pf-f-currency { margin-top: 22px; }
 .pf-f-currency .pf-chip { padding: 10px 18px; }
-.pf-row-est dd { font-weight: 500; }
