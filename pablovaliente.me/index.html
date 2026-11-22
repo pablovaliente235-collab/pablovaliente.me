@@ -463,76 +463,69 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
   .mail-short { display: inline; }
 }
 
-/* ── Mobile TikTok Slider ── */
-#mobile-tiktok { display: none; }
+/* ── Mobile home: carousels per section (≤767px) ── */
+#mhome { display: none; }
 @media (max-width: 767px) {
-  #main-content, #site-footer { display: none !important; }
-  #mobile-tiktok {
-    display: flex;
-    position: fixed;
-    inset: 0;
-    z-index: 2;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 28px 60px;
-  }
-  .mtk-row { display: flex; align-items: center; gap: 24px; }
-  .mtk-tabs { display: flex; gap: clamp(14px, 5vw, 22px); margin-bottom: 22px; }
-  .mtk-tab-link { text-decoration: none; display: inline-block; }
-  .mtk-tab {
-    position: relative; background: none; border: 0; padding: 8px 0; cursor: pointer;
-    font-family: "neue-haas-grotesk-display", sans-serif; font-size: 11px; font-weight: 500;
-    letter-spacing: 0.1em; white-space: nowrap; text-transform: uppercase; color: rgba(255,255,255,0.4);
-    transition: color 0.3s; -webkit-tap-highlight-color: transparent;
-  }
-  .mtk-tab::after {
-    content: ""; position: absolute; left: 0; right: 0; bottom: 2px; height: 1px; background: #fff;
-    transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
-  }
-  .mtk-tab.is-on { color: #fff; }
-  .mtk-tab.is-on::after { transform: scaleX(1); }
-  .mtk-info { flex: 1; min-width: 0; height: 130px; overflow: hidden; transition: opacity 0.2s; }
-  .mtk-info.is-fading { opacity: 0; }
-  .mtk-category {
-    display: block;
-    font-family: "neue-haas-grotesk-display", sans-serif;
-    font-size: 9px; font-weight: 400; letter-spacing: 0.14em;
-    text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 12px;
-  }
-  .mtk-title {
-    font-family: "neue-haas-grotesk-display", sans-serif;
-    font-size: clamp(32px, 10vw, 56px); font-weight: 500;
-    letter-spacing: -0.025em; line-height: 1.0; color: #fff; margin: 0;
-  }
-  .mtk-hint {
-    display: flex; align-items: center; gap: 8px; margin-top: 18px;
-    font-family: "neue-haas-grotesk-display", sans-serif;
-    font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: rgba(255,255,255,0.28); transition: opacity 0.5s;
-  }
-  .mtk-indicator {
-    flex-shrink: 0; height: 130px;
-    display: flex; flex-direction: column; align-items: center; justify-content: space-between;
-    cursor: pointer;
-  }
-  .mtk-ind-num {
-    font-family: "neue-haas-grotesk-display", sans-serif;
-    font-size: 9px; letter-spacing: 0.1em; line-height: 1;
-    color: rgba(255,255,255,0.4);
-  }
-  .mtk-ind-track {
-    position: relative; width: 1px; height: 50px;
-    background: rgba(255,255,255,0.18);
-  }
-  .mtk-ind-fill {
-    position: absolute; left: 0; right: 0; bottom: 0;
-    background: #fff;
-    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
+  html, body { height: auto; overflow-x: hidden; overflow-y: auto; }
+  body { background: #0C0C0B; color: #F2F0EF; }
+  .bg-stack, #main-content, #site-footer { display: none !important; }
+  #site-header { background: rgba(12,12,11,0.82); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+  #mhome { display: block; position: relative; z-index: 2; padding-top: 64px; overflow-x: clip; }
+  #mhome a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+  .mh-intro { padding: 14px 24px 0; font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.5; line-height: 1.6; }
+  .mh-sec { padding: 30px 0 20px; scroll-margin-top: 56px; }
+  .mh-head { display: flex; flex-wrap: wrap; padding: 0 24px 18px; }
+  #mh-photo .mh-h { font-size: clamp(40px, 13.4vw, 76px); }
+  .mh-h { font-size: clamp(44px, 17vw, 84px); font-weight: 500; letter-spacing: -0.045em; line-height: 0.92; }
+  .mh-count { order: -1; width: 100%; display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-bottom: 14px; font-size: 10px; font-weight: 500; letter-spacing: 0.12em; font-variant-numeric: tabular-nums; }
+  .mh-count span { opacity: 0.5; }
+  .mh-count b { font-weight: 500; opacity: 1; color: #F2F0EF; }
+  .mh-bar { position: relative; width: 64px; height: 1px; background: rgba(242,240,239,0.2); }
+  .mh-bar i { position: absolute; inset: 0; background: #F2F0EF; transform-origin: left; transform: scaleX(0.1667); transition: transform 0.45s cubic-bezier(0.22,1,0.36,1); }
+  /* kinetic letters */
+  .kin-w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.02em 0.04em 0.12em 0; margin: 0 -0.04em -0.12em 0; white-space: nowrap; }
+  .kin-w .ch { display: inline-block; white-space: pre; transform: translateY(105%); }
+  .mh-sec.is-in .mh-h .ch { animation: mh-rise 0.8s cubic-bezier(0.22,1,0.36,1) both; animation-delay: calc(var(--d, 0) * 1ms); }
+  .mh-sec.is-in .mh-card.is-active .mh-title .ch { animation: mh-rise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: calc(var(--d, 0) * 1ms + 60ms); }
+  .mh-sec.is-in .mh-h .ch, .mh-sec .mh-card .mh-title .ch { transform: none; }
+  .mh-sec:not(.is-in) .mh-h .ch { transform: translateY(105%); }
+  @keyframes mh-rise { from { transform: translateY(105%); } to { transform: none; } }
+  /* carousel */
+  .mh-track { overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding-inline: 24px; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: none; outline-offset: -2px; }
+  .mh-track::-webkit-scrollbar { display: none; }
+  .mh-list { list-style: none; display: flex; gap: 14px; padding: 0 24px; width: max-content; }
+  .mh-list::after { content: ""; flex: none; width: max(1px, calc(16vw - 38px)); }
+  .mh-list > li { flex: none; width: 84vw; scroll-snap-align: start; scroll-snap-stop: always; }
+  .mh-card { display: block; opacity: 0.5; transition: opacity 0.45s ease; }
+  .mh-card.is-active { opacity: 1; }
+  .mh-img { display: block; position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #1a1a19; }
+  .mh-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mh-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.28), transparent 38%); pointer-events: none; }
+  .mh-meta { display: block; padding: 16px 2px 0; }
+  .mh-cat { display: block; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.55; margin-bottom: 9px; }
+  .mh-title { display: block; font-size: clamp(25px, 7.6vw, 34px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.02; }
+  /* services */
+  .mh-svc-list > li { width: 72vw; }
+  .mh-svc-list::after { width: max(1px, calc(28vw - 38px)); }
+  .mh-svc { display: flex; flex-direction: column; min-height: 218px; padding: 22px 22px 20px; border: 1px solid rgba(242,240,239,0.16); }
+  .mh-svc-idx { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; opacity: 0.45; }
+  .mh-svc-name { display: block; margin-top: 22px; font-size: 23px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.08; }
+  .mh-svc-who { display: block; margin-top: 12px; font-size: 13px; font-weight: 300; line-height: 1.5; opacity: 0.6; }
+  .mh-svc-go { display: block; margin-top: auto; padding-top: 16px; font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.8; }
+  .mh-trust { padding: 26px 24px 0; font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.5; line-height: 1.7; }
+  .mh-cta { display: flex; flex-direction: column; align-items: stretch; gap: 8px; padding: 22px 24px 0; }
+  .mh-btn { display: block; text-align: center; background: #F2F0EF; color: #0C0C0B !important; padding: 19px 24px; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+  .mh-link { display: block; text-align: center; padding: 16px 24px; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; }
+  /* footer */
+  .mh-foot { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 28px; padding: 44px 20px 30px; margin-top: 32px; border-top: 1px solid rgba(242,240,239,0.1); color: rgba(255,255,255,0.4); }
+  .mh-foot .footer-col { text-align: center; }
+  .mh-foot .footer-col:first-child { order: 2; width: 100%; margin-top: 8px; }
+  .mh-foot .footer-col:not(:first-child) { display: flex; order: 1; gap: 28px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; }
+  .mh-foot a { padding: 6px 0; }
 }
-@media (max-width: 767px) {
-  #bg-3 img { object-position: calc(50% + 150px) center; }
-  #bg-4 img { object-position: calc(50% - 270px) center; }
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .mh-sec .kin-w .ch { animation: none !important; transform: none !important; }
+  .mh-card, .mh-bar i { transition: none !important; }
 }
 /* ── Large screens: scale the project carousel with the viewport (identical to the 1920px design at 1920px) ── */
 @media (min-width: 1920px) {
@@ -622,6 +615,7 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
     document.body.style.transition='transform 0.45s cubic-bezier(0.4,0,0.2,1),opacity 0.45s ease';
     document.body.style.transform='translateY(0)';
     document.body.style.opacity='1';
+    if(window.innerWidth<=767) setTimeout(function(){document.body.style.transform='';document.body.style.transition='';},600);
   });});
 })();
 </script>
@@ -664,11 +658,6 @@ footer a[href^="mailto:"] { text-transform: none; letter-spacing: 0; }
     <img src="assets/projects/project-2/Frames/frame-06.webp" alt="" loading="lazy"/>
     <div class="bg-overlay"></div>
   </div>
-  <!-- Mobile: Photography slides (images load on demand) -->
-  <div class="bg-layer bg-photo" id="bg-p0"><img data-src="assets/projects/monasterio-san-miguel/frames/frame-portada.webp" alt=""/><div class="bg-overlay"></div></div>
-  <div class="bg-layer bg-photo" id="bg-p1"><img data-src="assets/projects/iglesia-yaguaron/frames/frame-portada.webp" alt=""/><div class="bg-overlay"></div></div>
-  <div class="bg-layer bg-photo" id="bg-p2"><img data-src="assets/projects/japanisches-heiligtum/frames/frame-portada.webp" alt=""/><div class="bg-overlay"></div></div>
-  <div class="bg-layer bg-photo" id="bg-p3"><img data-src="assets/projects/bellamar-hotel-ibiza/frames/frame-portada.webp" alt=""/><div class="bg-overlay"></div></div>
 </div>
 
 <!-- Header -->
@@ -896,170 +885,68 @@ document.addEventListener('keydown', function(e) {
 document.querySelectorAll('.footer-year').forEach(function(el) {
   el.textContent = new Date().getFullYear();
 });
-// ── Mobile TikTok Slider ──
-document.addEventListener('DOMContentLoaded', function() {
-  if (window.innerWidth > 767) return;
-
-  var projects = [
-    { href: 'bellamar.html',              title: 'Bellamar Hotel<br>Beach &amp; Spa',          category: 'Hospitality Brand Production', bg: 'bg-0' },
-    { href: 'marvell.html',               title: 'Marvell Club Hotel<br>&amp; Apartments',     category: 'Hospitality Brand Production', bg: 'bg-1' },
-    { href: 'ordinary.html',              title: 'The Ordinary',                               category: 'Editing & Color Grading',      bg: 'bg-2' },
-    { href: 'perdido-en-una-perdiz.html', title: 'Perdido en<br>una perdiz',                   category: 'Editing & Color Grading',      bg: 'bg-4' },
-    { href: 'zufaellige-begegnung.html',  title: 'Zufällige<br>Begegnung',                     category: 'Short Film Production',        bg: 'bg-3' },
-    { href: 'esparadis.html',             title: 'Es Paradis',                                 category: 'Social Media Content',         bg: 'bg-6' },
-    { href: 'architecture/',                  title: 'Monasterio de<br>San Miguel', category: 'Architectural Photography',    bg: 'bg-p0', sec: 'photo' },
-    { href: 'architecture/iglesia-yaguaron/', title: 'Iglesia de<br>Yaguarón',      category: 'Architectural Photography',    bg: 'bg-p1', sec: 'photo' },
-    { href: 'architecture/japanese/',         title: 'Japanese<br>Sanctuary',       category: 'Architectural Photography',    bg: 'bg-p2', sec: 'photo' },
-    { href: 'hospitality/',                   title: 'Bellamar Hotel<br>Ibiza',     category: 'Hospitality Brand Production', bg: 'bg-p3', sec: 'photo' },
-  ];
-  projects.forEach(function (p) { if (!p.sec) p.sec = 'film'; });
-  var CAT_ES = {
-    'Hospitality Brand Production': 'Producción para hostelería',
-    'Editing & Color Grading': 'Edición y etalonaje',
-    'Short Film Production': 'Producción de cortometraje',
-    'Social Media Content': 'Contenido para redes sociales',
-    'Architectural Photography': 'Fotografía de arquitectura'
-  };
-  function catOf(p) { return window.pvLang && pvLang.get() === 'es' ? (CAT_ES[p.category] || p.category) : p.category; }
-  function secList(sec) { return projects.filter(function (p) { return p.sec === sec; }); }
-  function firstOf(sec) { for (var i = 0; i < projects.length; i++) if (projects[i].sec === sec) return i; return 0; }
-  // photo backgrounds load only when needed (current + next)
-  function loadBg(i) {
-    var p = projects[i]; if (!p) return;
-    var img = document.querySelector('#' + p.bg + ' img[data-src]');
-    if (img) { img.src = img.getAttribute('data-src'); img.removeAttribute('data-src'); }
-  }
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('.mtk-tab[data-sec]'));
-  var totEl = document.getElementById('mtkIndTot');
-
-  var idx     = 0;
-  var wrap    = document.getElementById('mobile-tiktok');
-  var infoEl  = document.getElementById('mtkInfo');
-  var titleEl = document.getElementById('mtkTitle');
-  var catEl   = document.getElementById('mtkCategory');
-  var hintEl   = document.getElementById('mtkHint');
-  var indEl   = document.getElementById('mtkIndicator');
-  var fillEl  = document.getElementById('mtkIndFill');
-  var trackEl = document.getElementById('mtkIndTrack');
-  var curEl   = document.getElementById('mtkIndCur');
-
-  function updateIndicator() {
-    var sec = projects[idx].sec, list = secList(sec), pos = list.indexOf(projects[idx]);
-    var progress = list.length > 1 ? pos / (list.length - 1) : 0;
-    fillEl.style.height = ((1 - progress) * 100) + '%';
-    curEl.textContent   = pos + 1;
-    totEl.textContent   = list.length;
-    tabs.forEach(function (t) { t.classList.toggle('is-on', t.getAttribute('data-sec') === sec); });
-  }
-
-  trackEl.addEventListener('click', function(e) {
-    var rect = trackEl.getBoundingClientRect();
-    var rel  = Math.min(1, Math.max(0, (e.clientY - rect.top) / rect.height));
-    var sec = projects[idx].sec;
-    goTo(firstOf(sec) + Math.round(rel * (secList(sec).length - 1)));
-  });
-  var svcTab = document.querySelector('.mtk-tab-link');
-  if (svcTab) svcTab.addEventListener('click', function (e) { e.preventDefault(); navigateTo(pvLang.get() === 'es' ? '/es/servicios/' : '/services/'); });
-  tabs.forEach(function (t) {
-    t.addEventListener('click', function () { goTo(firstOf(t.getAttribute('data-sec'))); if (hintEl) hintEl.style.opacity = '0'; });
-  });
-
-  function goTo(n) {
-    n = ((n % projects.length) + projects.length) % projects.length;
-    if (n === idx) return;
-    idx = n;
-    infoEl.classList.add('is-fading');
-    setTimeout(function() {
-      titleEl.innerHTML = projects[idx].title;
-      catEl.textContent   = catOf(projects[idx]);
-      infoEl.classList.remove('is-fading');
-    }, 150);
-    loadBg(idx); loadBg(idx + 1);
-    showBg(projects[idx].bg);
-    updateIndicator();
-  }
-  if (window.pvLang) pvLang.on(function () { catEl.textContent = catOf(projects[idx]); });
-  window.pvMobileHome = { go: function (sec) { goTo(firstOf(sec)); } };
-
-  function navigateTo(url, forward) {
-    // shared kinetic page transition (/js/transition.js)
-    if (window.pvTransition) { window.pvTransition(url); return; }
-    window.location.href = url;
-  }
-  function openProject() { navigateTo(projects[idx].href); }
-
-  if (/^#(works|photography)$/.test(location.hash)) idx = firstOf('photo');
-  titleEl.innerHTML = projects[idx].title;
-  catEl.textContent   = catOf(projects[idx]);
-  loadBg(idx); loadBg(idx + 1);
-  showBg(projects[idx].bg);
-  updateIndicator();
-
-  var startX, startY, hasMoved;
-  var SWIPE = 45, TAP = 12;
-
-  wrap.addEventListener('touchstart', function(e) {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    hasMoved = false;
-  }, { passive: true });
-
-  wrap.addEventListener('touchmove', function(e) {
-    if (Math.abs(e.touches[0].clientX - startX) > TAP ||
-        Math.abs(e.touches[0].clientY - startY) > TAP) hasMoved = true;
-  }, { passive: true });
-
-  wrap.addEventListener('touchend', function(e) {
-    var dx  = e.changedTouches[0].clientX - startX;
-    var dy  = e.changedTouches[0].clientY - startY;
-    var adx = Math.abs(dx), ady = Math.abs(dy);
-
-    if (e.target.closest && e.target.closest('.mtk-tabs, .mtk-indicator')) return;
-    if (!hasMoved) { openProject(); return; }
-
-    if (adx > SWIPE && adx > ady && dx < 0) {
-      navigateTo(projects[idx].href);
-      if (hintEl) hintEl.style.opacity = '0';
-      return;
-    }
-
-    if (ady > SWIPE && ady > adx) {
-      if (dy < 0 && idx === projects.length - 1) {
-        navigateTo(pvLang.get() === 'es' ? '/es/servicios/' : '/services/');
-      } else {
-        goTo(dy < 0 ? idx + 1 : idx - 1);
-      }
-      if (hintEl) hintEl.style.opacity = '0';
-    }
-  }, { passive: true });
-});
-
 </script>
 
-<!-- Mobile TikTok slider (hidden on desktop) -->
-<div id="mobile-tiktok" aria-label="Browse projects">
-  <div class="mtk-tabs" aria-label="Section">
-    <button type="button" class="mtk-tab is-on" data-sec="film">Film</button>
-    <button type="button" class="mtk-tab" data-sec="photo" data-es="Fotografía">Photography</button>
-    <a class="mtk-tab mtk-tab-link" href="/services/" data-es-href="/es/servicios/" data-go-services data-es="Servicios">Services</a>
-  </div>
-  <div class="mtk-row">
-    <div class="mtk-info" id="mtkInfo">
-      <span class="mtk-category" id="mtkCategory"></span>
-      <h2 class="mtk-title" id="mtkTitle"></h2>
-      <div class="mtk-hint" id="mtkHint">
-        <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M10 1l5 4-5 4M1 5h14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span data-es="Ver proyecto">Open project</span>
-      </div>
+<!-- Mobile home: carousels per section (hidden ≥768px) -->
+<div id="mhome">
+  <p class="mh-intro" data-es="Director de fotografía · Editor · Colorista">Director of Photography · Editor · Colorist</p>
+
+  <section class="mh-sec" id="mh-film" aria-labelledby="mh-film-h">
+    <div class="mh-head">
+      <h2 class="mh-h kin" id="mh-film-h" data-k-en="Film" data-k-es="Film">Film</h2>
+      <div class="mh-count" aria-hidden="true"><span><b class="mh-cur">01</b> / <span class="mh-tot">06</span></span><div class="mh-bar"><i></i></div></div>
     </div>
-    <div class="mtk-indicator" id="mtkIndicator">
-      <span class="mtk-ind-num" id="mtkIndCur">1</span>
-      <div class="mtk-ind-track" id="mtkIndTrack">
-        <div class="mtk-ind-fill" id="mtkIndFill"></div>
-      </div>
-      <span class="mtk-ind-num" id="mtkIndTot">6</span>
+    <div class="mh-track" role="region" tabindex="0" aria-label="Film projects" data-es-aria="Proyectos de cine y vídeo">
+      <ul class="mh-list" role="list">
+        <li><a class="mh-card is-active" href="bellamar.html"><span class="mh-img"><img src="assets/projects/project-1/Frames/frame-01.webp" alt="Bellamar Hotel Beach &amp; Spa" fetchpriority="high" loading="eager" decoding="async" width="800" height="1000"/></span><span class="mh-meta"><span class="mh-cat" data-es="Producción para hostelería">Hospitality Brand Production</span><span class="mh-title kin" data-k-en="Bellamar Hotel Beach &amp; Spa">Bellamar Hotel Beach &amp; Spa</span></span></a></li>
+        <li><a class="mh-card" href="marvell.html"><span class="mh-img"><img src="assets/projects/project-2/Frames/frame-01.webp" alt="Marvell Club Hotel &amp; Apartments" loading="lazy" decoding="async" width="800" height="1000"/></span><span class="mh-meta"><span class="mh-cat" data-es="Producción para hostelería">Hospitality Brand Production</span><span class="mh-title kin" data-k-en="Marvell Club Hotel &amp; Apartments">Marvell Club Hotel &amp; Apartments</span></span></a></li>
+        <li><a class="mh-card" href="ordinary.html"><span class="mh-img"><img src="assets/projects/project-3/Frames/frame-01.webp" alt="The Ordinary" loading="lazy" decoding="async" width="800" height="1000"/></span><span class="mh-meta"><span class="mh-cat" data-es="Edición y etalonaje">Editing &amp; Color Grading</span><span class="mh-title kin" data-k-en="The Ordinary">The Ordinary</span></span></a></li>
+        <li><a class="mh-card" href="perdido-en-una-perdiz.html"><span class="mh-img"><img src="assets/projects/project-5/Frames/frame-01.webp" alt="Perdido en una perdiz" style="object-position:22% 50%" loading="lazy" decoding="async" width="800" height="1000"/></span><span class="mh-meta"><span class="mh-cat" data-es="Edición y etalonaje">Editing &amp; Color Grading</span><span class="mh-title kin" data-k-en="Perdido en una perdiz">Perdido en una perdiz</span></span></a></li>
+        <li><a class="mh-card" href="zufaellige-begegnung.html"><span class="mh-img"><img src="assets/projects/project-4/Frames/frame-01.webp" alt="Zufällige Begegnung" style="object-position:72% 50%" loading="lazy" decoding="async" width="800" height="1000"/></span><span class="mh-meta"><span class="mh-cat" data-es="Producción de cortometraje">Short Film Production</span><span class="mh-title kin" data-k-en="Zufällige Begegnung">Zufällige Begegnung</span></span></a></li>
+        <li><a class="mh-card" href="esparadis.html"><span class="mh-img"><img src="assets/projects/project-7/Frames/frame-01.webp" alt="Es Paradis" loading="lazy" decoding="async" width="800" height="1000"/></span><span class="mh-meta"><span class="mh-cat" data-es="Contenido para redes sociales">Social Media Content</span><span class="mh-title kin" data-k-en="Es Paradis">Es Paradis</span></span></a></li>
+      </ul>
     </div>
-  </div>
+  </section>
+
+  <section class="mh-sec" id="mh-photo" aria-labelledby="mh-photo-h">
+    <div class="mh-head">
+      <h2 class="mh-h kin" id="mh-photo-h" data-k-en="Photography" data-k-es="Fotografía">Photography</h2>
+      <div class="mh-count" aria-hidden="true"><span><b class="mh-cur">01</b> / <span class="mh-tot">04</span></span><div class="mh-bar"><i></i></div></div>
+    </div>
+    <div class="mh-track" role="region" tabindex="0" aria-label="Photography projects" data-es-aria="Proyectos de fotografía">
+      <ul class="mh-list" role="list">
+        <li><a class="mh-card is-active" href="architecture/"><span class="mh-img"><img src="assets/projects/monasterio-san-miguel/frames/frame-portada.webp" alt="Monasterio de San Miguel" loading="lazy" decoding="async" width="800" height="1000"/></span><span class="mh-meta"><span class="mh-cat" data-es="Fotografía de arquitectura">Architectural Photography</span><span class="mh-title kin" data-k-en="Monasterio de San Miguel">Monasterio de San Miguel</span></span></a></li>
+        <li><a class="mh-card" href="architecture/iglesia-yaguaron/"><span class="mh-img"><img src="assets/projects/iglesia-yaguaron/frames/frame-portada.webp" alt="Iglesia de Yaguarón" loading="lazy" decoding="async" width="800" height="1000"/></span><span class="mh-meta"><span class="mh-cat" data-es="Fotografía de arquitectura">Architectural Photography</span><span class="mh-title kin" data-k-en="Iglesia de Yaguarón">Iglesia de Yaguarón</span></span></a></li>
+        <li><a class="mh-card" href="architecture/japanese/"><span class="mh-img"><img src="assets/projects/japanisches-heiligtum/frames/frame-portada.webp" alt="Japanese Sanctuary" data-es-alt="Santuario japonés" loading="lazy" decoding="async" width="800" height="1000"/></span><span class="mh-meta"><span class="mh-cat" data-es="Fotografía de arquitectura">Architectural Photography</span><span class="mh-title kin" data-k-en="Japanese Sanctuary" data-k-es="Santuario japonés">Japanese Sanctuary</span></span></a></li>
+        <li><a class="mh-card" href="hospitality/"><span class="mh-img"><img src="assets/projects/bellamar-hotel-ibiza/frames/frame-portada.webp" alt="Bellamar Hotel Ibiza" loading="lazy" decoding="async" width="800" height="1000"/></span><span class="mh-meta"><span class="mh-cat" data-es="Producción para hostelería">Hospitality Brand Production</span><span class="mh-title kin" data-k-en="Bellamar Hotel Ibiza">Bellamar Hotel Ibiza</span></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mh-sec" id="mh-services" aria-labelledby="mh-svc-h">
+    <div class="mh-head">
+      <h2 class="mh-h kin" id="mh-svc-h" data-k-en="Services" data-k-es="Servicios">Services</h2>
+      <div class="mh-count" aria-hidden="true"><span><b class="mh-cur">01</b> / <span class="mh-tot">04</span></span><div class="mh-bar"><i></i></div></div>
+    </div>
+    <div class="mh-track" role="region" tabindex="0" aria-label="Services" data-es-aria="Servicios">
+      <ul class="mh-list mh-svc-list" role="list">
+        <li><a class="mh-card mh-svc is-active" href="/services/remote-video-editing-color-grading/" data-es-href="/es/servicios/edicion-video-etalonaje-remoto/"><span class="mh-svc-idx" aria-hidden="true">01</span><span class="mh-svc-name" data-es="Edición de vídeo y etalonaje en remoto">Remote video editing &amp; color grading</span><span class="mh-svc-who" data-es="Para cineastas, agencias y estudios cuyo material necesita un acabado profesional.">For filmmakers, agencies and studios whose footage needs a professional finish.</span><span class="mh-svc-go" data-es="Ver servicio →">View service →</span></a></li>
+        <li><a class="mh-card mh-svc" href="/services/real-estate-video-photography/" data-es-href="/es/servicios/video-fotografia-inmobiliaria/"><span class="mh-svc-idx" aria-hidden="true">02</span><span class="mh-svc-name" data-es="Inmobiliaria e interiores">Real estate &amp; interiors</span><span class="mh-svc-who" data-es="Vídeo, foto y dron para anuncios que quieren destacar.">Video, photo and drone for listings that need to stand out.</span><span class="mh-svc-go" data-es="Ver servicio →">View service →</span></a></li>
+        <li><a class="mh-card mh-svc" href="/services/hotel-hospitality-video-production/" data-es-href="/es/servicios/video-hoteles-hosteleria/"><span class="mh-svc-idx" aria-hidden="true">03</span><span class="mh-svc-name" data-es="Hoteles y hostelería">Hotels &amp; hospitality</span><span class="mh-svc-who" data-es="Películas de marca y contenido para hoteles, resorts y restaurantes.">Brand films and content for hotels, resorts and restaurants.</span><span class="mh-svc-go" data-es="Ver servicio →">View service →</span></a></li>
+        <li><a class="mh-card mh-svc" href="/services/brand-commercial-video-production/" data-es-href="/es/servicios/video-publicitario-marca/"><span class="mh-svc-idx" aria-hidden="true">04</span><span class="mh-svc-name" data-es="Producción de marca y comercial">Brand &amp; commercial production</span><span class="mh-svc-who" data-es="Películas de campaña y producto pensadas para vender.">Campaign and product films built to sell.</span><span class="mh-svc-go" data-es="Ver servicio →">View service →</span></a></li>
+      </ul>
+    </div>
+    <p class="mh-trust" data-es="Certificado en DaVinci Resolve · Licencia de dron EASA · Más de 90 proyectos entregados">DaVinci Resolve Certified · EASA drone licence · 90+ projects delivered</p>
+    <div class="mh-cta">
+      <a class="mh-btn" href="/start-a-project.html" data-es="Empezar un proyecto">Start a project</a>
+      <a class="mh-link" href="/services/" data-es-href="/es/servicios/" data-es="Todos los servicios →">All services →</a>
+    </div>
+  </section>
+
+  <footer class="mh-foot" aria-label="Site footer">
+    <span class="footer-col">&copy; <span class="footer-year"></span> Pablo Valiente. All rights reserved.</span>
+    <span class="footer-col"><a href="mailto:contact@pablovaliente.me">Mail</a><a href="/start-a-project.html">Start a project</a><a href="https://instagram.com/pvaliente_" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.linkedin.com/in/valiente-pablo" target="_blank" rel="noopener noreferrer">LinkedIn</a></span>
+  </footer>
 </div>
 
 <!-- Desktop page 2: photography works page (works.html, iframe, desktop only) -->
@@ -1195,6 +1082,92 @@ document.addEventListener('DOMContentLoaded', function() {
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (en) { en.forEach(function (e) { sec.classList.toggle('is-in', e.isIntersecting); }); }, { threshold: 0.35 }).observe(sec);
   } else sec.classList.add('is-in');
+})();
+</script>
+<script>
+// ── Mobile home: carousels per section (≤767px) ──
+(function () {
+  var home = document.getElementById('mhome');
+  if (!home) return;
+  var mq = window.matchMedia('(max-width: 767px)');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var secs = Array.prototype.slice.call(home.querySelectorAll('.mh-sec'));
+
+  // kinetic text: words wrapped in clipping spans, letters rise (CSS)
+  function kin(el, text) {
+    var n = 0;
+    el.setAttribute('aria-label', text);
+    el.textContent = '';
+    text.split(' ').forEach(function (word, wi, arr) {
+      var w = document.createElement('span'); w.className = 'kin-w'; w.setAttribute('aria-hidden', 'true');
+      Array.from(word + (wi < arr.length - 1 ? ' ' : '')).forEach(function (chr) {
+        var c = document.createElement('span'); c.className = 'ch'; c.textContent = chr; c.style.setProperty('--d', Math.min(n, 30) * 28); n++; w.appendChild(c);
+      });
+      el.appendChild(w);
+    });
+  }
+  function renderKin() {
+    var es = window.pvLang && pvLang.get() === 'es';
+    home.querySelectorAll('.kin').forEach(function (el) {
+      var t = (es && el.getAttribute('data-k-es')) || el.getAttribute('data-k-en');
+      kin(el, t);
+    });
+  }
+  renderKin();
+  if (window.pvLang) pvLang.on(renderKin);
+
+  home.querySelectorAll('.footer-year').forEach(function (el) { el.textContent = new Date().getFullYear(); });
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  // one carousel: counter + progress + active card (scroll-driven, rAF)
+  secs.forEach(function (sec) {
+    var track = sec.querySelector('.mh-track'), cards = Array.prototype.slice.call(sec.querySelectorAll('.mh-card'));
+    var cur = sec.querySelector('.mh-cur'), tot = sec.querySelector('.mh-tot'), bar = sec.querySelector('.mh-bar i');
+    var active = 0, ticking = false;
+    tot.textContent = pad(cards.length);
+    function set(i) {
+      if (i === active && cards[i].classList.contains('is-active')) return;
+      active = i;
+      cards.forEach(function (c, k) { c.classList.toggle('is-active', k === i); });
+      cur.textContent = pad(i + 1);
+      bar.style.transform = 'scaleX(' + ((i + 1) / cards.length) + ')';
+    }
+    bar.style.transform = 'scaleX(' + (1 / cards.length) + ')';
+    function update() {
+      ticking = false;
+      var left = track.getBoundingClientRect().left + 24, best = 0, bd = 1e9;
+      cards.forEach(function (c, k) { var d = Math.abs(c.parentNode.getBoundingClientRect().left - left); if (d < bd) { bd = d; best = k; } });
+      set(best);
+    }
+    track.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    window.addEventListener('resize', update);
+  });
+
+  // headings rise when their section enters the viewport
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { threshold: 0.25 });
+    secs.forEach(function (s) { io.observe(s); });
+  } else secs.forEach(function (s) { s.classList.add('is-in'); });
+
+  // navigation: menu items + hash
+  var IDS = { film: 'mh-film', photo: 'mh-photo', services: 'mh-services' };
+  function go(sec, instant) {
+    var el = document.getElementById(IDS[sec] || IDS.film);
+    if (el) el.scrollIntoView({ behavior: (instant || reduce.matches) ? 'auto' : 'smooth', block: 'start' });
+  }
+  window.pvMobileHome = { go: function (sec) { if (mq.matches) go(sec); } };
+  function fromHash() {
+    if (!mq.matches) return;
+    var h = location.hash;
+    if (/^#(works|photography)$/.test(h)) go('photo', true);
+    else if (h === '#services') go('services', true);
+  }
+  fromHash();
+  window.addEventListener('load', fromHash);
+  window.addEventListener('hashchange', fromHash);
 })();
 </script>
 <script src="/kmenu.js"></script>
