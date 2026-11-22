@@ -66,11 +66,11 @@
     a.addEventListener('click', function (e) {
       var go = a.getAttribute('data-go');
       var home = document.getElementById('de-home');
-      // mobile home: Film / Photography are sections of the vertical slider
-      if (go && go !== 'services' && window.pvMobileHome && window.innerWidth <= 767) {
+      // mobile home: Film / Photography / Services are sections of the page (carousels)
+      if (go && window.pvMobileHome && window.innerWidth <= 767) {
         e.preventDefault();
         close();
-        window.pvMobileHome.go(go === 'works' ? 'photo' : 'film');
+        window.pvMobileHome.go(go === 'works' ? 'photo' : go === 'services' ? 'services' : 'film');
         return;
       }
       var svc = document.getElementById('services');
